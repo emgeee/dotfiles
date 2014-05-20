@@ -1,0 +1,319 @@
+set nocompatible              " be iMproved
+
+"" autoreload vimrc after save
+autocmd! bufwritepost .vimrc nested source %
+
+
+filetype off                  " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+""" Themes
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'trapd00r/neverland-vim-theme'
+
+"" Easy switching between vim/tmux
+Bundle 'christoomey/vim-tmux-navigator'
+
+
+"" Display git diffs in sidebar
+Bundle 'airblade/vim-gitgutter.git'
+
+"" Use ag (the silver searcher) to find patterns in file
+Bundle 'rking/ag.vim'
+" :Ag [options] {pattern} [{directory}]
+" must escape # character with \
+" e    to open file and close the quickfix window
+" o    to open (same as enter)
+" go   to preview file (open but maintain focus on ag.vim results)
+" t    to open in new tab
+" T    to open in new tab silently
+" h    to open in horizontal split
+" H    to open in horizontal split silently
+" v    to open in vertical split
+" gv   to open in vertical split silently
+" q    to close the quickfix window
+"
+
+"" File navigation sidebar
+Bundle 'scrooloose/nerdtree'
+" type :NERDTreeToggle
+" :NERDTreeFind find location of current file
+" i to open in new split
+" s to open in new vsplit
+" t to open in new tab
+" p go to parent directory
+" m to open menu
+
+"" Easily jump around
+Bundle 'Lokaltog/vim-easymotion'
+" Press <leader><leader> then a move command where <leader> = '\'
+"
+
+"" autocomplete plugin
+" Bundle 'Valloric/YouCompleteMe'
+" ctrl-X, ctrl-N, ctrl-P, ctrl-O
+Bundle 'kien/ctrlp.vim'
+Bundle 'Shougo/neocomplete.vim'
+
+"" Comment plugin
+Bundle 'tomtom/tcomment_vim'
+" Press <c-_><c-_> to comment lines
+" Press <c-_>i for inline commenting
+"
+
+"" Highligh css colors!
+Bundle 'ap/vim-css-color'
+
+"" Beautify HTML, css, and js
+"" requires ~/.vim/.editorconfig
+Bundle 'einars/js-beautify'
+Bundle 'maksimr/vim-jsbeautify'
+" :call JsBeautify()
+" :call HtmlBeautify()
+" :call CSSBeautify()
+"
+
+"" Add indent guides
+Bundle 'nathanaelkane/vim-indent-guides'
+
+
+"" Enable editorconfig in vim
+Bundle 'editorconfig/editorconfig-vim'
+
+
+""" additional syntax highlighting
+Bundle 'sudar/vim-arduino-syntax'
+
+""" Experimental (not necessarily in workflow)
+" Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Bundle 'tpope/vim-rails.git'
+" Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-sleuth'
+Bundle 'tpope/vim-surround'
+Bundle 'jiangmiao/auto-pairs.git'
+Bundle 'gcmt/breeze.vim'
+
+
+
+""" Enable powerline - must have vim compiled with python support
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User interface
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"set shortmess+=I "avoid hitting enter?
+
+set ruler "show line numbers at bottom right
+set showcmd "show information about current command in bottom right
+set number "show line numbers by default
+set relativenumber "line numbers are show relative to position
+set cursorline "highlight entire line cursor is on
+
+"" options for searching
+set hlsearch "highlight all matches
+set incsearch "incremently start searching before hitting enter
+set ignorecase "ignore case
+set smartcase "ignore case when only lower case
+
+set mouse=a "enable mouse support
+" set mouse=c "disable mouse support
+
+set encoding=utf-8
+set wildmenu
+
+"" used for viewing lines that are so long they take up the entire screen at
+"" once when wrapped
+set display=lastline
+
+"size of a hard tabstop
+set tabstop=2
+
+"size of an indent (used for << and >>)
+set shiftwidth=2
+set expandtab
+
+"" a combination of spaces and tabs are used to simulate tab stops at a width
+"" other than the (hard)tabstop
+set softtabstop=2
+
+"set expandtab "Expand TABs to spaces
+"set autoindent "preserves indentation
+
+set guioptions-=T "Remove toolbar
+set guioptions-=r "Remove right side scrollbar
+
+
+"" Fix timing issue with powerline update statusbar
+if ! has('gui_running')
+    set ttimeoutlen=10
+    augroup FastEscape
+        autocmd!
+        au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
+        au InsertLeave * set timeoutlen=1000
+    augroup END
+endif
+
+"" Powerline config
+set laststatus=2
+set noshowmode
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups, and undo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" individual filetype indenting can be configured in
+" ~/.vim/after/ftplugin/<filetype>.vim
+filetype plugin indent on
+
+
+set backup
+set backupdir=/tmp
+set directory=/tmp
+
+set history=700
+set undolevels=700
+
+
+"" turn on autoindent for arduino filetype (*.ino)
+au Filetype arduino set autoindent
+
+
+""" Tell vim to remember certain things when we exit
+""  '10  :  marks will be remembered for up to 10 previously edited files
+""  "100 :  will save up to 100 lines for each register
+""  :20  :  up to 20 lines of command-line history will be remembered
+""  %    :  saves and restores the buffer list
+""  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and fonts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
+
+" colorscheme neverland
+colorscheme solarized
+set background=dark
+
+set t_Co=256 "enable 256 colors
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
+
+
+
+"" Don't highlight trailing whitespace for vimpager
+if ! exists("vimpager")
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+  autocmd BufWinLeave * call clearmatches()
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Keyboard remappings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set pastetoggle=<F2>
+
+
+"" Remap leader key to space
+let mapleader = " "
+" let mapleader=","
+
+"" Map J-K to escape
+inoremap jk <Esc>
+
+"" easily clear highlighted search - :noh
+nmap <silent> <leader>h :nohlsearch<CR>
+" nmap <silent> /<CR> :nohlsearch<CR>
+
+
+nmap <silent> <F3> :NERDTreeToggle<CR>
+
+" Allow use of the backspace key at anytime in insert mode
+set backspace=indent,eol,start
+
+" :vsp - new buffer vertically
+" :sp - new buffer horizontally
+"" remap changing buffers
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins and utilities
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set shell=bash "needed to make vundle in fish work
+
+
+""""""""""""""""""""""""""""""
+" => vim-indent-guide config
+""""""""""""""""""""""""""""""
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=23
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0
+
+
+""""""""""""""""""""""""""""""
+" => Ctrlp config
+""""""""""""""""""""""""""""""
+" Set no max file limit
+let g:ctrlp_max_files = 0
+" Search from current directory instead of project root
+" let g:ctrlp_working_path_mode = 0
+
+"" Ignore these directories
+" set wildignore+=*/out/**
+" set wildignore+=*/vendor/**
+
+
+""""""""""""""""""""""""""""""
+" => Airline config
+""""""""""""""""""""""""""""""
+" let g:airline#extensions#tabline#enabled = 1
+
+"" Set easy motion key
+let g:EasyMotion_leader_key = '<leader><leader>'
+
+
+
+
+
+
+
+
+
+
+
+
