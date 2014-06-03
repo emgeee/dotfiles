@@ -91,7 +91,7 @@ Bundle 'Yggdroot/indentLine'
 
 
 "" Enable editorconfig in vim
-Bundle 'editorconfig/editorconfig-vim'
+" Bundle 'editorconfig/editorconfig-vim'
 
 "" Highlight matching html elements
 Bundle 'gcmt/breeze.vim'
@@ -105,21 +105,21 @@ Bundle 'sudar/vim-arduino-syntax'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Bundle 'tpope/vim-rails.git'
 " Bundle 'tpope/vim-fugitive'
-" Bundle 'kien/ctrlp.vim'
+Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-sleuth'
+" Bundle 'tpope/vim-sleuth'
 Bundle 'tpope/vim-surround'
 Bundle 'jiangmiao/auto-pairs.git'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'scrooloose/syntastic'
 
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimproc.vim'
-
-""" Sessions for Unite
-Bundle 'Shougo/unite-session'
-" :Unite session/new
-" :Unite session
+" Bundle 'Shougo/unite.vim'
+" Bundle 'Shougo/vimproc.vim'
+"
+" """ Sessions for Unite
+" Bundle 'Shougo/unite-session'
+" " :Unite session/new
+" " :Unite session
 
 """ Enable powerline - must have vim compiled with python support
 python from powerline.vim import setup as powerline_setup
@@ -158,14 +158,20 @@ set tabstop=2
 
 "size of an indent (used for << and >>)
 set shiftwidth=2
+
+"Expand TABs to spaces
 set expandtab
 
 "" a combination of spaces and tabs are used to simulate tab stops at a width
 "" other than the (hard)tabstop
 set softtabstop=2
 
-"set expandtab "Expand TABs to spaces
 "set autoindent "preserves indentation
+
+"""filetype configurations
+"" turn on autoindent for arduino filetype (*.ino)
+au Filetype arduino set autoindent
+
 
 set guioptions-=T "Remove toolbar
 set guioptions-=r "Remove right side scrollbar
@@ -173,11 +179,11 @@ set guioptions-=r "Remove right side scrollbar
 
 "" Fix timing issue with powerline update statusbar
 if ! has('gui_running')
-    set ttimeoutlen=10
-    augroup FastEscape
-        autocmd!
-        au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
-        au InsertLeave * set timeoutlen=1000
+  set ttimeoutlen=10
+  augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
+      au InsertLeave * set timeoutlen=1000
     augroup END
 endif
 
@@ -192,17 +198,12 @@ set noshowmode
 " ~/.vim/after/ftplugin/<filetype>.vim
 filetype plugin indent on
 
-
 set backup
 set backupdir=/tmp
 set directory=/tmp
 
 set history=700
 set undolevels=700
-
-
-"" turn on autoindent for arduino filetype (*.ino)
-au Filetype arduino set autoindent
 
 
 """ Tell vim to remember certain things when we exit
@@ -232,8 +233,9 @@ augroup END
 syntax on
 
 " colorscheme neverland
-colorscheme solarized
-set background=dark
+" colorscheme solarized
+colorscheme jellybeans
+" set background=dark
 
 set t_Co=256 "enable 256 colors
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
@@ -295,40 +297,40 @@ set shell=bash "needed to make vundle in fish work
 """"""""""""""""""""""""""""""
 " => Unit config
 """"""""""""""""""""""""""""""
-" track yank history
-let g:unite_source_history_yank_enable = 1
-let g:unit_data_directory = expand('$HOME/.vim/unite/')
-let g:unite_force_overwrite_statusline = 0
-
-""" Use the silver surfer
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
-
-call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-      \ 'ignore_pattern', join([
-      \ '\.git/',
-      \ ], '\|'))
-
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-
-nnoremap <silent> <C-P> :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
-
-autocmd FileType unite call s:unite_settings()
-
-function! s:unite_settings()
-  let b:SuperTabDisabled=1
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  imap <silent><buffer><expr> <C-x> unite#do_action('split')
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction
+" " track yank history
+" let g:unite_source_history_yank_enable = 1
+" let g:unit_data_directory = expand('$HOME/.vim/unite/')
+" let g:unite_force_overwrite_statusline = 0
+"
+" """ Use the silver surfer
+" if executable('ag')
+"   let g:unite_source_grep_command = 'ag'
+"   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+"   let g:unite_source_grep_recursive_opt = ''
+" endif
+"
+" call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+"       \ 'ignore_pattern', join([
+"       \ '\.git/',
+"       \ ], '\|'))
+"
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+"
+" nnoremap <silent> <C-P> :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+"
+" autocmd FileType unite call s:unite_settings()
+"
+" function! s:unite_settings()
+"   let b:SuperTabDisabled=1
+"   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+"   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+"   imap <silent><buffer><expr> <C-x> unite#do_action('split')
+"   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+"   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+"
+"   nmap <buffer> <ESC> <Plug>(unite_exit)
+" endfunction
 
 
 
@@ -341,7 +343,7 @@ endfunction
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=23
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0
 
-" indentLine
+""" indentLine
 let g:indentLine_char = '│'
 let g:indentLine_color_term = 239
 let g:indentLine_color_tty_light = 7
@@ -352,13 +354,14 @@ let g:indentLine_color_dark = 1
 " => Ctrlp config
 """"""""""""""""""""""""""""""
 " Set no max file limit
-" let g:ctrlp_max_files = 0
+let g:ctrlp_max_files = 0
 " Search from current directory instead of project root
-" let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 0
 
 "" Ignore these directories
-" set wildignore+=*/out/**
-" set wildignore+=*/vendor/**
+set wildignore+=*/out/**
+set wildignore+=*/node_modules/**
+set wildignore+=*/vendor/**
 
 
 "" Set easy motion key
@@ -367,11 +370,8 @@ let g:EasyMotion_leader_key = '<leader><leader>'
 
 
 "" Auto start NERDTree
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-
-
-
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * wincmd p
 
 
 
