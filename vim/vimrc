@@ -16,8 +16,6 @@ Bundle 'gmarik/vundle'
 " => Vim plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
-
 """ Themes
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'trapd00r/neverland-vim-theme'
@@ -57,6 +55,10 @@ Bundle 'scrooloose/nerdtree'
 " p go to parent directory
 " m to open menu
 
+"" Fuzzy file search
+Bundle 'kien/ctrlp.vim'
+
+
 "" Easily jump around
 Bundle 'Lokaltog/vim-easymotion'
 " Press <leader><leader> then a move command where <leader> = '\'
@@ -65,7 +67,7 @@ Bundle 'Lokaltog/vim-easymotion'
 "" autocomplete plugin
 " ctrl-X, ctrl-N, ctrl-P, ctrl-O
 " Bundle 'Valloric/YouCompleteMe'
-Bundle 'Shougo/neocomplete.vim'
+" Bundle 'Shougo/neocomplete.vim'
 
 "" Comment plugin
 Bundle 'tomtom/tcomment_vim'
@@ -98,37 +100,44 @@ Bundle 'gcmt/breeze.vim'
 " :BreezeWhatsWrong find issues with html tags
 " :BreezeMatchTag jump between html elements
 
-""" additional syntax highlighting
+"" Others
+Bundle 'Shougo/vimproc.vim'
+Bundle 'tpope/vim-surround'
+
+"" additional syntax highlighting
 Bundle 'sudar/vim-arduino-syntax'
 
 """ Experimental (not necessarily in workflow)
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Bundle 'tpope/vim-rails.git'
 " Bundle 'tpope/vim-fugitive'
-Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-unimpaired'
 " Bundle 'tpope/vim-sleuth'
-Bundle 'tpope/vim-surround'
 Bundle 'jiangmiao/auto-pairs.git'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'scrooloose/syntastic'
+" Bundle 'mbbill/undotree'
+
+
 
 " Bundle 'Shougo/unite.vim'
-" Bundle 'Shougo/vimproc.vim'
 "
 " """ Sessions for Unite
 " Bundle 'Shougo/unite-session'
 " " :Unite session/new
 " " :Unite session
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User interface
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 """ Enable powerline - must have vim compiled with python support
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => User interface
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "set shortmess+=I "avoid hitting enter?
 
 set ruler "show line numbers at bottom right
@@ -357,6 +366,7 @@ let g:indentLine_color_dark = 1
 let g:ctrlp_max_files = 0
 " Search from current directory instead of project root
 let g:ctrlp_working_path_mode = 0
+let g:ctrlp_cmd = "CtrlPMixed"
 
 "" Ignore these directories
 set wildignore+=*/out/**
@@ -366,6 +376,16 @@ set wildignore+=*/vendor/**
 
 "" Set easy motion key
 let g:EasyMotion_leader_key = '<leader><leader>'
+
+""""""""""""""""""""""""""""""
+" => Syntastic config
+""""""""""""""""""""""""""""""
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
+
+
+
+
 
 
 
