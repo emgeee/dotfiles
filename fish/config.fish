@@ -34,6 +34,10 @@ if test -e /usr/local/bin
   set -U fish_user_paths /usr/local/bin $PATH
 end
 
+# # prepend /usr/local/sbin for brew on MAX OSX
+if test -e /usr/local/sbin
+  set -U fish_user_paths /usr/local/sbin $PATH
+end
 
 
 # Universal environment variables
