@@ -146,7 +146,7 @@ python del powerline_setup
 set ruler "show line numbers at bottom right
 set showcmd "show information about current command in bottom right
 set number "show line numbers by default
-set relativenumber "line numbers are show relative to position
+" set relativenumber "line numbers are show relative to position
 set cursorline "highlight entire line cursor is on
 
 "" options for searching
