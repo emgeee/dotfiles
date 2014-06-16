@@ -23,6 +23,10 @@ end
 # end
 
 
+# # prepend ~/.rbenv/shims
+if test -e $HOME/.rbenv/shims
+  set -U fish_user_paths $HOME/.rbenv/shims $PATH
+end
 
 # # prepend ~/.bin/
 if test -e $HOME/.bin
