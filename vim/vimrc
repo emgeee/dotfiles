@@ -135,10 +135,6 @@ Bundle 'scrooloose/syntastic'
 " => User interface
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""" Enable powerline - must have vim compiled with python support
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
 
 
 "set shortmess+=I "avoid hitting enter?
@@ -187,10 +183,21 @@ au Filetype arduino set autoindent
 
 set guioptions-=T "Remove toolbar
 set guioptions-=r "Remove right side scrollbar
+set guioptions-=L "Remove right side scrollbar in NERDTree
 
 
-"" Fix timing issue with powerline update statusbar
+
+"" Macvim specific settings
 if ! has('gui_running')
+
+  """ Enable powerline - must have vim compiled with python support
+  python from powerline.vim import setup as powerline_setup
+  python powerline_setup()
+  python del powerline_setup
+
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
+
+  "" Fix timing issue with powerline update statusbar
   set ttimeoutlen=10
   augroup FastEscape
     autocmd!
@@ -252,7 +259,6 @@ colorscheme jellybeans
 " set background=dark
 
 set t_Co=256 "enable 256 colors
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
 
 
 
