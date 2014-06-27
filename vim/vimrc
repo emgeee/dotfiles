@@ -142,7 +142,7 @@ Bundle 'scrooloose/syntastic'
 set ruler "show line numbers at bottom right
 set showcmd "show information about current command in bottom right
 set number "show line numbers by default
-" set relativenumber "line numbers are show relative to position
+set relativenumber "line numbers are show relative to position
 set cursorline "highlight entire line cursor is on
 
 "" options for searching
@@ -180,6 +180,8 @@ set softtabstop=2
 "" turn on autoindent for arduino filetype (*.ino)
 au Filetype arduino set autoindent
 
+"" Set .md to markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 set guioptions-=T "Remove toolbar
 set guioptions-=r "Remove right side scrollbar
