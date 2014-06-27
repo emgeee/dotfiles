@@ -183,11 +183,11 @@ au Filetype arduino set autoindent
 "" Set .md to markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-set guioptions-=T "Remove toolbar
-set guioptions-=r "Remove right side scrollbar
-set guioptions-=L "Remove right side scrollbar in NERDTree
-
-
+if has('gui_running')
+  set guioptions-=T "Remove toolbar
+  set guioptions-=r "Remove right side scrollbar
+  set guioptions-=L "Remove right side scrollbar in NERDTree
+endif
 
 "" Macvim specific settings
 if ! has('gui_running')
@@ -207,7 +207,18 @@ if ! has('gui_running')
     augroup END
 endif
 
-"" Powerline config
+
+""""""""""""""""""""""""""""""
+" => airline
+""""""""""""""""""""""""""""""
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+"" Use powerline fonts
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
+
+let g:airline_powerline_fonts = 1
 set laststatus=2
 set noshowmode
 
@@ -307,6 +318,19 @@ noremap <silent> <leader>j :BreezeMatchTag<CR>
 
 " Allow use of the backspace key at anytime in insert mode
 set backspace=indent,eol,start
+
+"" allow us to toggle transparency of gui!
+if has('gui_running')
+  function! ToggleTransparency()
+    if &transparency ==? 0
+      set transparency=17
+    else
+      set transparency=0
+    endif
+  endfunction
+
+  map <D-u> :call ToggleTransparency()<CR>
+endif
 
 " :vsp - new buffer vertically
 " :sp - new buffer horizontally
@@ -432,19 +456,6 @@ let g:syntastic_warning_symbol = '!'
 " let g:instant_markdown_autostart = 0
 
 
-
-""""""""""""""""""""""""""""""
-" => airline
-""""""""""""""""""""""""""""""
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-"" Use powerline fonts
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
-
-let g:airline_powerline_fonts = 1
-set laststatus=2
 
 
 "" Auto start NERDTree
