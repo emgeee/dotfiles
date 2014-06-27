@@ -116,6 +116,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'jiangmiao/auto-pairs.git'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'mbbill/undotree'
+Bundle 'suan/vim-instant-markdown'
 
 
 Bundle 'scrooloose/syntastic'
@@ -262,6 +263,7 @@ if has('gui_running')
 else
   colorscheme jellybeans
 endif
+
 " set background=dark
 
 set t_Co=256 "enable 256 colors
@@ -413,13 +415,21 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
 
 
-
-
 """"""""""""""""""""""""""""""
 " => beautifier.vim
 """"""""""""""""""""""""""""""
 " let g:editorconfig_Beautifier = expand('$HOME/.editorconfig')
 
+
+""""""""""""""""""""""""""""""
+" => instant markdown
+""""""""""""""""""""""""""""""
+"" decrease how often mardown window is refershed (enable if load is too much)
+" let g:instant_markdown_slow = 1
+
+"" don't automatically open the web browser with markdown preview
+"" can be launched manually with :InstantMarkdownPreview
+" let g:instant_markdown_autostart = 0
 
 
 "" Auto start NERDTree
