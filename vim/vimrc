@@ -21,10 +21,16 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'trapd00r/neverland-vim-theme'
 Bundle 'nanotech/jellybeans.vim'
 
+"" additional syntax highlighting
+Bundle 'sudar/vim-arduino-syntax'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'othree/javascript-libraries-syntax.vim'
+
+"" Highligh css colors!
+Bundle 'ap/vim-css-color'
 
 "" Easy switching between vim/tmux
 Bundle 'christoomey/vim-tmux-navigator'
-
 
 "" Display git diffs in sidebar
 Bundle 'airblade/vim-gitgutter.git'
@@ -75,9 +81,6 @@ Bundle 'tomtom/tcomment_vim'
 " Press <c-_>i for inline commenting
 "
 
-"" Highligh css colors!
-Bundle 'ap/vim-css-color'
-
 "" Beautify HTML, css, and js
 "" requires ~/.vim/.editorconfig
 " Bundle 'einars/js-beautify'
@@ -103,9 +106,10 @@ Bundle 'gcmt/breeze.vim'
 "" Others
 Bundle 'Shougo/vimproc.vim'
 Bundle 'tpope/vim-surround'
+Bundle 'suan/vim-instant-markdown'
+Bundle 'bling/vim-airline'
+Bundle 'jiangmiao/auto-pairs.git'
 
-"" additional syntax highlighting
-Bundle 'sudar/vim-arduino-syntax'
 
 """ Experimental (not necessarily in workflow)
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -113,11 +117,9 @@ Bundle 'sudar/vim-arduino-syntax'
 " Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
 " Bundle 'tpope/vim-sleuth'
-Bundle 'jiangmiao/auto-pairs.git'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'mbbill/undotree'
-Bundle 'suan/vim-instant-markdown'
-
+" Bundle 'marijnh/tern_for_vim'
 
 Bundle 'scrooloose/syntastic'
 " :Errors - show quickfix window
@@ -135,9 +137,6 @@ Bundle 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
 "set shortmess+=I "avoid hitting enter?
 
 set ruler "show line numbers at bottom right
@@ -194,14 +193,13 @@ set guioptions-=L "Remove right side scrollbar in NERDTree
 if ! has('gui_running')
 
   """ Enable powerline - must have vim compiled with python support
-  python from powerline.vim import setup as powerline_setup
-  python powerline_setup()
-  python del powerline_setup
-
-  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
+  " python from powerline.vim import setup as powerline_setup
+  " python powerline_setup()
+  " python del powerline_setup
+  "
 
   "" Fix timing issue with powerline update statusbar
-  set ttimeoutlen=10
+  " set ttimeoutlen=10
   augroup FastEscape
     autocmd!
     au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
@@ -258,13 +256,15 @@ syntax on
 
 " colorscheme neverland
 
+set background=dark
 if has('gui_running')
   colorscheme solarized
 else
   colorscheme jellybeans
 endif
 
-" set background=dark
+"" configure javascript libraries syntax
+let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 
 set t_Co=256 "enable 256 colors
 
@@ -430,6 +430,21 @@ let g:syntastic_warning_symbol = '!'
 "" don't automatically open the web browser with markdown preview
 "" can be launched manually with :InstantMarkdownPreview
 " let g:instant_markdown_autostart = 0
+
+
+
+""""""""""""""""""""""""""""""
+" => airline
+""""""""""""""""""""""""""""""
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+"" Use powerline fonts
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
+
+let g:airline_powerline_fonts = 1
+set laststatus=2
 
 
 "" Auto start NERDTree
