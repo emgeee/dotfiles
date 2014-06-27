@@ -256,15 +256,19 @@ augroup END
 syntax on
 
 " colorscheme neverland
-" colorscheme solarized
-colorscheme jellybeans
+
+if has('gui_running')
+  colorscheme solarized
+else
+  colorscheme jellybeans
+endif
 " set background=dark
 
 set t_Co=256 "enable 256 colors
 
 
 
-"" Don't highlight trailing whitespace for vimpager or Unite window
+"" Highlight trailing whitespace in vim only (not vimpager or Unite window)
 if ! exists("vimpager")
   highlight ExtraWhitespace ctermbg=red guibg=red
   match ExtraWhitespace /\s\+$/
