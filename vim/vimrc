@@ -1,4 +1,4 @@
-set nocompatible              " be iMproved
+
 
 "" autoreload vimrc after save
 autocmd! bufwritepost .vimrc nested source %
@@ -183,6 +183,7 @@ au Filetype arduino set autoindent
 "" Set .md to markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd FileType markdown setlocal spell
+"" press zg over misspelled word to add to dictionary
 
 "" enable spellcheck autocomplete
 set complete+=kspell
