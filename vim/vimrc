@@ -182,6 +182,11 @@ au Filetype arduino set autoindent
 
 "" Set .md to markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd FileType markdown setlocal spell
+
+"" enable spellcheck autocomplete
+set complete+=kspell
+
 
 if has('gui_running')
   set guioptions-=T "Remove toolbar
