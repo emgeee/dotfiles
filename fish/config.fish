@@ -43,7 +43,6 @@ if test -e /usr/local/sbin
   set -U fish_user_paths /usr/local/sbin $PATH
 end
 
-
 # Universal environment variables
 set -Ux HOSTNAME (hostname)
 set -Ux EDITOR vim
