@@ -106,7 +106,6 @@ Bundle 'gcmt/breeze.vim'
 "" Others
 Bundle 'Shougo/vimproc.vim'
 Bundle 'tpope/vim-surround'
-Bundle 'suan/vim-instant-markdown'
 Bundle 'bling/vim-airline'
 Bundle 'jiangmiao/auto-pairs.git'
 
@@ -185,6 +184,13 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd FileType markdown setlocal spell
 "" press zg over misspelled word to add to dictionary
 
+"" Interpret .ejs files as html
+au BufNewFile,BufRead *.ejs set filetype=html
+
+autocmd Filetype markdown setlocal wrap
+autocmd Filetype markdown setlocal linebreak
+autocmd Filetype markdown setlocal nolist
+
 "" enable spellcheck autocomplete
 set complete+=kspell
 
@@ -197,12 +203,6 @@ endif
 
 "" Macvim specific settings
 if ! has('gui_running')
-
-  """ Enable powerline - must have vim compiled with python support
-  " python from powerline.vim import setup as powerline_setup
-  " python powerline_setup()
-  " python del powerline_setup
-  "
 
   "" Fix timing issue with powerline update statusbar
   " set ttimeoutlen=10
@@ -222,7 +222,7 @@ if !exists('g:airline_symbols')
 endif
 
 "" Use powerline fonts
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 
 let g:airline_powerline_fonts = 1
 set laststatus=2
@@ -449,19 +449,6 @@ let g:syntastic_warning_symbol = '!'
 " => beautifier.vim
 """"""""""""""""""""""""""""""
 " let g:editorconfig_Beautifier = expand('$HOME/.editorconfig')
-
-
-""""""""""""""""""""""""""""""
-" => instant markdown
-""""""""""""""""""""""""""""""
-"" decrease how often mardown window is refershed (enable if load is too much)
-" let g:instant_markdown_slow = 1
-
-"" don't automatically open the web browser with markdown preview
-"" can be launched manually with :InstantMarkdownPreview
-" let g:instant_markdown_autostart = 0
-
-
 
 
 "" Auto start NERDTree
