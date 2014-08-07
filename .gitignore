@@ -2,3 +2,4 @@ fish/fish_history
 fish/fishd.*
 vim/bundle/*
 vim/.editorconfig
+vim/undodir

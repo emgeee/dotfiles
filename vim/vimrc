@@ -239,6 +239,10 @@ set backup
 set backupdir=/tmp
 set directory=/tmp
 
+
+set undofile
+set undodir=~/.vim/undodir
+
 set history=700
 set undolevels=700
 
