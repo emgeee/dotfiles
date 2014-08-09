@@ -1,8 +1,5 @@
-
-
 "" autoreload vimrc after save
 autocmd! bufwritepost .vimrc nested source %
-
 
 filetype off                  " required!
 
@@ -15,6 +12,9 @@ Bundle 'gmarik/vundle'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" Better bracket matching with %
+runtime! macros/matchit.vim
 
 """ Themes
 Bundle 'altercation/vim-colors-solarized'
@@ -62,7 +62,8 @@ Bundle 'scrooloose/nerdtree'
 " m to open menu
 
 "" Fuzzy file search
-Bundle 'kien/ctrlp.vim'
+" Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 
 
 "" Easily jump around
@@ -108,13 +109,16 @@ Bundle 'Shougo/vimproc.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'bling/vim-airline'
 Bundle 'jiangmiao/auto-pairs.git'
+Bundle 'tpope/vim-unimpaired'
 
 
 """ Experimental (not necessarily in workflow)
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Bundle 'tpope/vim-rails.git'
-" Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+Bundle 'luochen1990/rainbow'
+
 " Bundle 'tpope/vim-sleuth'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'mbbill/undotree'
@@ -149,6 +153,10 @@ set hlsearch "highlight all matches
 set incsearch "incremently start searching before hitting enter
 set ignorecase "ignore case
 set smartcase "ignore case when only lower case
+set gdefault "default to global search+replace
+
+" set textwidth=79
+set formatoptions=qrn1
 
 set mouse=a "enable mouse support
 " set mouse=c "disable mouse support
@@ -166,6 +174,9 @@ set tabstop=2
 "size of an indent (used for << and >>)
 set shiftwidth=2
 
+"round to nearest shiftwidth
+set shiftround
+
 "Expand TABs to spaces
 set expandtab
 
@@ -179,36 +190,29 @@ set softtabstop=2
 "" turn on autoindent for arduino filetype (*.ino)
 au Filetype arduino set autoindent
 
-"" Set .md to markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd FileType markdown setlocal spell
-"" press zg over misspelled word to add to dictionary
 
 "" Interpret .ejs files as html
 au BufNewFile,BufRead *.ejs set filetype=html
 
-autocmd Filetype markdown setlocal wrap
-autocmd Filetype markdown setlocal linebreak
-autocmd Filetype markdown setlocal nolist
-
-"" enable spellcheck autocomplete
-set complete+=kspell
+"" Set .md to markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 
+"" Macvim specific settings
 if has('gui_running')
   set guioptions-=T "Remove toolbar
   set guioptions-=r "Remove right side scrollbar
   set guioptions-=L "Remove right side scrollbar in NERDTree
 endif
 
-"" Macvim specific settings
+
 if ! has('gui_running')
 
   "" Fix timing issue with powerline update statusbar
   " set ttimeoutlen=10
   augroup FastEscape
     autocmd!
-    au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
+      au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
       au InsertLeave * set timeoutlen=1000
     augroup END
 endif
@@ -242,9 +246,13 @@ set directory=/tmp
 
 set undofile
 set undodir=~/.vim/undodir
-
 set history=700
 set undolevels=700
+
+
+"" Auto save when focus is lost
+au FocusLost * :wa
+
 
 "" Auto reload the buffer from disk if it has changed when entering
 au FocusGained,BufEnter * :silent! !
@@ -284,6 +292,8 @@ else
   colorscheme jellybeans
 endif
 
+highlight clear SignColumn
+
 "" configure javascript libraries syntax
 let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 
@@ -319,12 +329,35 @@ inoremap jk <Esc>
 
 "" easily clear highlighted search - :noh
 nmap <silent> <leader>h :nohlsearch<CR>
-" nmap <silent> /<CR> :nohlsearch<CR>
+
+"" Strip all whitespace from file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+"" re hardwrap paragraph
+nnoremap <leader>q gqip
+
+"" reselect recent pasted text
+nnoremap <leader>v V`]
 
 
+"" Quickly open vimrc in new verticle window
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
+
+
+"" Toggle NERDTree
 nmap <silent> <F3> :NERDTreeToggle<CR>
 
+nmap <silent> <leader>r :RainbowToggle<CR>
+
 noremap <silent> <leader>j :BreezeMatchTag<CR>
+
+"" remap tab key to % for jumping to matching brackets
+" nnoremap <tab> %
+" vnoremap <tab> %
+
+"" Navigate wrapped lines (display lines) as you'd expect
+nnoremap j gj
+nnoremap k gk
 
 " Allow use of the backspace key at anytime in insert mode
 set backspace=indent,eol,start
@@ -455,11 +488,35 @@ let g:syntastic_warning_symbol = '!'
 " let g:editorconfig_Beautifier = expand('$HOME/.editorconfig')
 
 
-"" Auto start NERDTree
-" autocmd VimEnter * NERDTree
-" autocmd VimEnter * wincmd p
+""""""""""""""""""""""""""""""
+" => rainbow
+""""""""""""""""""""""""""""""
+let g:rainbow_active = 0
+let g:rainbow_conf = {
+\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\   'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
+\   'operators': '_,_',
+\   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+\   'separately': {
+\       '*': {},
+\       'lisp': {
+\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+\       },
+\       'vim': {
+\           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+\       },
+\       'tex': {
+\           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+\       },
+\       'css': 0,
+\       'stylus': 0,
+\   }
+\}
 
 
-
+""""""""""""""""""""""""""""""
+" => gitgutter
+""""""""""""""""""""""""""""""
 
 
