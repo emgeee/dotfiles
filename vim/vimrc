@@ -240,12 +240,13 @@ set noshowmode
 filetype plugin indent on
 
 set backup
-set backupdir=/tmp
-set directory=/tmp
+set backupdir=~/.vim/tmp/backup//
 
+set directory=~/.vim/tmp/swap//
+set noswapfile
 
 set undofile
-set undodir=~/.vim/undodir
+set undodir=~/.vim/tmp/undo//
 set history=700
 set undolevels=700
 
