@@ -20,6 +20,8 @@ runtime! macros/matchit.vim
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'trapd00r/neverland-vim-theme'
 Bundle 'nanotech/jellybeans.vim'
+Plugin 'chriskempson/base16-vim'
+
 
 "" additional syntax highlighting
 Bundle 'sudar/vim-arduino-syntax'
@@ -108,8 +110,11 @@ Bundle 'gcmt/breeze.vim'
 Bundle 'Shougo/vimproc.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'bling/vim-airline'
-Bundle 'jiangmiao/auto-pairs.git'
 Bundle 'tpope/vim-unimpaired'
+
+" Bundle 'jiangmiao/auto-pairs.git'
+Bundle 'Raimondi/delimitMate'
+
 
 
 """ Experimental (not necessarily in workflow)
@@ -126,8 +131,6 @@ Bundle 'luochen1990/rainbow'
 
 Bundle 'scrooloose/syntastic'
 " :Errors - show quickfix window
-
-
 
 " Bundle 'Shougo/unite.vim'
 "
@@ -241,9 +244,7 @@ filetype plugin indent on
 
 set backup
 set backupdir=~/.vim/tmp/backup//
-
 set directory=~/.vim/tmp/swap//
-set noswapfile
 
 set undofile
 set undodir=~/.vim/tmp/undo//
@@ -285,6 +286,7 @@ augroup END
 syntax on
 
 " colorscheme neverland
+" colorscheme base16-default
 
 set background=dark
 if has('gui_running')
@@ -340,7 +342,6 @@ nnoremap <leader>q gqip
 "" reselect recent pasted text
 nnoremap <leader>v V`]
 
-
 "" Quickly open vimrc in new verticle window
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
 
@@ -355,6 +356,19 @@ noremap <silent> <leader>j :BreezeMatchTag<CR>
 "" remap tab key to % for jumping to matching brackets
 " nnoremap <tab> %
 " vnoremap <tab> %
+
+"" use vim magic mode instead of weird regexes
+nnoremap / /\v
+vnoremap / /\v
+
+"" automatically position cursor to middle of screen
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+"" move to beginning/end of line easier
+noremap H ^
+noremap L $
+
 
 "" Navigate wrapped lines (display lines) as you'd expect
 nnoremap j gj
