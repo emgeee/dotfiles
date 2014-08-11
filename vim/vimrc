@@ -307,6 +307,14 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
 
+
+"" Automatically highlight @todo
+augroup HiglightTODO
+  autocmd!
+  autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', '@todo', -1)
+augroup END
+
+
 " colorscheme neverland
 " colorscheme base16-default
 
