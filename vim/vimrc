@@ -1,4 +1,20 @@
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Vim tips and commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim quick reference (cheat sheet)
+"   :help quickref
+
+" Recommended keys to map custom functionality too
+"   :help map-which-keys
+"
+" List of commands for each mode
+"   :help index
+"
+"
+
+
+
 filetype off                  " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -6,6 +22,9 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 Bundle 'gmarik/vundle'
+
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim plugins
