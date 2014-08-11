@@ -49,7 +49,7 @@ Bundle 'rking/ag.vim'
 " v    to open in vertical split
 " gv   to open in vertical split silently
 " q    to close the quickfix window
-"
+
 
 "" File navigation sidebar
 Bundle 'scrooloose/nerdtree'
@@ -104,29 +104,45 @@ Bundle 'gcmt/breeze.vim'
 " :BreezeWhatsWrong find issues with html tags
 " :BreezeMatchTag jump between html elements
 
-"" Others
-Bundle 'Shougo/vimproc.vim'
+
+"" Easily surround things
 Bundle 'tpope/vim-surround'
-Bundle 'bling/vim-airline'
-Bundle 'tpope/vim-unimpaired'
+" cs<old char><new char> - Change Surround
+" ds<old char> - Delete Surround
+" ys<text object><surround char> - wrap text object
+" In virtual mode - S<char> - wrap current selection in <char>
+
 
 " Bundle 'jiangmiao/auto-pairs.git'
 Bundle 'Raimondi/delimitMate'
 
 
+" Rainbow brackets!
+Bundle 'luochen1990/rainbow'
+
+
+"" Others
+Bundle 'Shougo/vimproc.vim'
+Bundle 'bling/vim-airline'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+
 
 """ Experimental (not necessarily in workflow)
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'luochen1990/rainbow'
 
 " Bundle 'tpope/vim-sleuth'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'mbbill/undotree'
-" Bundle 'marijnh/tern_for_vim'
 
+
+"" configure tern - the javascript autocompleter
+Bundle 'marijnh/tern_for_vim'
+" remember to `npm install` in package directory
+
+"" Syntax checker
 Bundle 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
@@ -265,6 +281,8 @@ au FocusGained,BufEnter * :silent! !
 ""  n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
 
+
+"" Save line postion on exit, then restore when opening file
 function! ResCur()
   if line("'\"") <= line("$")
     normal! g`"
