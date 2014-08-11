@@ -1,5 +1,3 @@
-"" autoreload vimrc after save
-autocmd! bufwritepost .vimrc nested source %
 
 filetype off                  " required!
 
@@ -279,6 +277,12 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+
+"" autoreload vimrc after save
+augroup reload_vimrc
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and fonts
