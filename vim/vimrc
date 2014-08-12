@@ -397,8 +397,7 @@ set pastetoggle=<F2>
 
 
 "" Remap leader key to space
-let mapleader = " "
-" let mapleader=","
+let mapleader = "\<Space>"
 
 "" Map J-K to escape
 inoremap jk <Esc>
@@ -418,13 +417,31 @@ nnoremap <leader>v V`]
 "" Quickly open vimrc in new verticle window
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
 
+"" Quickly select entire file
+nnoremap <leader>sa ggVG
+
+"" Quickly select entire file
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+
+"" Toggle line numbers easily
+function! ToggleLineNumbers()
+    if &relativenumber
+      set number!
+      set relativenumber!
+    else
+      set number "show line numbers by default
+      set relativenumber "line numbers are show relative to position
+    endif
+endfunction
+
+map <leader>tn :call ToggleLineNumbers()<CR>
+
+"" Rainbow toggle match brackets with colors
+nmap <silent> <leader>r :RainbowToggle<CR>
 
 "" Toggle NERDTree
 nmap <silent> <F3> :NERDTreeToggle<CR>
-
-nmap <silent> <leader>r :RainbowToggle<CR>
-
-noremap <silent> <leader>j :BreezeMatchTag<CR>
 
 "" remap tab key to % for jumping to matching brackets
 " nnoremap <tab> %
@@ -434,7 +451,9 @@ noremap <silent> <leader>j :BreezeMatchTag<CR>
 nnoremap / /\v
 vnoremap / /\v
 
-"" automatically position cursor to middle of screen
+nnoremap ? ?\v
+vnoremap ? ?\v
+"" automatically position cursor to middle of screen after searching
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
@@ -444,8 +463,8 @@ noremap L $
 
 
 "" Navigate wrapped lines (display lines) as you'd expect
-nnoremap j gj
-nnoremap k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
 
 " Allow use of the backspace key at anytime in insert mode
 set backspace=indent,eol,start
@@ -542,16 +561,6 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_cmd = "CtrlPMixed"
 
-"" Ignore these directories
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=*/out/**
-set wildignore+=*/node_modules/**
-set wildignore+=*/vendor/**
-
-"" ignore for cordova projects
-set wildignore+=*/platforms/**
-set wildignore+=*/plugins/**
-
 
 "" Set easy motion key
 let g:EasyMotion_leader_key = '<leader><leader>'
@@ -598,6 +607,7 @@ let g:rainbow_conf = {
 \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
 \       },
 \       'css': 0,
+
 \       'stylus': 0,
 \   }
 \}
