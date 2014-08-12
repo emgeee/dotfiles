@@ -11,27 +11,23 @@
 " List of commands for each mode
 "   :help index
 "
+" M - jump cursor to middle of display "
 "
-
-
-
-filetype off                  " required!
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-Bundle 'gmarik/vundle'
-
+" :ju(mp) - print jump list
 
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype off                  " required!
 
-"" Better bracket matching with %
-runtime! macros/matchit.vim
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
 
 """ Themes
 Bundle 'altercation/vim-colors-solarized'
@@ -115,17 +111,11 @@ Bundle 'maksimr/vim-jsbeautify'
 "
 
 "" Add indent guides
-" Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Yggdroot/indentLine'
 
 
 "" Enable editorconfig in vim
 Bundle 'editorconfig/editorconfig-vim'
-
-"" Highlight matching html elements
-Bundle 'gcmt/breeze.vim'
-" :BreezeWhatsWrong find issues with html tags
-" :BreezeMatchTag jump between html elements
 
 
 "" Easily surround things
@@ -150,32 +140,35 @@ Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
+Bundle 'Valloric/MatchTagAlways'
 
 
-""" Experimental (not necessarily in workflow)
-" Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Bundle 'tpope/vim-rails.git'
-
+"" Experimental (not necessarily in workflow)
 " Bundle 'tpope/vim-sleuth'
 " Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'mbbill/undotree'
+" Bundle 'gcmt/breeze.vim' " Highlight matching html elements
 
 
 "" configure tern - the javascript autocompleter
-Bundle 'marijnh/tern_for_vim'
+" Bundle 'marijnh/tern_for_vim'
 " remember to `npm install` in package directory
 
 "" Syntax checker
 Bundle 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
+"" Unite stuff
 " Bundle 'Shougo/unite.vim'
-"
-" """ Sessions for Unite
 " Bundle 'Shougo/unite-session'
 " " :Unite session/new
 " " :Unite session
 
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"" Better bracket matching with %
+runtime! macros/matchit.vim
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
@@ -184,9 +177,11 @@ Bundle 'scrooloose/syntastic'
 
 set ruler "show line numbers at bottom right
 set showcmd "show information about current command in bottom right
-set number "show line numbers by default
-set relativenumber "line numbers are show relative to position
+set scrolloff=3 "keep minimum of 3 lines between cursor and end of screen
 set cursorline "highlight entire line cursor is on
+" set number "show line numbers by default
+" set relativenumber "line numbers are show relative to position
+
 
 "" options for searching
 set hlsearch "highlight all matches
@@ -228,34 +223,19 @@ set wildignore+=*/.nx/**,*.app
 "" once when wrapped
 set display=lastline
 
-"size of a hard tabstop
-set tabstop=2
-
-"size of an indent (used for << and >>)
-set shiftwidth=2
-
-"round to nearest shiftwidth
-set shiftround
-
-"Expand TABs to spaces
-set expandtab
+set tabstop=2 "size of a hard tabstop
+set shiftwidth=2 "size of an indent (used for << and >>)
+set shiftround "round to nearest shiftwidth
+set expandtab "Expand TABs to spaces
 
 "" a combination of spaces and tabs are used to simulate tab stops at a width
 "" other than the (hard)tabstop
 set softtabstop=2
 
-"set autoindent "preserves indentation
-
 """filetype configurations
-"" turn on autoindent for arduino filetype (*.ino)
-au Filetype arduino set autoindent
-
-
-"" Interpret .ejs files as html
-au BufNewFile,BufRead *.ejs set filetype=html
-
-"" Set .md to markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+au Filetype arduino set autoindent "turn on autoindent for arduino filetype (*.ino)
+au BufNewFile,BufRead *.ejs set filetype=html "Interpret .ejs files as html
+au BufNewFile,BufReadPost *.md set filetype=markdown "Set .md to markdown
 
 
 "" Macvim specific settings
@@ -361,12 +341,12 @@ augroup END
 " colorscheme neverland
 " colorscheme base16-default
 
-set background=dark
 if has('gui_running')
   colorscheme solarized
 else
   colorscheme jellybeans
 endif
+set background=dark
 
 highlight clear SignColumn
 
@@ -539,12 +519,6 @@ set shell=bash "needed to make vundle in fish work
 """"""""""""""""""""""""""""""
 " => vim-indent-guide config
 """"""""""""""""""""""""""""""
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_guide_size = 1
-" let g:indent_guides_auto_colors = 0
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=23
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0
-
 """ indentLine
 let g:indentLine_char = '│'
 let g:indentLine_color_term = 239
@@ -607,14 +581,13 @@ let g:rainbow_conf = {
 \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
 \       },
 \       'css': 0,
-
 \       'stylus': 0,
 \   }
 \}
 
 
 """"""""""""""""""""""""""""""
-" => gitgutter
+" => Neocomplete + snippets
 """"""""""""""""""""""""""""""
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
