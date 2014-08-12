@@ -120,9 +120,9 @@ Bundle 'editorconfig/editorconfig-vim'
 
 "" Easily surround things
 Bundle 'tpope/vim-surround'
+" ys<text object><surround char> - wrap text object
 " cs<old char><new char> - Change Surround
 " ds<old char> - Delete Surround
-" ys<text object><surround char> - wrap text object
 " In virtual mode - S<char> - wrap current selection in <char>
 
 
@@ -210,11 +210,6 @@ set wildignore+=*/platforms/** "ignore for cordova projects
 set wildignore+=*/plugins/**
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=*DS_Store*
-set wildignore+=vendor/rails/**
-set wildignore+=vendor/cache/**
-set wildignore+=*.gem
-set wildignore+=log/**
-set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 set wildignore+=*.so,*.swp,*.zip,*/.Trash/**,*.pdf,*.dmg,*/Library/**,*/.rbenv/**
 set wildignore+=*/.nx/**,*.app
@@ -341,12 +336,12 @@ augroup END
 " colorscheme neverland
 " colorscheme base16-default
 
+set background=dark
 if has('gui_running')
   colorscheme solarized
 else
   colorscheme jellybeans
 endif
-set background=dark
 
 highlight clear SignColumn
 
@@ -403,6 +398,9 @@ nnoremap <leader>sa ggVG
 "" Quickly select entire file
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+
+"" Toggle neocomplete on/off
+nnoremap <leader>nc :NeoCompleteToggle<CR>
 
 "" Toggle line numbers easily
 function! ToggleLineNumbers()
@@ -484,7 +482,7 @@ set shell=bash "needed to make vundle in fish work
 " let g:unit_data_directory = expand('$HOME/.vim/unite/')
 " let g:unite_force_overwrite_statusline = 0
 "
-" """ Use the silver surfer
+" " Use the silver surfer
 " if executable('ag')
 "   let g:unite_source_grep_command = 'ag'
 "   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
