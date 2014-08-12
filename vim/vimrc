@@ -202,7 +202,27 @@ set mouse=a "enable mouse support
 " set mouse=c "disable mouse support
 
 set encoding=utf-8
+
+"" Ignore these directories
+set wildmode=list:longest,full
 set wildmenu
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/out/**
+set wildignore+=*/node_modules/**
+set wildignore+=*/vendor/**
+set wildignore+=*/platforms/** "ignore for cordova projects
+set wildignore+=*/plugins/**
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=*.so,*.swp,*.zip,*/.Trash/**,*.pdf,*.dmg,*/Library/**,*/.rbenv/**
+set wildignore+=*/.nx/**,*.app
 
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped
