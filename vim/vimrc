@@ -203,16 +203,15 @@ set wildmode=list:longest,full
 set wildmenu
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=*/out/**
-set wildignore+=*/node_modules/**
-set wildignore+=*/vendor/**
-set wildignore+=*/platforms/** "ignore for cordova projects
-set wildignore+=*/plugins/**
-set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*/out/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/bower_components/*
+set wildignore+=*/vendor/*
+set wildignore+=*/platforms/* "ignore for cordova projects
+set wildignore+=*/plugins/*
+set wildignore+=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=*DS_Store*
 set wildignore+=*.png,*.jpg,*.gif
-set wildignore+=*.so,*.swp,*.zip,*/.Trash/**,*.pdf,*.dmg,*/Library/**,*/.rbenv/**
-set wildignore+=*/.nx/**,*.app
 
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped
@@ -231,6 +230,7 @@ set softtabstop=2
 au Filetype arduino set autoindent "turn on autoindent for arduino filetype (*.ino)
 au BufNewFile,BufRead *.ejs set filetype=html "Interpret .ejs files as html
 au BufNewFile,BufReadPost *.md set filetype=markdown "Set .md to markdown
+au BufNewFile,BufReadPost *.json set filetype=json
 
 
 "" Macvim specific settings
@@ -339,11 +339,11 @@ augroup END
 set background=dark
 if has('gui_running')
   colorscheme solarized
+  highlight clear SignColumn
 else
   colorscheme jellybeans
 endif
 
-highlight clear SignColumn
 
 "" configure javascript libraries syntax
 let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
@@ -389,8 +389,9 @@ nnoremap <leader>q gqip
 "" reselect recent pasted text
 nnoremap <leader>v V`]
 
-"" Quickly open vimrc in new verticle window
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
+"" Quickly open vimrc in new splits
+nnoremap <leader>ev :vs $MYVIMRC<CR>
+nnoremap <leader>eV :split $MYVIMRC<CR>
 
 "" Quickly select entire file
 nnoremap <leader>sa ggVG
@@ -691,3 +692,6 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+" Disable NeoComplCache for certain filetypes
+au FileType pandoc,markdown nested NeoCompleteLock
