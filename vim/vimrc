@@ -213,6 +213,8 @@ set wildignore+=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=*DS_Store*
 set wildignore+=*.png,*.jpg,*.gif
 
+set wildignore+=*/public/*
+
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped
 set display=lastline
@@ -260,12 +262,24 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-"" Use powerline fonts
+" Use powerline fonts
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 
+" don't show git status
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+
 let g:airline_powerline_fonts = 1
+
+" disable showing fileencoding and fileformat
+let g:airline_section_y = ''
+" disable showing filetype
+let g:airline_section_x = airline#section#create_right(['tagbar'])
+
 set laststatus=2
 set noshowmode
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups, and undo
@@ -333,13 +347,27 @@ augroup HiglightTODO
 augroup END
 
 
-" colorscheme neverland
-" colorscheme base16-default
-
 set background=dark
+
+
+"" Find more Airline themes at
+"" https://github.com/bling/vim-airline/tree/master/autoload/airline/themes
+"" pictures: https://github.com/bling/vim-airline/wiki/Screenshots
+
+" colorscheme neverland
+" let g:airline_theme = 'wombat'
+
+" colorscheme jellybeans
+" let g:airline_theme = 'dark'
+
 if has('gui_running')
-  colorscheme solarized
-  highlight clear SignColumn
+  colorscheme base16-default
+  let g:airline_theme = 'base16'
+
+  "" solarized for gui
+  " colorscheme solarized
+  " let g:airline_theme = 'solarized'
+  " highlight clear SignColumn
 else
   colorscheme jellybeans
 endif
