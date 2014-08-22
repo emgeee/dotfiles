@@ -39,13 +39,14 @@ Plugin 'chriskempson/base16-vim'
 "" additional syntax highlighting
 Bundle 'sudar/vim-arduino-syntax'
 
-
 Bundle 'pangloss/vim-javascript'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'othree/javascript-libraries-syntax.vim'
 
 "" Highligh css colors!
 Bundle 'ap/vim-css-color'
+Bundle 'JulesWang/css.vim'
+Bundle 'cakebaker/scss-syntax.vim'
 
 "" Easy switching between vim/tmux
 Bundle 'christoomey/vim-tmux-navigator'
@@ -141,6 +142,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'Valloric/MatchTagAlways'
+Bundle 'vim-scripts/CursorLineCurrentWindow'
 
 
 "" Experimental (not necessarily in workflow)
@@ -181,6 +183,7 @@ set scrolloff=3 "keep minimum of 3 lines between cursor and end of screen
 set cursorline "highlight entire line cursor is on
 " set number "show line numbers by default
 " set relativenumber "line numbers are show relative to position
+set cursorline
 
 
 "" options for searching
@@ -361,15 +364,16 @@ set background=dark
 " let g:airline_theme = 'dark'
 
 if has('gui_running')
-  colorscheme base16-default
-  let g:airline_theme = 'base16'
+  " colorscheme base16-default
+  " let g:airline_theme = 'base16'
 
-  "" solarized for gui
-  " colorscheme solarized
-  " let g:airline_theme = 'solarized'
-  " highlight clear SignColumn
+  " solarized for gui
+  colorscheme solarized
+  let g:airline_theme = 'murmur'
+  highlight clear SignColumn
 else
   colorscheme jellybeans
+  let g:airline_theme = 'dark'
 endif
 
 
