@@ -8,11 +8,11 @@ set fish_theme robbyrussell
 set fish_plugins git rails node rbenv tmux autojump vi-mode brew bundler
 
 # # Node/NPM
-set -Ux NPM_PACKAGES $HOME/.nvm/v0.10.28
-set -gx NODE_PATH $NPM_PACKAGES/lib/node_modules $NODE_PATH
-if test -e $NPM_PACKAGES/bin
-  set -U fish_user_paths $NPM_PACKAGES/bin $fish_user_paths
-end
+# set -Ux NPM_PACKAGES $HOME/.nvm/v0.10.28
+# set -gx NODE_PATH $NPM_PACKAGES/lib/node_modules $NODE_PATH
+# if test -e $NPM_PACKAGES/bin
+#   set -U fish_user_paths $NPM_PACKAGES/bin $fish_user_paths
+# end
 
 
 # # Android tools
@@ -68,3 +68,5 @@ set fish_path $HOME/.oh-my-fish
 . $fish_path/oh-my-fish.fish
 
 
+
+test -s /Users/matt/.nvm-fish/nvm.fish; and source /Users/matt/.nvm-fish/nvm.fish
