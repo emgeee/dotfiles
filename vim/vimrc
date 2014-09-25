@@ -217,6 +217,7 @@ set wildignore+=*DS_Store*
 set wildignore+=*.png,*.jpg,*.gif
 
 set wildignore+=*/public/*
+set wildignore+=*/production/*
 
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped
@@ -302,7 +303,7 @@ set undolevels=700
 
 
 "" Auto save when focus is lost
-au FocusLost * :wa
+" au FocusLost * :wa
 
 
 "" Auto reload the buffer from disk if it has changed when entering
@@ -428,9 +429,15 @@ nnoremap <leader>eV :split $MYVIMRC<CR>
 "" Quickly select entire file
 nnoremap <leader>sa ggVG
 
-"" Quickly select entire file
+"" vim fugitive shortcuts
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+
+"" easily interact with system clipboard
+map <leader>p "*p
+map <leader>P "*P
+vnoremap <leader>y "*y
+vnoremap <leader>d "*d
 
 "" Toggle neocomplete on/off
 nnoremap <leader>nc :NeoCompleteToggle<CR>
@@ -459,11 +466,11 @@ nmap <silent> <F3> :NERDTreeToggle<CR>
 " vnoremap <tab> %
 
 "" use vim magic mode instead of weird regexes
-nnoremap / /\v
-vnoremap / /\v
+nnoremap / /\V
+vnoremap / /\V
 
-nnoremap ? ?\v
-vnoremap ? ?\v
+nnoremap ? ?\V
+vnoremap ? ?\V
 "" automatically position cursor to middle of screen after searching
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -623,7 +630,7 @@ let g:rainbow_conf = {
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_at_startup = 0
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
