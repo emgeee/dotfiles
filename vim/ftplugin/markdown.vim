@@ -3,6 +3,7 @@
 setlocal wrap
 setlocal linebreak
 setlocal nolist
+setlocal nocul
 " set textwidth=79
 set formatoptions=t
 
