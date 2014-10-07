@@ -142,7 +142,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'Valloric/MatchTagAlways'
-Bundle 'vim-scripts/CursorLineCurrentWindow'
+" Bundle 'vim-scripts/CursorLineCurrentWindow'
 
 
 "" Experimental (not necessarily in workflow)
@@ -167,7 +167,6 @@ Bundle 'scrooloose/syntastic'
 " " :Unite session
 
 call vundle#end()            " required
-filetype plugin indent on    " required
 
 "" Better bracket matching with %
 runtime! macros/matchit.vim
@@ -180,10 +179,20 @@ runtime! macros/matchit.vim
 set ruler "show line numbers at bottom right
 set showcmd "show information about current command in bottom right
 set scrolloff=3 "keep minimum of 3 lines between cursor and end of screen
-set cursorline "highlight entire line cursor is on
+" set cursorline "highlight entire line cursor is on
 " set number "show line numbers by default
 " set relativenumber "line numbers are show relative to position
-set cursorline
+
+augroup CursorLine
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
+
+" always disable cursor line for markdown
+augroup markdown_set_cul
+  autocmd FileType markdown :autocmd! markdown_set_cul VimEnter,WinEnter,BufWinEnter <buffer> :setlocal nocul
+augroup END
 
 
 "" options for searching
@@ -235,8 +244,8 @@ set softtabstop=2
 """filetype configurations
 au Filetype arduino set autoindent "turn on autoindent for arduino filetype (*.ino)
 au BufNewFile,BufRead *.ejs set filetype=html "Interpret .ejs files as html
-au BufNewFile,BufReadPost *.md set filetype=markdown "Set .md to markdown
 au BufNewFile,BufReadPost *.json set filetype=json
+au BufNewFile,BufReadPost *.md,*.mdown,*.markdown set filetype=markdown "Set .md to markdown
 
 
 "" Macvim specific settings
@@ -252,7 +261,7 @@ if ! has('gui_running')
   "" Fix timing issue with powerline update statusbar
   " set ttimeoutlen=10
   augroup FastEscape
-    autocmd!
+      autocmd!
       au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
       au InsertLeave * set timeoutlen=1000
     augroup END
