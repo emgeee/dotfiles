@@ -26,36 +26,36 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
 
 " let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 
 """ Themes
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'trapd00r/neverland-vim-theme'
-Bundle 'nanotech/jellybeans.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'trapd00r/neverland-vim-theme'
+Plugin 'nanotech/jellybeans.vim'
 Plugin 'chriskempson/base16-vim'
 
 
 "" additional syntax highlighting
-Bundle 'sudar/vim-arduino-syntax'
+Plugin 'sudar/vim-arduino-syntax'
 
-Bundle 'pangloss/vim-javascript'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'othree/javascript-libraries-syntax.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'othree/javascript-libraries-syntax.vim'
 
 "" Highligh css colors!
-Bundle 'ap/vim-css-color'
-Bundle 'JulesWang/css.vim'
-Bundle 'cakebaker/scss-syntax.vim'
+Plugin 'ap/vim-css-color'
+Plugin 'JulesWang/css.vim'
+Plugin 'cakebaker/scss-syntax.vim'
 
 "" Easy switching between vim/tmux
-Bundle 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-navigator'
 
 "" Display git diffs in sidebar
-Bundle 'airblade/vim-gitgutter.git'
+Plugin 'airblade/vim-gitgutter.git'
 
 "" Use ag (the silver searcher) to find patterns in file
-Bundle 'rking/ag.vim'
+Plugin 'rking/ag.vim'
 " :Ag [options] {pattern} [{directory}]
 " must escape # character with \
 " e    to open file and close the quickfix window
@@ -71,7 +71,7 @@ Bundle 'rking/ag.vim'
 
 
 "" File navigation sidebar
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " type :NERDTreeToggle
 " :NERDTreeFind find location of current file
 " i to open in new split
@@ -81,88 +81,102 @@ Bundle 'scrooloose/nerdtree'
 " m to open menu
 
 "" Fuzzy file search
-" Bundle 'kien/ctrlp.vim'
-Bundle 'ctrlpvim/ctrlp.vim'
+" Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 
 "" Easily jump around
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'Lokaltog/vim-easymotion'
 " Press <leader><leader> then a move command where <leader> = '\'
 "
 
 "" Vim snippets
-Bundle 'Shougo/neocomplete.vim'
-Bundle 'Shougo/neosnippet.vim'
-Bundle 'Shougo/neosnippet-snippets'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/neosnippet-snippets'
 
 
 "" Comment plugin
-Bundle 'tomtom/tcomment_vim'
+Plugin 'tomtom/tcomment_vim'
 " Press <c-_><c-_> to comment lines
 " Press <c-_>i for inline commenting
 "
 
 "" Beautify HTML, css, and js
 "" requires ~/.vim/.editorconfig
-" Bundle 'einars/js-beautify'
-Bundle 'maksimr/vim-jsbeautify'
+" Plugin 'einars/js-beautify'
+Plugin 'maksimr/vim-jsbeautify'
 " :call JsBeautify()
 " :call HtmlBeautify()
 " :call CSSBeautify()
 "
 
-"" Add indent guides
-Bundle 'Yggdroot/indentLine'
+""""""""""""""""""""""""""""""
+" => Add indent guides
+""""""""""""""""""""""""""""""
+Plugin 'Yggdroot/indentLine'
+let g:indentLine_noConcealCursor=""
+let g:indentLine_char = '│'
+let g:indentLine_color_term = 239
+let g:indentLine_color_tty_light = 7
+let g:indentLine_color_dark = 1
 
 
 "" Enable editorconfig in vim
-Bundle 'editorconfig/editorconfig-vim'
+Plugin 'editorconfig/editorconfig-vim'
 
 
 "" Easily surround things
-Bundle 'tpope/vim-surround'
+Plugin 'tpope/vim-surround'
 " ys<text object><surround char> - wrap text object
 " cs<old char><new char> - Change Surround
 " ds<old char> - Delete Surround
 " In virtual mode - S<char> - wrap current selection in <char>
 
 
-" Bundle 'jiangmiao/auto-pairs.git'
-Bundle 'Raimondi/delimitMate'
+" Plugin 'jiangmiao/auto-pairs.git'
+Plugin 'Raimondi/delimitMate'
 
 
 " Rainbow brackets!
-Bundle 'luochen1990/rainbow'
+Plugin 'luochen1990/rainbow'
 
+Plugin 'tpope/vim-fugitive'
+" dp
+" do
 
 "" Others
-Bundle 'Shougo/vimproc.vim'
-Bundle 'bling/vim-airline'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'Valloric/MatchTagAlways'
-" Bundle 'vim-scripts/CursorLineCurrentWindow'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-repeat'
+Plugin 'Valloric/MatchTagAlways'
+" Plugin 'vim-scripts/CursorLineCurrentWindow'
+
+
+
+Plugin 'elzr/vim-json'
+let g:vim_json_syntax_conceal = 0
 
 
 "" Experimental (not necessarily in workflow)
-" Bundle 'tpope/vim-sleuth'
-" Bundle 'terryma/vim-multiple-cursors'
-" Bundle 'mbbill/undotree'
-" Bundle 'gcmt/breeze.vim' " Highlight matching html elements
+" Plugin 'tpope/vim-sleuth'
+" Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'mbbill/undotree'
+" Plugin 'gcmt/breeze.vim' " Highlight matching html elements
 
 
 "" configure tern - the javascript autocompleter
-" Bundle 'marijnh/tern_for_vim'
+" Plugin 'marijnh/tern_for_vim'
 " remember to `npm install` in package directory
 
 "" Syntax checker
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
 "" Unite stuff
-" Bundle 'Shougo/unite.vim'
-" Bundle 'Shougo/unite-session'
+" Plugin 'Shougo/unite.vim'
+" Plugin 'Shougo/unite-session'
 " " :Unite session/new
 " " :Unite session
 
@@ -226,6 +240,7 @@ set wildignore+=*DS_Store*
 set wildignore+=*.png,*.jpg,*.gif
 
 set wildignore+=*/public/*
+set wildignore+=*/development/*
 set wildignore+=*/production/*
 
 "" used for viewing lines that are so long they take up the entire screen at
@@ -563,14 +578,6 @@ set shell=bash "needed to make vundle in fish work
 
 
 
-""""""""""""""""""""""""""""""
-" => vim-indent-guide config
-""""""""""""""""""""""""""""""
-""" indentLine
-let g:indentLine_char = '│'
-let g:indentLine_color_term = 239
-let g:indentLine_color_tty_light = 7
-let g:indentLine_color_dark = 1
 
 
 """"""""""""""""""""""""""""""
