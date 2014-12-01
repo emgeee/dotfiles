@@ -259,6 +259,7 @@ set softtabstop=2
 """filetype configurations
 au Filetype arduino set autoindent "turn on autoindent for arduino filetype (*.ino)
 au BufNewFile,BufRead *.ejs set filetype=html "Interpret .ejs files as html
+au BufNewFile,BufRead *.hbs set filetype=html
 au BufNewFile,BufReadPost *.json set filetype=json
 au BufNewFile,BufReadPost *.md,*.mdown,*.markdown set filetype=markdown "Set .md to markdown
 
