@@ -163,8 +163,7 @@ let g:vim_json_syntax_conceal = 0
 " Plugin 'tpope/vim-sleuth'
 " Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'mbbill/undotree'
-" Plugin 'gcmt/breeze.vim' " Highlight matching html elements
-
+Plugin 'junegunn/vim-easy-align'
 
 "" configure tern - the javascript autocompleter
 " Plugin 'marijnh/tern_for_vim'
@@ -236,12 +235,12 @@ set wildignore+=*/vendor/*
 set wildignore+=*/platforms/* "ignore for cordova projects
 set wildignore+=*/plugins/*
 set wildignore+=*.o,*.obj,*~ "stuff to ignore when tab completing
-set wildignore+=*DS_Store*
+set wildignore+=DS_Store
 set wildignore+=*.png,*.jpg,*.gif
 
-set wildignore+=*/public/*
-set wildignore+=*/development/*
-set wildignore+=*/production/*
+set wildignore+=public
+" set wildignore+=*/development/*
+" set wildignore+=*/production/*
 
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped
@@ -486,6 +485,13 @@ nmap <silent> <leader>r :RainbowToggle<CR>
 "" Toggle NERDTree
 nmap <silent> <F3> :NERDTreeToggle<CR>
 
+
+"" Easy Align
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 "" remap tab key to % for jumping to matching brackets
 " nnoremap <tab> %
 " vnoremap <tab> %
@@ -503,7 +509,6 @@ nnoremap N Nzzzv
 "" move to beginning/end of line easier
 noremap H ^
 noremap L $
-
 
 "" Navigate wrapped lines (display lines) as you'd expect
 nnoremap <silent> j gj
