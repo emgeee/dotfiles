@@ -270,6 +270,8 @@ if has('gui_running')
   set guioptions-=T "Remove toolbar
   set guioptions-=r "Remove right side scrollbar
   set guioptions-=L "Remove right side scrollbar in NERDTree
+
+  set vb t_vb= "Disable visual bell in mvim
 endif
 
 
