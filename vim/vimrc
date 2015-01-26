@@ -111,6 +111,9 @@ Plugin 'maksimr/vim-jsbeautify'
 " :call CSSBeautify()
 "
 
+Plugin 'kana/vim-textobj-user'
+
+
 """"""""""""""""""""""""""""""
 " => Add indent guides
 """"""""""""""""""""""""""""""
@@ -151,7 +154,6 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
 Plugin 'Valloric/MatchTagAlways'
-" Plugin 'vim-scripts/CursorLineCurrentWindow'
 
 
 
@@ -163,8 +165,16 @@ let g:vim_json_syntax_conceal = 0
 " Plugin 'tpope/vim-sleuth'
 " Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'mbbill/undotree'
+
+" Track usage with Wakatime
 Plugin 'junegunn/vim-easy-align'
 Plugin 'wakatime/vim-wakatime'
+
+
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled=1
+
 
 "" configure tern - the javascript autocompleter
 " Plugin 'marijnh/tern_for_vim'
@@ -203,10 +213,6 @@ augroup CursorLine
   autocmd WinLeave * setlocal nocursorline
 augroup END
 
-" always disable cursor line for markdown
-augroup markdown_set_cul
-  autocmd FileType markdown :autocmd! markdown_set_cul VimEnter,WinEnter,BufWinEnter <buffer> :setlocal nocul
-augroup END
 
 
 "" options for searching
@@ -263,6 +269,11 @@ au BufNewFile,BufRead *.ejs set filetype=html "Interpret .ejs files as html
 au BufNewFile,BufRead *.hbs set filetype=html
 au BufNewFile,BufReadPost *.json set filetype=json
 au BufNewFile,BufReadPost *.md,*.mdown,*.markdown set filetype=markdown "Set .md to markdown
+
+" always disable cursor line for markdown
+augroup markdown_set_cul
+  autocmd FileType markdown :autocmd! markdown_set_cul VimEnter,WinEnter,BufWinEnter <buffer> :setlocal nocul
+augroup END
 
 
 "" Macvim specific settings
@@ -598,6 +609,7 @@ let g:ctrlp_max_files = 0
 " Search from current directory instead of project root
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_cmd = "CtrlPMixed"
+let g:ctrlp_custom_ignore = 'mean-tutorial/code'
 
 
 "" Set easy motion key
