@@ -164,6 +164,7 @@ let g:vim_json_syntax_conceal = 0
 " Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'mbbill/undotree'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'wakatime/vim-wakatime'
 
 "" configure tern - the javascript autocompleter
 " Plugin 'marijnh/tern_for_vim'
@@ -239,6 +240,7 @@ set wildignore+=DS_Store
 set wildignore+=*.png,*.jpg,*.gif
 
 set wildignore+=public
+set wildignore+=submodules
 " set wildignore+=*/development/*
 " set wildignore+=*/production/*
 
