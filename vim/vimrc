@@ -28,6 +28,7 @@ call vundle#begin()
 " let Vundle manage Vundle
 Plugin 'gmarik/vundle'
 
+Plugin 'floobits/floobits-vim'
 
 """ Themes
 Plugin 'altercation/vim-colors-solarized'
@@ -38,6 +39,8 @@ Plugin 'chriskempson/base16-vim'
 
 "" additional syntax highlighting
 Plugin 'sudar/vim-arduino-syntax'
+
+Plugin 'digitaltoad/vim-jade'
 
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
@@ -112,17 +115,18 @@ Plugin 'maksimr/vim-jsbeautify'
 "
 
 Plugin 'kana/vim-textobj-user'
-
+Plugin 'whatyouhide/vim-textobj-xmlattr'
 
 """"""""""""""""""""""""""""""
 " => Add indent guides
 """"""""""""""""""""""""""""""
-Plugin 'Yggdroot/indentLine'
-let g:indentLine_noConcealCursor=""
-let g:indentLine_char = '│'
-let g:indentLine_color_term = 239
-let g:indentLine_color_tty_light = 7
-let g:indentLine_color_dark = 1
+" Plugin 'Yggdroot/indentLine'
+" let g:indentLine_faster = 1
+" let g:indentLine_noConcealCursor = ""
+" let g:indentLine_char = '│'
+" let g:indentLine_color_term = 239
+" let g:indentLine_color_tty_light = 7
+" let g:indentLine_color_dark = 1
 
 
 "" Enable editorconfig in vim
@@ -772,3 +776,50 @@ endif
 
 " Disable NeoComplCache for certain filetypes
 au FileType pandoc,markdown nested NeoCompleteLock
+
+
+""""""""""""""""""""""""""""""
+" => textobj
+""""""""""""""""""""""""""""""
+" call textobj#user#plugin('markdown', {
+" \  'code_a': {
+" \    'select': 'amc',
+" \    'pattern': '^```\w\+\n\_.\{-}\n\_^```\_$',
+" \    'region-type': 'V',
+" \  },
+" \  'code_i': {
+" \    'select': 'imc',
+" \    'pattern': '^```\w\+\_$\n\zs\_.\{-}\ze\_^```\_$',
+" \    'region-type': 'V',
+" \  },
+" \ })
+
+" call textobj#user#plugin('markdown', {
+" \  'code': {
+" \    'pattern': ['\_^```\w+\_$','\_^```\_$'],
+" \    'select-a': 'amc',
+" \    'select-i': 'imc',
+" \    'region-type': 'v',
+" \  },
+" \ })
+
+
+" call textobj#user#plugin('markdown', {
+" \  'code': {
+" \    'select-a': 'amc',
+" \    'select-a-function': 'CurrentLineA',
+" \    'select-i': 'imc',
+" \    'select-i-function': 'CurrentLineI',
+" \  },
+" \ })
+"
+" function! CurrentLineA()
+" endfunction
+"
+" function! CurrentLineI()
+"   let ORIG_POS = getpos('.')[1:2]
+"   let start = searchpos('\_^```$', 'bceW')
+"   let end = searchpos('\n\_^```$', 'cW')
+"
+"   return s:cancel_selection(a:previous_mode, ORIG_POS)
+" endfunction
