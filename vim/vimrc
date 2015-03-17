@@ -50,6 +50,7 @@ Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'ap/vim-css-color'
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'groenewege/vim-less'
 
 "" Easy switching between vim/tmux
 Plugin 'christoomey/vim-tmux-navigator'
@@ -388,7 +389,7 @@ syntax on
 
 
 "" Automatically highlight @todo
-augroup HiglightTODO
+augroup HighlightTODO
   autocmd!
   autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', '@todo', -1)
 augroup END
