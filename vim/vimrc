@@ -28,8 +28,6 @@ call vundle#begin()
 " let Vundle manage Vundle
 Plugin 'gmarik/vundle'
 
-Plugin 'floobits/floobits-vim'
-
 """ Themes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'trapd00r/neverland-vim-theme'
@@ -161,6 +159,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'Valloric/MatchTagAlways'
 
 
+Plugin 'rizzatti/dash.vim'
+
+
 
 Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
@@ -208,9 +209,9 @@ runtime! macros/matchit.vim
 set ruler "show line numbers at bottom right
 set showcmd "show information about current command in bottom right
 set scrolloff=3 "keep minimum of 3 lines between cursor and end of screen
-" set cursorline "highlight entire line cursor is on
-" set number "show line numbers by default
-" set relativenumber "line numbers are show relative to position
+set cursorline "highlight entire line cursor is on
+set number "show line numbers by default
+set relativenumber "line numbers are show relative to position
 
 augroup CursorLine
   autocmd!
@@ -312,6 +313,9 @@ endif
 
 " Use powerline fonts
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+
+"" For screencasting - bump up font size
+" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h24
 
 " don't show git status
 let g:airline#extensions#hunks#enabled = 0
@@ -777,6 +781,11 @@ endif
 
 " Disable NeoComplCache for certain filetypes
 au FileType pandoc,markdown nested NeoCompleteLock
+
+""""""""""""""""""""""""""""""
+" => Dash.vim
+""""""""""""""""""""""""""""""
+nmap <silent> <leader>d <Plug>DashSearch
 
 
 """"""""""""""""""""""""""""""

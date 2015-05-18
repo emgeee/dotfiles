@@ -1,6 +1,6 @@
 
 
-setlocal wrap
+" setlocal wrap
 setlocal linebreak
 setlocal nolist
 " set textwidth=79

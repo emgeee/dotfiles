@@ -67,6 +67,4 @@ set fish_path $HOME/.oh-my-fish
 # Load oh-my-fish configuration.
 . $fish_path/oh-my-fish.fish
 
-
-
-test -s /Users/matt/.nvm-fish/nvm.fish; and source /Users/matt/.nvm-fish/nvm.fish
+source ~/.config/fish/nvm-wrapper/nvm.fish
