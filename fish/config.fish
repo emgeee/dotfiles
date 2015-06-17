@@ -1,32 +1,24 @@
+# Path to your oh-my-fish.
+set fish_path $HOME/.oh-my-fish
+
+# Path to your custom folder (default path is ~/.oh-my-fish/custom)
+#set fish_custom $HOME/dotfiles/oh-my-fish
+
+# Load oh-my-fish configuration.
+. $fish_path/oh-my-fish.fish
+
+Theme 'robbyrussell'
+Plugin 'theme'
+Plugin 'git'
+Plugin 'node'
+Plugin 'tmux'
+Plugin 'autojump'
+Plugin 'vi-mode'
+Plugin 'brew'
+
+
 # PATH
 set -e fish_user_paths
-
-
-
-set fish_theme robbyrussell
-
-set fish_plugins git rails node rbenv tmux autojump vi-mode brew bundler
-
-# # Node/NPM
-# set -Ux NPM_PACKAGES $HOME/.nvm/v0.10.28
-# set -gx NODE_PATH $NPM_PACKAGES/lib/node_modules $NODE_PATH
-# if test -e $NPM_PACKAGES/bin
-#   set -U fish_user_paths $NPM_PACKAGES/bin $fish_user_paths
-# end
-
-
-# # Android tools
-# set -gx ANDROID_PATH $HOME/android-sdk-macosx
-# if test -e $ANDROID_PATH
-#   set -U fish_user_paths $ANDROID_PATH/tools $fish_user_paths
-#   set -U fish_user_paths $ANDROID_PATH/platform-tools $fish_user_paths
-# end
-
-
-# # prepend ~/.rbenv/shims
-if test -e $HOME/.rbenv/shims
-  set -U fish_user_paths $HOME/.rbenv/shims $PATH
-end
 
 # # prepend ~/.bin/
 if test -e $HOME/.bin
@@ -51,20 +43,9 @@ if type vimpager >/dev/null 2>&1
   set -Ux PAGER vimpager
 end
 
-
-
-
-
 function sudo_update_locate
   echo "updating locate db..."
   sudo /usr/libexec/locate.updatedb
 end
-
-
-
-set fish_path $HOME/.oh-my-fish
-
-# Load oh-my-fish configuration.
-. $fish_path/oh-my-fish.fish
 
 source ~/.config/fish/nvm-wrapper/nvm.fish
