@@ -34,10 +34,8 @@ Plugin 'trapd00r/neverland-vim-theme'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'chriskempson/base16-vim'
 
-
 "" additional syntax highlighting
 Plugin 'sudar/vim-arduino-syntax'
-
 Plugin 'digitaltoad/vim-jade'
 
 Plugin 'pangloss/vim-javascript'
@@ -51,7 +49,8 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'groenewege/vim-less'
 
 "" Easy switching between vim/tmux
-Plugin 'christoomey/vim-tmux-navigator'
+"" NOTE: not using tmux right now
+" Plugin 'christoomey/vim-tmux-navigator'
 
 "" Display git diffs in sidebar
 Plugin 'airblade/vim-gitgutter.git'
@@ -116,17 +115,6 @@ Plugin 'maksimr/vim-jsbeautify'
 Plugin 'kana/vim-textobj-user'
 Plugin 'whatyouhide/vim-textobj-xmlattr'
 
-""""""""""""""""""""""""""""""
-" => Add indent guides
-""""""""""""""""""""""""""""""
-" Plugin 'Yggdroot/indentLine'
-" let g:indentLine_faster = 1
-" let g:indentLine_noConcealCursor = ""
-" let g:indentLine_char = '│'
-" let g:indentLine_color_term = 239
-" let g:indentLine_color_tty_light = 7
-" let g:indentLine_color_dark = 1
-
 
 "" Enable editorconfig in vim
 Plugin 'editorconfig/editorconfig-vim'
@@ -141,32 +129,37 @@ Plugin 'tpope/vim-surround'
 
 
 " Plugin 'jiangmiao/auto-pairs.git'
+
+"" Automatically added closing parenthesis/brackets etc
 Plugin 'Raimondi/delimitMate'
 
 
-" Rainbow brackets!
+"" Rainbow brackets!
 Plugin 'luochen1990/rainbow'
 
+"" Manage git inside vim
 Plugin 'tpope/vim-fugitive'
 " dp
 " do
 
 "" Others
 Plugin 'Shougo/vimproc.vim'
+
+"" random key mappings
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
 
-" Give me a powerline style status bar
+"" Give me a powerline style status bar
 Plugin 'bling/vim-airline'
 
-" Highlight matching tags
+"" Highlight matching tags
 Plugin 'Valloric/MatchTagAlways'
 
-" Search Dash documentation
+"" Search Dash documentation
 Plugin 'rizzatti/dash.vim'
 " mapped to <leader>d
 
-" Highligh which character to target for f, F
+"" Highligh which character to target for f, F
 Plugin 'unblevable/quick-scope'
 
 
@@ -179,14 +172,11 @@ let g:vim_json_syntax_conceal = 0
 " Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'mbbill/undotree'
 
-" Track usage with Wakatime
+"" Track usage with Wakatime
 Plugin 'wakatime/vim-wakatime'
 
-" Align text around auto columns
+"" Align text around auto columns
 Plugin 'junegunn/vim-easy-align'
-
-
-Plugin 'godlygeek/tabular'
 
 "" configure tern - the javascript autocompleter
 " Plugin 'marijnh/tern_for_vim'
