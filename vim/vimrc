@@ -153,14 +153,21 @@ Plugin 'tpope/vim-fugitive'
 
 "" Others
 Plugin 'Shougo/vimproc.vim'
-Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
+
+" Give me a powerline style status bar
+Plugin 'bling/vim-airline'
+
+" Highlight matching tags
 Plugin 'Valloric/MatchTagAlways'
 
-
+" Search Dash documentation
 Plugin 'rizzatti/dash.vim'
+" mapped to <leader>d
 
+" Highligh which character to target for f, F
+Plugin 'unblevable/quick-scope'
 
 
 Plugin 'elzr/vim-json'
@@ -173,14 +180,13 @@ let g:vim_json_syntax_conceal = 0
 " Plugin 'mbbill/undotree'
 
 " Track usage with Wakatime
-Plugin 'junegunn/vim-easy-align'
 Plugin 'wakatime/vim-wakatime'
+
+" Align text around auto columns
+Plugin 'junegunn/vim-easy-align'
 
 
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-let g:vim_markdown_folding_disabled=1
-
 
 "" configure tern - the javascript autocompleter
 " Plugin 'marijnh/tern_for_vim'
@@ -242,8 +248,6 @@ set wildmenu
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/out/*
-set wildignore+=**/node_modules/*
-set wildignore+=**/bower_components/*
 set wildignore+=*/vendor/*
 set wildignore+=*/platforms/* "ignore for cordova projects
 set wildignore+=*/plugins/*
@@ -253,6 +257,9 @@ set wildignore+=*.png,*.jpg,*.gif
 
 set wildignore+=public
 set wildignore+=submodules
+set wildignore+=node_modules
+set wildignore+=bower_components
+" set wildignore+=www
 " set wildignore+=*/development/*
 " set wildignore+=*/production/*
 
@@ -618,7 +625,7 @@ let g:ctrlp_max_files = 0
 " Search from current directory instead of project root
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_cmd = "CtrlPMixed"
-let g:ctrlp_custom_ignore = 'mean-tutorial/code'
+" let g:ctrlp_custom_ignore = 'mean-tutorial/code'
 
 
 "" Set easy motion key
@@ -631,9 +638,12 @@ let g:EasyMotion_leader_key = '<leader><leader>'
 " let g:syntastic_always_populate_loc_list = 1
 
 let g:syntastic_enable_signs = 1
-" let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-"', 'proprietary attribute "ion-"']
 let g:syntastic_javascript_checkers = ['standard']
-let g:syntastic_html_checkers = ['jshint']
+
+let g:syntastic_html_tidy_exec = 'tidy5'
+" let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
 
