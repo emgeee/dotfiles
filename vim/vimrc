@@ -112,8 +112,13 @@ Plugin 'maksimr/vim-jsbeautify'
 " :call CSSBeautify()
 "
 
+"" Allow custom text objects
 Plugin 'kana/vim-textobj-user'
+
+"" Custom text object for XML attributes
 Plugin 'whatyouhide/vim-textobj-xmlattr'
+" ax and ix
+"
 
 
 "" Enable editorconfig in vim
