@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/matt/floobits/emgeee/browser-sync'
+let g:netrw_dirhist_2='/Users/matt/floobits/emgeee/browser-sync/examples'
+let g:netrw_dirhist_3='/Users/matt/floobits/emgeee/browser-sync'
+let g:netrw_dirhist_4='/Users/matt/floobits/emgeee/browser-sync/examples'
+let g:netrw_dirhist_5='/Users/matt/floobits/emgeee/browser-sync'
+let g:netrw_dirhist_6='/Users/matt/code/ej/EJ-Marketing'
+let g:netrw_dirhist_7='/Users/matt/code/ej/EJ-Marketing/src'
+let g:netrw_dirhist_8='/Users/matt/code/ej/EJ-Marketing/src/angular'
+let g:netrw_dirhist_9='/Users/matt/code/ej/EJ-Marketing/src/angular/services'

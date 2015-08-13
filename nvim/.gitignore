@@ -1,0 +1,6 @@
+bundle/*
+.editorconfig
+tmp/swap/*
+tmp/undo/*
+tmp/backup/*
+session/

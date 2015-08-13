@@ -1,0 +1,806 @@
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Vim tips and commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim quick reference (cheat sheet)
+"   :help quickref
+
+" Recommended keys to map custom functionality too
+"   :help map-which-keys
+"
+" List of commands for each mode
+"   :help index
+"
+" M - jump cursor to middle of display "
+"
+" :ju(mp) - print jump list
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+  let s:editor_root=expand("~/.nvim")
+else
+  let s:editor_root=expand("~/.vim")
+endif
+
+filetype off                  " required!
+
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin(s:editor_root . '/bundle')
+
+" let Vundle manage Vundle
+Plugin 'VundleVim/Vundle.vim'
+
+""" Themes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'trapd00r/neverland-vim-theme'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'chriskempson/base16-vim'
+
+"" additional syntax highlighting
+Plugin 'sudar/vim-arduino-syntax'
+Plugin 'digitaltoad/vim-jade'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'othree/javascript-libraries-syntax.vim'
+
+"" Highligh css colors!
+Plugin 'ap/vim-css-color'
+Plugin 'JulesWang/css.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'groenewege/vim-less'
+
+"" Easy switching between vim/tmux
+"" NOTE: not using tmux right now
+" Plugin 'christoomey/vim-tmux-navigator'
+
+"" Display git diffs in sidebar
+Plugin 'airblade/vim-gitgutter.git'
+
+"" Use ag (the silver searcher) to find patterns in file
+Plugin 'rking/ag.vim'
+" :Ag [options] {pattern} [{directory}]
+" must escape # character with \
+" e    to open file and close the quickfix window
+" o    to open (same as enter)
+" go   to preview file (open but maintain focus on ag.vim results)
+" t    to open in new tab
+" T    to open in new tab silently
+" h    to open in horizontal split
+" H    to open in horizontal split silently
+" v    to open in vertical split
+" gv   to open in vertical split silently
+" q    to close the quickfix window
+
+
+"" File navigation sidebar
+Plugin 'scrooloose/nerdtree'
+" type :NERDTreeToggle
+" :NERDTreeFind find location of current file
+" i to open in new split
+" s to open in new vsplit
+" t to open in new tab
+" p go to parent directory
+" m to open menu
+
+"" Fuzzy file search
+" Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+
+
+"" Easily jump around
+Plugin 'Lokaltog/vim-easymotion'
+" Press <leader><leader> then a move command where <leader> = '\'
+"
+
+"" Vim snippets
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/neosnippet-snippets'
+
+
+"" Comment plugin
+Plugin 'tomtom/tcomment_vim'
+" Press <c-_><c-_> to comment lines
+" Press <c-_>i for inline commenting
+"
+
+"" Beautify HTML, css, and js
+"" requires ~/.vim/.editorconfig
+" Plugin 'einars/js-beautify'
+Plugin 'maksimr/vim-jsbeautify'
+" :call JsBeautify()
+" :call HtmlBeautify()
+" :call CSSBeautify()
+"
+
+"" Allow custom text objects
+Plugin 'kana/vim-textobj-user'
+
+"" Custom text object for XML attributes
+Plugin 'whatyouhide/vim-textobj-xmlattr'
+" ax and ix
+"
+
+
+"" Enable editorconfig in vim
+Plugin 'editorconfig/editorconfig-vim'
+
+
+"" Easily surround things
+Plugin 'tpope/vim-surround'
+" ys<text object><surround char> - wrap text object
+" cs<old char><new char> - Change Surround
+" ds<old char> - Delete Surround
+" In virtual mode - S<char> - wrap current selection in <char>
+
+
+" Plugin 'jiangmiao/auto-pairs.git'
+
+"" Automatically added closing parenthesis/brackets etc
+Plugin 'Raimondi/delimitMate'
+
+
+"" Rainbow brackets!
+Plugin 'luochen1990/rainbow'
+
+"" Manage git inside vim
+Plugin 'tpope/vim-fugitive'
+" dp
+" do
+
+"" Others
+Plugin 'Shougo/vimproc.vim'
+
+"" random key mappings
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-repeat'
+
+"" Give me a powerline style status bar
+Plugin 'bling/vim-airline'
+
+"" Highlight matching tags
+Plugin 'Valloric/MatchTagAlways'
+
+"" Search Dash documentation
+Plugin 'rizzatti/dash.vim'
+" mapped to <leader>d
+
+"" Highligh which character to target for f, F
+Plugin 'unblevable/quick-scope'
+
+
+Plugin 'elzr/vim-json'
+let g:vim_json_syntax_conceal = 0
+
+
+"" Experimental (not necessarily in workflow)
+" Plugin 'tpope/vim-sleuth'
+" Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'mbbill/undotree'
+
+"" Track usage with Wakatime
+Plugin 'wakatime/vim-wakatime'
+
+"" Align text around auto columns
+Plugin 'junegunn/vim-easy-align'
+
+"" configure tern - the javascript autocompleter
+" Plugin 'marijnh/tern_for_vim'
+" remember to `npm install` in package directory
+
+"" Syntax checker
+Plugin 'scrooloose/syntastic'
+" :Errors - show quickfix window
+
+Plugin 'tpope/vim-obsession'
+Plugin 'dhruvasagar/vim-prosession'
+
+call vundle#end()            " required
+
+"" Better bracket matching with %
+runtime! macros/matchit.vim
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User interface
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"set shortmess+=I "avoid hitting enter?
+
+set ruler "show line numbers at bottom right
+set showcmd "show information about current command in bottom right
+set scrolloff=3 "keep minimum of 3 lines between cursor and end of screen
+set cursorline "highlight entire line cursor is on
+set number "show line numbers by default
+set relativenumber "line numbers are show relative to position
+
+augroup CursorLine
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
+
+
+
+"" options for searching
+set hlsearch "highlight all matches
+set incsearch "incremently start searching before hitting enter
+set ignorecase "ignore case
+set smartcase "ignore case when only lower case
+set gdefault "default to global search+replace
+
+" set textwidth=79
+set formatoptions=qrn1
+
+set mouse=a "enable mouse support
+" set mouse=c "disable mouse support
+
+set encoding=utf-8
+
+"" Ignore these directories
+set wildmode=list:longest,full
+set wildmenu
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/out/*
+set wildignore+=*/vendor/*
+set wildignore+=*/platforms/* "ignore for cordova projects
+set wildignore+=*/plugins/*
+set wildignore+=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=DS_Store
+set wildignore+=*.png,*.jpg,*.gif
+
+set wildignore+=public
+set wildignore+=submodules
+set wildignore+=node_modules
+set wildignore+=bower_components
+" set wildignore+=www
+" set wildignore+=*/development/*
+" set wildignore+=*/production/*
+
+"" used for viewing lines that are so long they take up the entire screen at
+"" once when wrapped
+set display=lastline
+
+set tabstop=2 "size of a hard tabstop
+set shiftwidth=2 "size of an indent (used for << and >>)
+set shiftround "round to nearest shiftwidth
+set expandtab "Expand TABs to spaces
+
+"" a combination of spaces and tabs are used to simulate tab stops at a width
+"" other than the (hard)tabstop
+set softtabstop=2
+
+"""filetype configurations
+au Filetype arduino set autoindent "turn on autoindent for arduino filetype (*.ino)
+au BufNewFile,BufRead *.ejs set filetype=html "Interpret .ejs files as html
+au BufNewFile,BufRead *.hbs set filetype=html
+au BufNewFile,BufReadPost *.json set filetype=json
+au BufNewFile,BufReadPost *.md,*.mdown,*.markdown set filetype=markdown "Set .md to markdown
+
+" always disable cursor line for markdown
+augroup markdown_set_cul
+  autocmd FileType markdown :autocmd! markdown_set_cul VimEnter,WinEnter,BufWinEnter <buffer> :setlocal nocul
+augroup END
+
+
+"" Macvim specific settings
+if has('gui_running')
+  set guioptions-=T "Remove toolbar
+  set guioptions-=r "Remove right side scrollbar
+  set guioptions-=L "Remove right side scrollbar in NERDTree
+
+  set vb t_vb= "Disable visual bell in mvim
+endif
+
+
+if ! has('gui_running')
+
+  "" Fix timing issue with powerline update statusbar
+  " set ttimeoutlen=10
+  augroup FastEscape
+      autocmd!
+      au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
+      au InsertLeave * set timeoutlen=1000
+    augroup END
+endif
+
+
+""""""""""""""""""""""""""""""
+" => airline
+""""""""""""""""""""""""""""""
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" Use powerline fonts
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+
+"" For screencasting - bump up font size
+" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h24
+
+" don't show git status
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+
+let g:airline_powerline_fonts = 1
+
+" disable showing fileencoding and fileformat
+let g:airline_section_y = ''
+" disable showing filetype
+let g:airline_section_x = airline#section#create_right(['tagbar'])
+
+set laststatus=2
+set noshowmode
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups, and undo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" individual filetype indenting can be configured in
+" ~/.vim/after/ftplugin/<filetype>.vim
+filetype plugin indent on
+
+set backup
+set backupdir=~/.vim/tmp/backup//
+set directory=~/.vim/tmp/swap//
+
+set undofile
+set undodir=~/.vim/tmp/undo//
+set history=700
+set undolevels=700
+
+
+"" Auto save when focus is lost
+" au FocusLost * :wa
+
+
+"" Auto reload the buffer from disk if it has changed when entering
+au FocusGained,BufEnter * :silent! !
+
+""" Tell vim to remember certain things when we exit
+""  '10  :  marks will be remembered for up to 10 previously edited files
+""  "100 :  will save up to 100 lines for each register
+""  :20  :  up to 20 lines of command-line history will be remembered
+""  %    :  saves and restores the buffer list
+""  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+
+"" Save line postion on exit, then restore when opening file
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
+
+"" autoreload vimrc after save
+augroup reload_vimrc
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and fonts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
+
+
+"" Automatically highlight @todo
+augroup HighlightTODO
+  autocmd!
+  autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', '@todo', -1)
+augroup END
+
+
+set background=dark
+
+
+"" Find more Airline themes at
+"" https://github.com/bling/vim-airline/tree/master/autoload/airline/themes
+"" pictures: https://github.com/bling/vim-airline/wiki/Screenshots
+
+" colorscheme neverland
+" let g:airline_theme = 'wombat'
+
+" colorscheme jellybeans
+" let g:airline_theme = 'dark'
+
+if has('gui_running')
+  " colorscheme base16-default
+  " let g:airline_theme = 'base16'
+
+  " solarized for gui
+  colorscheme solarized
+  let g:airline_theme = 'murmur'
+  highlight clear SignColumn
+else
+  colorscheme jellybeans
+  let g:airline_theme = 'dark'
+endif
+
+
+"" configure javascript libraries syntax
+let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
+
+set t_Co=256 "enable 256 colors
+
+
+
+"" Highlight trailing whitespace in vim only (not vimpager or Unite window)
+if ! exists("vimpager")
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+  autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+  autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+  autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Keyboard remappings
+"    use `:help index` to view default bindings
+"    use :map to view list of bindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set pastetoggle=<F2>
+
+
+"" Remap leader key to space
+let mapleader = "\<Space>"
+
+"" Map J-K to escape
+inoremap jk <Esc>
+
+"" easily clear highlighted search - :noh
+nmap <silent> <leader>h :nohlsearch<CR>
+
+"" Strip all whitespace from file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+"" re hardwrap paragraph
+nnoremap <leader>q gqip
+
+"" reselect recent pasted text
+nnoremap <leader>v V`]
+
+"" Quickly open vimrc in new splits
+nnoremap <leader>ev :vs $MYVIMRC<CR>
+nnoremap <leader>eV :split $MYVIMRC<CR>
+
+"" Quickly select entire file
+nnoremap <leader>sa ggVG
+
+"" vim fugitive shortcuts
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+
+"" easily interact with system clipboard
+map <leader>p "*p
+map <leader>P "*P
+vnoremap <leader>y "*y
+vnoremap <leader>d "*d
+
+"" Toggle neocomplete on/off
+nnoremap <leader>nc :NeoCompleteToggle<CR>
+
+"" Toggle line numbers easily
+function! ToggleLineNumbers()
+    if &relativenumber
+      set number!
+      set relativenumber!
+    else
+      set number "show line numbers by default
+      set relativenumber "line numbers are show relative to position
+    endif
+endfunction
+
+map <leader>tn :call ToggleLineNumbers()<CR>
+
+"" Rainbow toggle match brackets with colors
+nmap <silent> <leader>r :RainbowToggle<CR>
+
+"" Toggle NERDTree
+nmap <silent> <F3> :NERDTreeToggle<CR>
+
+
+"" Easy Align
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"" remap tab key to % for jumping to matching brackets
+" nnoremap <tab> %
+" vnoremap <tab> %
+
+"" use vim magic mode instead of weird regexes
+nnoremap / /\V
+vnoremap / /\V
+
+nnoremap ? ?\V
+vnoremap ? ?\V
+"" automatically position cursor to middle of screen after searching
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+"" move to beginning/end of line easier
+noremap H ^
+noremap L $
+
+"" Navigate wrapped lines (display lines) as you'd expect
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+
+" Allow use of the backspace key at anytime in insert mode
+set backspace=indent,eol,start
+
+"" allow us to toggle transparency of gui!
+if has('gui_running')
+  function! ToggleTransparency()
+    if &transparency ==? 0
+      set transparency=17
+    else
+      set transparency=0
+    endif
+  endfunction
+
+  map <D-u> :call ToggleTransparency()<CR>
+endif
+
+" :vsp - new buffer vertically
+" :sp - new buffer horizontally
+"" remap changing buffers
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
+
+
+" NeoVim terminal emulation
+tnoremap <Esc> <C-\><C-n>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins and utilities
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set shell=bash "needed to make vundle in fish work
+
+""""""""""""""""""""""""""""""
+" => Ctrlp config
+""""""""""""""""""""""""""""""
+" Set no max file limit
+let g:ctrlp_max_files = 0
+" Search from current directory instead of project root
+let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_cmd = "CtrlPMixed"
+" let g:ctrlp_custom_ignore = 'mean-tutorial/code'
+
+
+"" Set easy motion key
+let g:EasyMotion_leader_key = '<leader><leader>'
+
+""""""""""""""""""""""""""""""
+" => Syntastic config
+""""""""""""""""""""""""""""""
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_always_populate_loc_list = 1
+
+let g:syntastic_enable_signs = 1
+let g:syntastic_javascript_checkers = ['standard']
+
+let g:syntastic_html_tidy_exec = 'tidy5'
+" let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '!'
+
+
+""""""""""""""""""""""""""""""
+" => beautifier.vim
+""""""""""""""""""""""""""""""
+" let g:editorconfig_Beautifier = expand('$HOME/.editorconfig')
+
+
+""""""""""""""""""""""""""""""
+" => rainbow
+""""""""""""""""""""""""""""""
+let g:rainbow_active = 0
+let g:rainbow_conf = {
+\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\   'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
+\   'operators': '_,_',
+\   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+\   'separately': {
+\       '*': {},
+\       'lisp': {
+\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+\       },
+\       'vim': {
+\           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+\       },
+\       'tex': {
+\           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+\       },
+\       'css': 0,
+\       'stylus': 0,
+\   }
+\}
+
+
+""""""""""""""""""""""""""""""
+" => Neocomplete + snippets
+""""""""""""""""""""""""""""""
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 0
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplete#enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplete#enable_insert_char_pre = 1
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
+""""""""""""""""""""""""""""""
+" => Neosnippets
+""""""""""""""""""""""""""""""
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" Disable NeoComplCache for certain filetypes
+au FileType pandoc,markdown nested NeoCompleteLock
+
+""""""""""""""""""""""""""""""
+" => Dash.vim
+""""""""""""""""""""""""""""""
+nmap <silent> <leader>d <Plug>DashSearch
+
+
+""""""""""""""""""""""""""""""
+" => textobj
+""""""""""""""""""""""""""""""
+" call textobj#user#plugin('markdown', {
+" \  'code_a': {
+" \    'select': 'amc',
+" \    'pattern': '^```\w\+\n\_.\{-}\n\_^```\_$',
+" \    'region-type': 'V',
+" \  },
+" \  'code_i': {
+" \    'select': 'imc',
+" \    'pattern': '^```\w\+\_$\n\zs\_.\{-}\ze\_^```\_$',
+" \    'region-type': 'V',
+" \  },
+" \ })
+
+" call textobj#user#plugin('markdown', {
+" \  'code': {
+" \    'pattern': ['\_^```\w+\_$','\_^```\_$'],
+" \    'select-a': 'amc',
+" \    'select-i': 'imc',
+" \    'region-type': 'v',
+" \  },
+" \ })
+
+
+" call textobj#user#plugin('markdown', {
+" \  'code': {
+" \    'select-a': 'amc',
+" \    'select-a-function': 'CurrentLineA',
+" \    'select-i': 'imc',
+" \    'select-i-function': 'CurrentLineI',
+" \  },
+" \ })
+"
+" function! CurrentLineA()
+" endfunction
+"
+" function! CurrentLineI()
+"   let ORIG_POS = getpos('.')[1:2]
+"   let start = searchpos('\_^```$', 'bceW')
+"   let end = searchpos('\n\_^```$', 'cW')
+"
+"   return s:cancel_selection(a:previous_mode, ORIG_POS)
+" endfunction
