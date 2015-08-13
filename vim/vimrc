@@ -191,6 +191,9 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
+Plugin 'tpope/vim-obsession'
+Plugin 'dhruvasagar/vim-prosession'
+
 call vundle#end()            " required
 
 "" Better bracket matching with %
