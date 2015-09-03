@@ -51,12 +51,15 @@ end
 # set -x NVM_PATH /Users/matt/.nvm/versions/node/v0.12.7/lib/node
 # set PATH /Users/matt/.nvm/versions/node/v0.12.7/bin $PATH
 
-set -x NVM_BIN=/Users/matt/.nvm/versions/io.js/v2.4.0/bin
+
+set -l IOJS_VERSION v3.2.0
+
+set -x NVM_BIN=/Users/matt/.nvm/versions/io.js/$IOJS_VERSION/bin
 set -x NVM_IOJS_ORG_MIRROR=https://iojs.org/dist
 set -x NVM_IOJS_ORG_VERSION_LISTING=https://iojs.org/dist/index.tab
 set -x NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
-set -x NVM_PATH=/Users/matt/.nvm/versions/io.js/v2.4.0/lib/node
-set -U fish_user_paths /Users/matt/.nvm/versions/io.js/v2.4.0/bin $PATH
+set -x NVM_PATH=/Users/matt/.nvm/versions/io.js/$IOJS_VERSION/lib/node
+set -U fish_user_paths /Users/matt/.nvm/versions/io.js/$IOJS_VERSION/bin $PATH
 
 set -x NVM_DIR ~/.nvm
 source ~/.config/fish/nvm-wrapper/nvm.fish
