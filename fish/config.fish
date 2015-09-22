@@ -43,13 +43,17 @@ end
 # Configure nvm
 # manually set up paths to increase startup time
 set -l NODE_TYPE node
-set -l NODE_VERSION v4.0.0
+set -l NODE_VERSION v4.1.0
+# set -l NODE_VERSION v0.12.7
 
-set -x NVM_BIN=/Users/matt/.nvm/versions/$NODE_TYPE/$NODE_VERSION/bin
-set -x NVM_PATH=/Users/matt/.nvm/versions/$NODE_TYPE/$NODE_VERSION/lib/node
+set -x NVM_BIN /Users/matt/.nvm/versions/$NODE_TYPE/$NODE_VERSION/bin
+set -x NVM_PATH /Users/matt/.nvm/versions/$NODE_TYPE/$NODE_VERSION/lib/node
 set -U fish_user_paths /Users/matt/.nvm/versions/$NODE_TYPE/$NODE_VERSION/bin $PATH
 
 set -x NVM_DIR ~/.nvm
+
+set -x ANDROID_HOME /usr/local/opt/android-sdk
+
 source ~/.config/fish/nvm-wrapper/nvm.fish
 
 ## This is pretty slow but works
