@@ -54,6 +54,10 @@ set -x NVM_DIR ~/.nvm
 
 set -x ANDROID_HOME /usr/local/opt/android-sdk
 
+if test -e ./aliases.fish
+  source ./aliases.fish
+end
+
 source ~/.config/fish/nvm-wrapper/nvm.fish
 
 ## This is pretty slow but works
