@@ -52,6 +52,8 @@ set -U fish_user_paths /Users/matt/.nvm/versions/$NODE_TYPE/$NODE_VERSION/bin $P
 
 set -x NVM_DIR ~/.nvm
 
+set -x NODE_ENV local
+
 set -x ANDROID_HOME /usr/local/opt/android-sdk
 
 if test -e $HOME/.config/fish/aliases.fish
