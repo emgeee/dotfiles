@@ -21,14 +21,14 @@
 " => Vim plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('nvim')
-  let s:editor_root=expand("~/.nvim")
+  let s:editor_root=expand("~/.config/nvim")
 else
   let s:editor_root=expand("~/.vim")
 endif
 
 filetype off                  " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim/
+set rtp+=~/.config/nvim/bundle/Vundle.vim/
 call vundle#begin(s:editor_root . '/bundle')
 
 " let Vundle manage Vundle
@@ -102,6 +102,8 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet.vim'
 Plugin 'Shougo/neosnippet-snippets'
 
+"" Floobits
+Plugin 'floobits/floobits-neovim'
 
 "" Comment plugin
 Plugin 'tomtom/tcomment_vim'
@@ -169,10 +171,6 @@ Plugin 'Valloric/MatchTagAlways'
 "" Search Dash documentation
 Plugin 'rizzatti/dash.vim'
 " mapped to <leader>d
-
-"" Highligh which character to target for f, F
-Plugin 'unblevable/quick-scope'
-
 
 Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
@@ -368,7 +366,7 @@ au FocusGained,BufEnter * :silent! !
 ""  :20  :  up to 20 lines of command-line history will be remembered
 ""  %    :  saves and restores the buffer list
 ""  n... :  where to save the viminfo files
-set viminfo='10,\"100,:20,%,n~/.viminfo
+set viminfo='10,\"100,:20,%,n~/.nviminfo
 
 
 "" Save line postion on exit, then restore when opening file

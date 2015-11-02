@@ -47,10 +47,11 @@ Plugin 'ap/vim-css-color'
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'groenewege/vim-less'
+Plugin 'mxw/vim-jsx.git'
 
 "" Easy switching between vim/tmux
 "" NOTE: not using tmux right now
-" Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-navigator'
 
 "" Display git diffs in sidebar
 Plugin 'airblade/vim-gitgutter.git'
@@ -164,10 +165,6 @@ Plugin 'Valloric/MatchTagAlways'
 Plugin 'rizzatti/dash.vim'
 " mapped to <leader>d
 
-"" Highligh which character to target for f, F
-Plugin 'unblevable/quick-scope'
-
-
 Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
@@ -191,6 +188,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
+"" automatic vim session creation + restoration
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
 
@@ -508,6 +506,8 @@ nmap <silent> <leader>r :RainbowToggle<CR>
 "" Toggle NERDTree
 nmap <silent> <F3> :NERDTreeToggle<CR>
 
+"" Automatically standard format a file
+nmap <silent> <F6> :!standard % --format<CR>
 
 "" Easy Align
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
