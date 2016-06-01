@@ -39,6 +39,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'trapd00r/neverland-vim-theme'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'chriskempson/base16-vim'
+Plugin 'romainl/flattened'
 
 "" additional syntax highlighting
 Plugin 'sudar/vim-arduino-syntax'
@@ -47,6 +48,9 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'mxw/vim-jsx'
+
+let g:jsx_ext_required = 0
 
 "" Highligh css colors!
 Plugin 'ap/vim-css-color'
@@ -192,11 +196,19 @@ Plugin 'junegunn/vim-easy-align'
 " remember to `npm install` in package directory
 
 "" Syntax checker
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
+Plugin 'benekastah/neomake'
+
+"" automatic vim session creation + restoration
+" :Obsess! to remove the session (so you can start over)
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
+
+"" vim keybindings for require
+" gF to go to required() file
+Plugin 'moll/vim-node'
 
 call vundle#end()            " required
 
@@ -236,8 +248,6 @@ set formatoptions=qrn1
 set mouse=a "enable mouse support
 " set mouse=c "disable mouse support
 
-set encoding=utf-8
-
 "" Ignore these directories
 set wildmode=list:longest,full
 set wildmenu
@@ -255,7 +265,7 @@ set wildignore+=public
 set wildignore+=submodules
 set wildignore+=node_modules
 set wildignore+=bower_components
-" set wildignore+=www
+set wildignore+=www
 " set wildignore+=*/development/*
 " set wildignore+=*/production/*
 
@@ -344,11 +354,11 @@ set noshowmode
 filetype plugin indent on
 
 set backup
-set backupdir=~/.vim/tmp/backup//
-set directory=~/.vim/tmp/swap//
+set backupdir=~/.config/nvim/tmp/backup//
+set directory=~/.config/nvim/tmp/swap//
 
 set undofile
-set undodir=~/.vim/tmp/undo//
+set undodir=~/.config/nvim/tmp/undo//
 set history=700
 set undolevels=700
 
@@ -403,7 +413,10 @@ augroup END
 
 
 set background=dark
+" colorscheme solarized
+colorscheme jellybeans
 
+" colorscheme flattened_dark
 
 "" Find more Airline themes at
 "" https://github.com/bling/vim-airline/tree/master/autoload/airline/themes
@@ -415,24 +428,14 @@ set background=dark
 " colorscheme jellybeans
 " let g:airline_theme = 'dark'
 
-if has('gui_running')
-  " colorscheme base16-default
-  " let g:airline_theme = 'base16'
-
-  " solarized for gui
-  colorscheme solarized
-  let g:airline_theme = 'murmur'
-  highlight clear SignColumn
-else
-  colorscheme jellybeans
-  let g:airline_theme = 'dark'
-endif
-
+" let g:airline_theme = 'murmur'
+let g:airline_theme = 'dark'
+highlight clear SignColumn
 
 "" configure javascript libraries syntax
 let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 
-set t_Co=256 "enable 256 colors
+" set t_Co=256 "enable 256 colors
 
 
 
@@ -512,6 +515,8 @@ nmap <silent> <leader>r :RainbowToggle<CR>
 "" Toggle NERDTree
 nmap <silent> <F3> :NERDTreeToggle<CR>
 
+"" Automatically standard format a file
+nmap <silent> <F6> :!standard % --format<CR>
 
 "" Easy Align
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -590,21 +595,31 @@ let g:ctrlp_working_path_mode = 'ra'
 "" Set easy motion key
 let g:EasyMotion_leader_key = '<leader><leader>'
 
+
+
+""""""""""""""""""""""""""""""
+" => neomake config
+""""""""""""""""""""""""""""""
+let g:neomake_javascript_enabled_makers = ['standard']
+let g:neomake_jsx_enabled_makers = ['standard']
+
+autocmd! BufWritePost * Neomake
+
 """"""""""""""""""""""""""""""
 " => Syntastic config
 """"""""""""""""""""""""""""""
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_always_populate_loc_list = 1
-
-let g:syntastic_enable_signs = 1
-let g:syntastic_javascript_checkers = ['standard']
-
-let g:syntastic_html_tidy_exec = 'tidy5'
-" let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
-
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '!'
+"
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_javascript_checkers = ['standard']
+"
+" let g:syntastic_html_tidy_exec = 'tidy5'
+" " let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
+" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+"
+" let g:syntastic_error_symbol = '✗'
+" let g:syntastic_warning_symbol = '!'
 
 
 """"""""""""""""""""""""""""""

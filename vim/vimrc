@@ -47,7 +47,7 @@ Plugin 'ap/vim-css-color'
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'groenewege/vim-less'
-Plugin 'mxw/vim-jsx.git'
+Plugin 'mxw/vim-jsx'
 
 "" Easy switching between vim/tmux
 "" NOTE: not using tmux right now
@@ -189,8 +189,13 @@ Plugin 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
 "" automatic vim session creation + restoration
+" :Obsess! to remove the session (so you can start over)
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
+
+"" vim keybindings for require
+" gF to go to required() file
+Plugin 'moll/vim-node'
 
 call vundle#end()            " required
 
