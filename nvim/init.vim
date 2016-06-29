@@ -29,44 +29,41 @@ endif
 filetype off                  " required!
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim/
-call vundle#begin(s:editor_root . '/bundle')
-
-" let Vundle manage Vundle
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin(s:editor_root . '/plugged')
 
 """ Themes
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'trapd00r/neverland-vim-theme'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'romainl/flattened'
+Plug 'altercation/vim-colors-solarized'
+Plug 'trapd00r/neverland-vim-theme'
+Plug 'nanotech/jellybeans.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'romainl/flattened'
 
 "" additional syntax highlighting
-Plugin 'sudar/vim-arduino-syntax'
-Plugin 'digitaltoad/vim-jade'
+Plug 'sudar/vim-arduino-syntax'
+Plug 'digitaltoad/vim-jade'
 
-Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mxw/vim-jsx'
 
 let g:jsx_ext_required = 0
 
 "" Highligh css colors!
-Plugin 'ap/vim-css-color'
-Plugin 'JulesWang/css.vim'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'groenewege/vim-less'
+Plug 'ap/vim-css-color'
+Plug 'JulesWang/css.vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'groenewege/vim-less'
 
 "" Easy switching between vim/tmux
 "" NOTE: not using tmux right now
-" Plugin 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 
 "" Display git diffs in sidebar
-Plugin 'airblade/vim-gitgutter.git'
+Plug 'airblade/vim-gitgutter'
 
 "" Use ag (the silver searcher) to find patterns in file
-Plugin 'rking/ag.vim'
+Plug 'rking/ag.vim'
 " :Ag [options] {pattern} [{directory}]
 " must escape # character with \
 " e    to open file and close the quickfix window
@@ -82,7 +79,7 @@ Plugin 'rking/ag.vim'
 
 
 "" File navigation sidebar
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " type :NERDTreeToggle
 " :NERDTreeFind find location of current file
 " i to open in new split
@@ -92,125 +89,122 @@ Plugin 'scrooloose/nerdtree'
 " m to open menu
 
 "" Fuzzy file search
-" Plugin 'kien/ctrlp.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 
 "" Easily jump around
-Plugin 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 " Press <leader><leader> then a move command where <leader> = '\'
 "
 
 "" Vim snippets
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/neosnippet.vim'
-Plugin 'Shougo/neosnippet-snippets'
-
-"" Floobits
-Plugin 'floobits/floobits-neovim'
+Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 "" Comment plugin
-Plugin 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim'
 " Press <c-_><c-_> to comment lines
 " Press <c-_>i for inline commenting
 "
 
 "" Beautify HTML, css, and js
 "" requires ~/.vim/.editorconfig
-" Plugin 'einars/js-beautify'
-Plugin 'maksimr/vim-jsbeautify'
+" Plug 'einars/js-beautify'
+Plug 'maksimr/vim-jsbeautify'
 " :call JsBeautify()
 " :call HtmlBeautify()
 " :call CSSBeautify()
 "
 
 "" Allow custom text objects
-Plugin 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user'
 
 "" Custom text object for XML attributes
-Plugin 'whatyouhide/vim-textobj-xmlattr'
+Plug 'whatyouhide/vim-textobj-xmlattr'
 " ax and ix
 "
 
 
 "" Enable editorconfig in vim
-Plugin 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim'
 
 
 "" Easily surround things
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " ys<text object><surround char> - wrap text object
 " cs<old char><new char> - Change Surround
 " ds<old char> - Delete Surround
 " In virtual mode - S<char> - wrap current selection in <char>
 
 
-" Plugin 'jiangmiao/auto-pairs.git'
+" Plug 'jiangmiao/auto-pairs.git'
 
 "" Automatically added closing parenthesis/brackets etc
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 
 "" Rainbow brackets!
-Plugin 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 
 "" Manage git inside vim
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " dp
 " do
 
 "" Others
-Plugin 'Shougo/vimproc.vim'
+" Plug 'Shougo/vimproc.vim'
 
 "" random key mappings
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
 
 "" Give me a powerline style status bar
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 
 "" Highlight matching tags
-Plugin 'Valloric/MatchTagAlways'
+Plug 'Valloric/MatchTagAlways'
 
 "" Search Dash documentation
-Plugin 'rizzatti/dash.vim'
+" Plug 'rizzatti/dash.vim'
 " mapped to <leader>d
 
-Plugin 'elzr/vim-json'
+Plug 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
 
 "" Experimental (not necessarily in workflow)
-" Plugin 'tpope/vim-sleuth'
-" Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'mbbill/undotree'
+" Plug 'tpope/vim-sleuth'
+" Plug 'terryma/vim-multiple-cursors'
+" Plug 'mbbill/undotree'
 
 "" Track usage with Wakatime
-Plugin 'wakatime/vim-wakatime'
+Plug 'wakatime/vim-wakatime'
 
 "" Align text around auto columns
-Plugin 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 "" configure tern - the javascript autocompleter
-" Plugin 'marijnh/tern_for_vim'
+" Plug 'marijnh/tern_for_vim'
 " remember to `npm install` in package directory
 
 "" Syntax checker
-" Plugin 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
-Plugin 'benekastah/neomake'
+Plug 'benekastah/neomake'
 
 "" automatic vim session creation + restoration
 " :Obsess! to remove the session (so you can start over)
-Plugin 'tpope/vim-obsession'
-Plugin 'dhruvasagar/vim-prosession'
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
 
 "" vim keybindings for require
 " gF to go to required() file
-Plugin 'moll/vim-node'
+Plug 'moll/vim-node'
 
-call vundle#end()            " required
+call plug#end()            " required
 
 "" Better bracket matching with %
 runtime! macros/matchit.vim
