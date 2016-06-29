@@ -28,7 +28,6 @@ endif
 
 filetype off                  " required!
 
-set rtp+=~/.config/nvim/bundle/Vundle.vim/
 call plug#begin(s:editor_root . '/plugged')
 
 """ Themes
@@ -38,26 +37,21 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'romainl/flattened'
 
-"" additional syntax highlighting
-Plug 'sudar/vim-arduino-syntax'
-Plug 'digitaltoad/vim-jade'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
-Plug 'pangloss/vim-javascript'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'mxw/vim-jsx'
-
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 let g:jsx_ext_required = 0
+
+Plug 'elzr/vim-json', { 'for': ['json'] }
+let g:vim_json_syntax_conceal = 0
 
 "" Highligh css colors!
 Plug 'ap/vim-css-color'
 Plug 'JulesWang/css.vim'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'groenewege/vim-less'
-
-"" Easy switching between vim/tmux
-"" NOTE: not using tmux right now
-" Plug 'christoomey/vim-tmux-navigator'
 
 "" Display git diffs in sidebar
 Plug 'airblade/vim-gitgutter'
@@ -79,7 +73,7 @@ Plug 'rking/ag.vim'
 
 
 "" File navigation sidebar
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " type :NERDTreeToggle
 " :NERDTreeFind find location of current file
 " i to open in new split
@@ -97,11 +91,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Lokaltog/vim-easymotion'
 " Press <leader><leader> then a move command where <leader> = '\'
 "
-
-"" Vim snippets
-Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 
 "" Comment plugin
 Plug 'tomtom/tcomment_vim'
@@ -126,7 +115,6 @@ Plug 'whatyouhide/vim-textobj-xmlattr'
 " ax and ix
 "
 
-
 "" Enable editorconfig in vim
 Plug 'editorconfig/editorconfig-vim'
 
@@ -139,14 +127,9 @@ Plug 'tpope/vim-surround'
 " In virtual mode - S<char> - wrap current selection in <char>
 
 
-" Plug 'jiangmiao/auto-pairs.git'
-
 "" Automatically added closing parenthesis/brackets etc
 Plug 'Raimondi/delimitMate'
 
-
-"" Rainbow brackets!
-" Plug 'luochen1990/rainbow'
 
 "" Manage git inside vim
 Plug 'tpope/vim-fugitive'
@@ -169,9 +152,6 @@ Plug 'Valloric/MatchTagAlways'
 "" Search Dash documentation
 " Plug 'rizzatti/dash.vim'
 " mapped to <leader>d
-
-Plug 'elzr/vim-json'
-let g:vim_json_syntax_conceal = 0
 
 
 "" Experimental (not necessarily in workflow)
@@ -487,9 +467,6 @@ map <leader>P "*P
 vnoremap <leader>y "*y
 vnoremap <leader>d "*d
 
-"" Toggle neocomplete on/off
-nnoremap <leader>nc :NeoCompleteToggle<CR>
-
 "" Toggle line numbers easily
 function! ToggleLineNumbers()
     if &relativenumber
@@ -502,9 +479,6 @@ function! ToggleLineNumbers()
 endfunction
 
 map <leader>tn :call ToggleLineNumbers()<CR>
-
-"" Rainbow toggle match brackets with colors
-nmap <silent> <leader>r :RainbowToggle<CR>
 
 "" Toggle NERDTree
 nmap <silent> <F3> :NERDTreeToggle<CR>
@@ -620,145 +594,6 @@ autocmd! BufWritePost * Neomake
 " => beautifier.vim
 """"""""""""""""""""""""""""""
 " let g:editorconfig_Beautifier = expand('$HOME/.editorconfig')
-
-
-""""""""""""""""""""""""""""""
-" => rainbow
-""""""""""""""""""""""""""""""
-let g:rainbow_active = 0
-let g:rainbow_conf = {
-\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\   'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
-\   'operators': '_,_',
-\   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
-\   'separately': {
-\       '*': {},
-\       'lisp': {
-\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-\           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
-\       },
-\       'vim': {
-\           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
-\       },
-\       'tex': {
-\           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
-\       },
-\       'css': 0,
-\       'stylus': 0,
-\   }
-\}
-
-
-""""""""""""""""""""""""""""""
-" => Neocomplete + snippets
-""""""""""""""""""""""""""""""
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 0
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-
-""""""""""""""""""""""""""""""
-" => Neosnippets
-""""""""""""""""""""""""""""""
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-" Disable NeoComplCache for certain filetypes
-au FileType pandoc,markdown nested NeoCompleteLock
 
 """"""""""""""""""""""""""""""
 " => Dash.vim
