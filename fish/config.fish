@@ -11,6 +11,7 @@ end
 # Universal environment variables
 set -Ux HOSTNAME (hostname)
 set -Ux EDITOR vim
+set -Ux REACT_EDITOR code
 
 if type vimpager >/dev/null 2>&1
   set -Ux PAGER vimpager
@@ -32,9 +33,9 @@ end
 #   set PATH /usr/local/share/npm/bin $PATH
 # end
 #
-# if not contains ./node_modules/.bin $PATH
-#   set PATH ./node_modules/.bin $PATH
-# end
+if not contains ./node_modules/.bin $PATH
+  set PATH ./node_modules/.bin $PATH
+end
 
 
 ## OMF config

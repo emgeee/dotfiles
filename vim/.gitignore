@@ -4,3 +4,4 @@ tmp/swap/*
 tmp/undo/*
 tmp/backup/*
 session/
+plugged/*

@@ -40,6 +40,8 @@ Plug 'romainl/flattened'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 let g:jsx_ext_required = 0
@@ -71,6 +73,10 @@ Plug 'rking/ag.vim'
 " gv   to open in vertical split silently
 " q    to close the quickfix window
 
+"" Split/join certain control statements
+" gS - split one-liner into multiple lines
+" gJ - join block in single line
+Plug 'AndrewRadev/splitjoin.vim'
 
 "" File navigation sidebar
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -156,8 +162,10 @@ Plug 'Valloric/MatchTagAlways'
 
 "" Experimental (not necessarily in workflow)
 " Plug 'tpope/vim-sleuth'
-" Plug 'terryma/vim-multiple-cursors'
 " Plug 'mbbill/undotree'
+
+Plug 'terryma/vim-multiple-cursors'
+" ctrl+n
 
 "" Track usage with Wakatime
 Plug 'wakatime/vim-wakatime'
@@ -175,14 +183,22 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'benekastah/neomake'
 
+" Plug 'flowtype/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
+" let g:flow#flowpath = "./node_modules/.bin/flow"
+" let g:flow#autoclose = 1
+
+Plug 'junegunn/rainbow_parentheses.vim'
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+
+
 "" automatic vim session creation + restoration
 " :Obsess! to remove the session (so you can start over)
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 
 "" vim keybindings for require
-" gF to go to required() file
 Plug 'moll/vim-node'
+" gF to go to required() file
 
 call plug#end()            " required
 
