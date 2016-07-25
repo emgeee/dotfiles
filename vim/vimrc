@@ -22,6 +22,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:editor_root=expand("~/.vim")
 
+set shell=bash "needed to make plugins work in fish shell
+
 filetype off                  " required!
 
 call plug#begin(s:editor_root . '/plugged')
@@ -84,14 +86,22 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " p go to parent directory
 " m to open menu
 
+""""""""""""""""""""""""""""""
+" => Ctrlp config
 "" Fuzzy file search
-" Plug 'kien/ctrlp.vim'
+""""""""""""""""""""""""""""""
 Plug 'ctrlpvim/ctrlp.vim'
+" Set no max file limit
+let g:ctrlp_max_files = 0
+" Search from current directory instead of project root
+let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_cmd = "CtrlPMixed"
+" let g:ctrlp_custom_ignore = 'mean-tutorial/code'
 
 
 "" Easily jump around
 Plug 'Lokaltog/vim-easymotion'
-" Press <leader><leader> then a move command where <leader> = '\'
+let g:EasyMotion_leader_key = '<leader><leader>'
 "
 
 "" Comment plugin
@@ -149,16 +159,8 @@ Plug 'tpope/vim-repeat'
 Plug 'bling/vim-airline'
 
 "" Highlight matching tags
-Plug 'Valloric/MatchTagAlways'
-
-"" Search Dash documentation
-" Plug 'rizzatti/dash.vim'
-" mapped to <leader>d
-
-
-"" Experimental (not necessarily in workflow)
-" Plug 'tpope/vim-sleuth'
-" Plug 'mbbill/undotree'
+" Requires Python
+" Plug 'Valloric/MatchTagAlways'
 
 Plug 'terryma/vim-multiple-cursors'
 " ctrl+n
@@ -170,13 +172,26 @@ Plug 'junegunn/vim-easy-align'
 " Plug 'marijnh/tern_for_vim'
 " remember to `npm install` in package directory
 
+""""""""""""""""""""""""""""""
+" => Syntastic config
 "" Syntax checker
+""""""""""""""""""""""""""""""
 Plug 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
-" Plug 'flowtype/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
-" let g:flow#flowpath = "./node_modules/.bin/flow"
-" let g:flow#autoclose = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+
+let g:syntastic_enable_signs = 1
+let g:syntastic_javascript_checkers = ['standard']
+
+let g:syntastic_html_tidy_exec = 'tidy5'
+" let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '!'
+
 
 Plug 'junegunn/rainbow_parentheses.vim'
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
@@ -186,6 +201,11 @@ let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " :Obsess! to remove the session (so you can start over)
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
+
+execute "let g:prosession_dir='" . s:editor_root . "/session/'"
+if !isdirectory(g:prosession_dir)
+  call mkdir(g:prosession_dir, "p")
+endif
 
 "" vim keybindings for require
 Plug 'moll/vim-node'
@@ -275,19 +295,7 @@ augroup markdown_set_cul
   autocmd FileType markdown :autocmd! markdown_set_cul VimEnter,WinEnter,BufWinEnter <buffer> :setlocal nocul
 augroup END
 
-
-"" Macvim specific settings
-if has('gui_running')
-  set guioptions-=T "Remove toolbar
-  set guioptions-=r "Remove right side scrollbar
-  set guioptions-=L "Remove right side scrollbar in NERDTree
-
-  set vb t_vb= "Disable visual bell in mvim
-endif
-
-
 if ! has('gui_running')
-
   "" Fix timing issue with powerline update statusbar
   " set ttimeoutlen=10
   augroup FastEscape
@@ -333,12 +341,27 @@ set noshowmode
 " individual filetype indenting can be configured in
 " ~/.vim/after/ftplugin/<filetype>.vim
 filetype plugin indent on
+
+execute "let s:backupdir='". s:editor_root . "/tmp/backup//'"
+execute "let s:directory='" . s:editor_root . "/tmp/swap//'"
+execute "let s:undodir='" . s:editor_root . "/tmp/undo//'"
+
+if !isdirectory(s:backupdir)
+  call mkdir(s:backupdir, "p")
+endif
+if !isdirectory(s:directory)
+  call mkdir(s:directory, "p")
+endif
+if !isdirectory(s:undodir)
+  call mkdir(s:undodir, "p")
+endif
+
 set backup
-execute "set backupdir=". s:editor_root . "/tmp/backup//"
-execute "set directory=" . s:editor_root . "/tmp/swap//"
+execute "set backupdir=". s:backupdir
+execute "set directory=" . s:directory
 
 set undofile
-execute "set undodir=" . s:editor_root . "/tmp/undo//"
+execute "set undodir=" . s:undodir
 set history=700
 set undolevels=700
 
@@ -544,39 +567,3 @@ nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins and utilities
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set shell=bash "needed to make vundle in fish work
-
-""""""""""""""""""""""""""""""
-" => Ctrlp config
-""""""""""""""""""""""""""""""
-" Set no max file limit
-let g:ctrlp_max_files = 0
-" Search from current directory instead of project root
-let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_cmd = "CtrlPMixed"
-" let g:ctrlp_custom_ignore = 'mean-tutorial/code'
-
-
-"" Set easy motion key
-let g:EasyMotion_leader_key = '<leader><leader>'
-
-
-""""""""""""""""""""""""""""""
-" => Syntastic config
-""""""""""""""""""""""""""""""
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_always_populate_loc_list = 1
-
-let g:syntastic_enable_signs = 1
-let g:syntastic_javascript_checkers = ['standard']
-
-let g:syntastic_html_tidy_exec = 'tidy5'
-" let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
-
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '!'
