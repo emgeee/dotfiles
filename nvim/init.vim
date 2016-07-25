@@ -54,6 +54,7 @@ Plug 'groenewege/vim-less'
 "" Display git diffs in sidebar
 Plug 'airblade/vim-gitgutter'
 
+""""""""""""""""""""""""""""""""""""""""""
 "" Use ag (the silver searcher) to find patterns in file
 " Plug 'rking/ag.vim'
 Plug 'mileszs/ack.vim'
@@ -63,7 +64,7 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 """"""""""""""""""""""""""""""""""""""""""
-Plug 'rking/ag.vim'
+
 " :Ag [options] {pattern} [{directory}]
 " must escape # character with \
 " e    to open file and close the quickfix window
@@ -199,6 +200,8 @@ let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " :Obsess! to remove the session (so you can start over)
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
+
+execute "let g:prosession_dir='" . s:editor_root . "/session/'"
 
 "" vim keybindings for require
 Plug 'moll/vim-node'
@@ -348,11 +351,11 @@ set noshowmode
 filetype plugin indent on
 
 set backup
-set backupdir=~/.config/nvim/tmp/backup//
-set directory=~/.config/nvim/tmp/swap//
+execute "set backupdir=". s:editor_root . "/tmp/backup//"
+execute "set directory=" . s:editor_root . "/tmp/swap//"
 
 set undofile
-set undodir=~/.config/nvim/tmp/undo//
+execute "set undodir=" . s:editor_root . "/tmp/undo//"
 set history=700
 set undolevels=700
 
