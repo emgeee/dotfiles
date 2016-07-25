@@ -291,29 +291,6 @@ augroup markdown_set_cul
   autocmd FileType markdown :autocmd! markdown_set_cul VimEnter,WinEnter,BufWinEnter <buffer> :setlocal nocul
 augroup END
 
-
-"" Macvim specific settings
-if has('gui_running')
-  set guioptions-=T "Remove toolbar
-  set guioptions-=r "Remove right side scrollbar
-  set guioptions-=L "Remove right side scrollbar in NERDTree
-
-  set vb t_vb= "Disable visual bell in mvim
-endif
-
-
-if ! has('gui_running')
-
-  "" Fix timing issue with powerline update statusbar
-  " set ttimeoutlen=10
-  augroup FastEscape
-      autocmd!
-      au InsertEnter * set timeoutlen=200 "gimme this ms to enter jk
-      au InsertLeave * set timeoutlen=1000
-    augroup END
-endif
-
-
 """"""""""""""""""""""""""""""
 " => airline
 """"""""""""""""""""""""""""""
