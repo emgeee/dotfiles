@@ -223,6 +223,9 @@ Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 
 execute "let g:prosession_dir='" . s:editor_root . "/session/'"
+if !isdirectory(g:prosession_dir)
+  call mkdir(g:prosession_dir, "p")
+endif
 
 "" vim keybindings for require
 Plug 'moll/vim-node'
@@ -348,12 +351,26 @@ set noshowmode
 " ~/.vim/after/ftplugin/<filetype>.vim
 filetype plugin indent on
 
+execute "let s:backupdir='". s:editor_root . "/tmp/backup//'"
+execute "let s:directory='" . s:editor_root . "/tmp/swap//'"
+execute "let s:undodir='" . s:editor_root . "/tmp/undo//'"
+
+if !isdirectory(s:backupdir)
+  call mkdir(s:backupdir, "p")
+endif
+if !isdirectory(s:directory)
+  call mkdir(s:directory, "p")
+endif
+if !isdirectory(s:undodir)
+  call mkdir(s:undodir, "p")
+endif
+
 set backup
-execute "set backupdir=". s:editor_root . "/tmp/backup//"
-execute "set directory=" . s:editor_root . "/tmp/swap//"
+execute "set backupdir=". s:backupdir
+execute "set directory=" . s:directory
 
 set undofile
-execute "set undodir=" . s:editor_root . "/tmp/undo//"
+execute "set undodir=" . s:undodir
 set history=700
 set undolevels=700
 
