@@ -59,6 +59,14 @@ Plug 'groenewege/vim-less'
 Plug 'airblade/vim-gitgutter'
 
 "" Use ag (the silver searcher) to find patterns in file
+" Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
+
+" Optionally use silver Searcher
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+""""""""""""""""""""""""""""""""""""""""""
 Plug 'rking/ag.vim'
 " :Ag [options] {pattern} [{directory}]
 " must escape # character with \
