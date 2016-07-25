@@ -20,11 +20,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('nvim')
-  let s:editor_root=expand("~/.config/nvim")
-else
-  let s:editor_root=expand("~/.vim")
-endif
+let s:editor_root=expand("~/.config/nvim")
 
 filetype off                  " required!
 
