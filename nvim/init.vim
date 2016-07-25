@@ -22,6 +22,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:editor_root=expand("~/.config/nvim")
 
+set shell=bash "needed to make plugins work in fish shell
+
 filetype off                  " required!
 
 call plug#begin(s:editor_root . '/plugged')
@@ -93,15 +95,24 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " p go to parent directory
 " m to open menu
 
-"" Fuzzy file search
-" Plug 'kien/ctrlp.vim'
+""""""""""""""""""""""""""""""
+" => Ctrlp config
+" Fuzzy file search
+""""""""""""""""""""""""""""""
 Plug 'ctrlpvim/ctrlp.vim'
+
+" Set no max file limit
+let g:ctrlp_max_files = 0
+" Search from current directory instead of project root
+let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_cmd = "CtrlPMixed"
 
 
 "" Easily jump around
 Plug 'Lokaltog/vim-easymotion'
 " Press <leader><leader> then a move command where <leader> = '\'
 "
+let g:EasyMotion_leader_key = '<leader><leader>'
 
 "" Comment plugin
 Plug 'tomtom/tcomment_vim'
@@ -160,10 +171,13 @@ Plug 'bling/vim-airline'
 "" Highlight matching tags
 Plug 'Valloric/MatchTagAlways'
 
+
+""""""""""""""""""""""""""""""
+" => Dash.vim
+""""""""""""""""""""""""""""""
 "" Search Dash documentation
 " Plug 'rizzatti/dash.vim'
-" mapped to <leader>d
-
+nmap <silent> <leader>d <Plug>DashSearch
 
 "" Experimental (not necessarily in workflow)
 " Plug 'tpope/vim-sleuth'
@@ -186,7 +200,14 @@ Plug 'junegunn/vim-easy-align'
 " Plug 'scrooloose/syntastic'
 " :Errors - show quickfix window
 
+""""""""""""""""""""""""""""""
+" => neomake
+""""""""""""""""""""""""""""""
 Plug 'benekastah/neomake'
+let g:neomake_javascript_enabled_makers = ['standard']
+let g:neomake_jsx_enabled_makers = ['standard']
+
+autocmd! BufWritePost * Neomake
 
 " Plug 'flowtype/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
 " let g:flow#flowpath = "./node_modules/.bin/flow"
@@ -541,108 +562,3 @@ nmap <C-l> <C-w>l
 
 " NeoVim terminal emulation
 tnoremap <Esc> <C-\><C-n>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins and utilities
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set shell=bash "needed to make vundle in fish work
-
-""""""""""""""""""""""""""""""
-" => Ctrlp config
-""""""""""""""""""""""""""""""
-" Set no max file limit
-let g:ctrlp_max_files = 0
-" Search from current directory instead of project root
-let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_cmd = "CtrlPMixed"
-" let g:ctrlp_custom_ignore = 'mean-tutorial/code'
-
-
-"" Set easy motion key
-let g:EasyMotion_leader_key = '<leader><leader>'
-
-
-
-""""""""""""""""""""""""""""""
-" => neomake config
-""""""""""""""""""""""""""""""
-let g:neomake_javascript_enabled_makers = ['standard']
-let g:neomake_jsx_enabled_makers = ['standard']
-
-autocmd! BufWritePost * Neomake
-
-""""""""""""""""""""""""""""""
-" => Syntastic config
-""""""""""""""""""""""""""""""
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_always_populate_loc_list = 1
-"
-" let g:syntastic_enable_signs = 1
-" let g:syntastic_javascript_checkers = ['standard']
-"
-" let g:syntastic_html_tidy_exec = 'tidy5'
-" " let g:syntastic_html_tidy_ignore_errors=['proprietary attribute', '<input> proprietary attribute "role"' ]
-" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
-"
-" let g:syntastic_error_symbol = '✗'
-" let g:syntastic_warning_symbol = '!'
-
-
-""""""""""""""""""""""""""""""
-" => beautifier.vim
-""""""""""""""""""""""""""""""
-" let g:editorconfig_Beautifier = expand('$HOME/.editorconfig')
-
-""""""""""""""""""""""""""""""
-" => Dash.vim
-""""""""""""""""""""""""""""""
-nmap <silent> <leader>d <Plug>DashSearch
-
-
-""""""""""""""""""""""""""""""
-" => textobj
-""""""""""""""""""""""""""""""
-" call textobj#user#plugin('markdown', {
-" \  'code_a': {
-" \    'select': 'amc',
-" \    'pattern': '^```\w\+\n\_.\{-}\n\_^```\_$',
-" \    'region-type': 'V',
-" \  },
-" \  'code_i': {
-" \    'select': 'imc',
-" \    'pattern': '^```\w\+\_$\n\zs\_.\{-}\ze\_^```\_$',
-" \    'region-type': 'V',
-" \  },
-" \ })
-
-" call textobj#user#plugin('markdown', {
-" \  'code': {
-" \    'pattern': ['\_^```\w+\_$','\_^```\_$'],
-" \    'select-a': 'amc',
-" \    'select-i': 'imc',
-" \    'region-type': 'v',
-" \  },
-" \ })
-
-
-" call textobj#user#plugin('markdown', {
-" \  'code': {
-" \    'select-a': 'amc',
-" \    'select-a-function': 'CurrentLineA',
-" \    'select-i': 'imc',
-" \    'select-i-function': 'CurrentLineI',
-" \  },
-" \ })
-"
-" function! CurrentLineA()
-" endfunction
-"
-" function! CurrentLineI()
-"   let ORIG_POS = getpos('.')[1:2]
-"   let start = searchpos('\_^```$', 'bceW')
-"   let end = searchpos('\n\_^```$', 'cW')
-"
-"   return s:cancel_selection(a:previous_mode, ORIG_POS)
-" endfunction
