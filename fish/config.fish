@@ -8,6 +8,10 @@ if test -e $HOME/.bin
   set -U fish_user_paths $HOME/.bin $PATH
 end
 
+if test -e $HOME/.nodebrew/current/bin
+  set -U fish_user_paths $HOME/.nodebrew/current/bin $PATH
+end
+
 # Universal environment variables
 set -Ux HOSTNAME (hostname)
 set -Ux EDITOR vim
@@ -18,8 +22,14 @@ if type vimpager >/dev/null 2>&1
 end
 
 set -x NODE_ENV local
-set -x ANDROID_HOME /usr/local/opt/android-sdk
+set -x ANDROID_HOME /Users/matt/Library/Android/sdk
 set -x JAVA_HOME (/usr/libexec/java_home)
+
+# Add android tools to path
+if test -e $ANDROID_HOME
+  set -U fish_user_paths $ANDROID_HOME/tools/bin $PATH
+  set -U fish_user_paths $ANDROID_HOME/platform-tools $PATH
+end
 
 if test -e $HOME/.config/fish/aliases.fish
   source $HOME/.config/fish/aliases.fish

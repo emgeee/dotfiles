@@ -40,6 +40,7 @@ Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'leafgarland/typescript-vim'
 
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 let g:jsx_ext_required = 0
@@ -158,6 +159,8 @@ Plug 'tpope/vim-fugitive'
 " dp
 " do
 
+Plug 'tpope/vim-rhubarb'
+
 "" Others
 " Plug 'Shougo/vimproc.vim'
 
@@ -187,7 +190,7 @@ Plug 'terryma/vim-multiple-cursors'
 " ctrl+n
 
 "" Track usage with Wakatime
-Plug 'wakatime/vim-wakatime'
+" Plug 'wakatime/vim-wakatime'
 
 "" Align text around auto columns
 Plug 'junegunn/vim-easy-align'
@@ -522,7 +525,7 @@ map <leader>tn :call ToggleLineNumbers()<CR>
 nmap <silent> <F3> :NERDTreeToggle<CR>
 
 "" Automatically standard format a file
-nmap <silent> <F6> :!standard % --format<CR>
+nmap <silent> <F6> :!standard-format % -w<CR>
 
 "" Easy Align
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -579,3 +582,7 @@ nmap <C-l> <C-w>l
 
 " NeoVim terminal emulation
 tnoremap <Esc> <C-\><C-n>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l

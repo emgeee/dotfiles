@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/matt/code/boosterfuels/types'
+let g:netrw_dirhist_2='/Users/matt/code/boosterfuels/bob/models'
+let g:netrw_dirhist_3='/Users/matt/code/boosterfuels/diamond/styles'
+let g:netrw_dirhist_4='/Users/matt/code/boosterfuels/bob'
+let g:netrw_dirhist_5='/Users/matt/code/boosterfuels/drivers-lp/build'
+let g:netrw_dirhist_6='/Users/matt/code/boosterfuels/zeus/server'
+let g:netrw_dirhist_7='/Users/matt/code/boosterfuels/mappy2/node_modules/react-map-gl'
