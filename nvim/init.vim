@@ -544,8 +544,8 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 "" remap tab key to % for jumping to matching brackets
-" nnoremap <tab> %
-" vnoremap <tab> %
+nnoremap <tab> %
+vnoremap <tab> %
 
 "" use vim magic mode instead of weird regexes
 nnoremap / /\V
