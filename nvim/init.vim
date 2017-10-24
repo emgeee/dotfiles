@@ -36,11 +36,24 @@ Plug 'chriskempson/base16-vim'
 Plug 'romainl/flattened'
 
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+let g:javascript_plugin_jsdoc = 1 " Syntax highlighting for JsDoc
+let g:javascript_plugin_flow = 1 " Syntax highlighting for Flowtype
+
+" Adds some addition syntax highlighting
 Plug 'jelera/vim-javascript-syntax', { 'for': ['javascript', 'javascript.jsx'] }
+
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+"" configure javascript libraries syntax
+let g:used_javascript_libs = 'underscore,jquery,react,ramda'
+
 " Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+"
+" TypeScript Syntax highlighting
 Plug 'leafgarland/typescript-vim'
+
+" Plugin connects to Typescript server for information
+Plug 'Quramy/tsuquyomi'
 
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 let g:jsx_ext_required = 0
@@ -446,9 +459,6 @@ colorscheme jellybeans
 " let g:airline_theme = 'murmur'
 let g:airline_theme = 'dark'
 highlight clear SignColumn
-
-"" configure javascript libraries syntax
-let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 
 " set t_Co=256 "enable 256 colors
 
