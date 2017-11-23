@@ -47,6 +47,9 @@ if not contains ./node_modules/.bin $PATH
   set PATH ./node_modules/.bin $PATH
 end
 
+alias python="python3"
+alias pip="pip3"
+
 
 ## OMF config
 # Path to Oh My Fish install.

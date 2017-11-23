@@ -50,10 +50,10 @@ let g:used_javascript_libs = 'underscore,jquery,react,ramda'
 " Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 "
 " TypeScript Syntax highlighting
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 
 " Plugin connects to Typescript server for information
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] }
 
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 let g:jsx_ext_required = 0
@@ -172,10 +172,12 @@ Plug 'tpope/vim-fugitive'
 " dp
 " do
 
+"" Adds some Github specific bindings
+" :Gbrowse to open repo in Github
 Plug 'tpope/vim-rhubarb'
 
 "" Others
-" Plug 'Shougo/vimproc.vim'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 "" random key mappings
 Plug 'tpope/vim-unimpaired'
@@ -186,6 +188,9 @@ Plug 'bling/vim-airline'
 
 "" Highlight matching tags
 Plug 'Valloric/MatchTagAlways'
+
+"" Show contents of buffers when pasting
+Plug 'junegunn/vim-peekaboo'
 
 
 """"""""""""""""""""""""""""""
