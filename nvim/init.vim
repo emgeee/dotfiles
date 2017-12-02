@@ -109,6 +109,10 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " p go to parent directory
 " m to open menu
 
+"" Ctrlsf - Searching and editing strings across multiple files
+" EXPERIMENTAL
+Plug 'dyng/ctrlsf.vim'
+
 """"""""""""""""""""""""""""""
 " => Ctrlp config
 " Fuzzy file search
@@ -224,15 +228,40 @@ Plug 'junegunn/vim-easy-align'
 """"""""""""""""""""""""""""""
 " => neomake
 """"""""""""""""""""""""""""""
-Plug 'benekastah/neomake'
-let g:neomake_javascript_enabled_makers = ['standard']
-let g:neomake_jsx_enabled_makers = ['standard']
-
-autocmd! BufWritePost * Neomake
+" Plug 'neomake/neomake'
+" let g:neomake_javascript_enabled_makers = ['standard']
+" let g:neomake_jsx_enabled_makers = ['standard']
+"
+" autocmd! BufWritePost * Neomake
+" call neomake#configure#automake('w')
 
 " Plug 'flowtype/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
 " let g:flow#flowpath = "./node_modules/.bin/flow"
 " let g:flow#autoclose = 1
+
+""""""""""""""""""""""""""""""""
+" => ALE Linter
+""""""""""""""""""""""""""""""""
+Plug 'w0rp/ale'
+let g:ale_sign_column_always = 1
+
+" Enable option to only lint on file save (file save linting is enabled by default)
+" let g:ale_lint_on_text_changed = 'never'
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'javascript.jsx': ['eslint']
+\}
+
+" let g:ale_linter_aliases = {
+" \  'javascript.jsx': 'javascript',
+" \  'jsx': 'javascript'
+" \}
+
+" let g:ale_fixers = {
+"   \ 'javascript': ['eslint']
+"   \ }
+
 
 Plug 'junegunn/rainbow_parentheses.vim'
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
@@ -251,6 +280,10 @@ endif
 "" vim keybindings for require
 Plug 'moll/vim-node'
 " gF to go to required() file
+
+"" Hot key to auto add import statements
+" Requires 'npm install -g import-js'
+Plug 'galooshi/vim-import-js'
 
 call plug#end()            " required
 
