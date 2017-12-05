@@ -1,1 +1,4 @@
 aliases.fish
+fish_history
+fishd.*
+completions
