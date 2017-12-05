@@ -376,22 +376,56 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-" Use powerline fonts
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+function! UsePowerlinePatchedFonts()
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
 
-"" For screencasting - bump up font size
-" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h24
+  " don't show git status
+  let g:airline#extensions#hunks#enabled = 0
+  let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 
-" don't show git status
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+  let g:airline_powerline_fonts = 1
 
-let g:airline_powerline_fonts = 1
+  " disable showing fileencoding and fileformat
+  let g:airline_section_y = ''
+  " disable showing filetype
+  let g:airline_section_x = airline#section#create_right(['tagbar'])
+endfunction
 
-" disable showing fileencoding and fileformat
-let g:airline_section_y = ''
-" disable showing filetype
-let g:airline_section_x = airline#section#create_right(['tagbar'])
+function! UseNormalFonts()
+  let g:airline_right_alt_sep = ''
+  " unicode symbols
+  let g:airline_left_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_symbols.linenr = 'Ξ'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_detect_spell=0
+  " Airline White Space Handling:
+  let g:airline#extensions#whitespace#enabled = 1
+  let g:airline_symbols.whitespace = '□□'
+
+  let g:airline_mode_map = {
+  \ '__' : '-',
+  \ 'n' : 'N',
+  \ 'i' : 'I',
+  \ 'R' : 'R',
+  \ 'c' : 'C',
+  \ 'v' : 'V',
+  \ 'V' : 'V',
+  \ 's' : 'S',
+  \ 'S' : 'S',
+  \ '�' : 'S',
+  \ }
+endfunction
+
+if has('unix')
+  if has('mac')       " osx
+    " Use powerline fonts
+    call UsePowerlinePatchedFonts()
+  endif
+else
+  " Linux systems that don't have patched fonts
+  call UseNormalFonts()
+endif
 
 set laststatus=2
 set noshowmode
