@@ -285,6 +285,8 @@ Plug 'moll/vim-node'
 " Requires 'npm install -g import-js'
 Plug 'galooshi/vim-import-js'
 
+Plug 'christoomey/vim-tmux-navigator'
+
 call plug#end()            " required
 
 "" Better bracket matching with %
@@ -668,3 +670,12 @@ tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
+
+let g:tmux_navigator_no_mappings = 1
+
+" Keymappings for vim-tmux-navigator
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-o> :TmuxNavigatePrevious<cr>
