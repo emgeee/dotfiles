@@ -1,0 +1,6 @@
+package brew
+package osx
+package vi-mode
+theme batman
+theme default
+theme eclm
