@@ -47,13 +47,9 @@ if not contains ./node_modules/.bin $PATH
   set PATH ./node_modules/.bin $PATH
 end
 
-alias python="python3"
-alias pip="pip3"
-
-
 ## OMF config
 # Path to Oh My Fish install.
-set -gx OMF_PATH "/Users/matt/.local/share/omf"
+set -gx OMF_PATH $HOME/.local/share/omf
 
 # Customize Oh My Fish configuration path.
 #set -gx OMF_CONFIG "/Users/matt/.config/omf"
