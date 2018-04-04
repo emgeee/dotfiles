@@ -28,13 +28,20 @@ filetype off                  " required!
 
 call plug#begin(s:editor_root . '/plugged')
 
+
+""""""""""""""""""""""""""""""
 """ Themes
+""""""""""""""""""""""""""""""
 Plug 'altercation/vim-colors-solarized'
 Plug 'trapd00r/neverland-vim-theme'
 Plug 'nanotech/jellybeans.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'romainl/flattened'
 
+
+""""""""""""""""""""""""""""""
+""" JavaScript / Web
+""""""""""""""""""""""""""""""
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 let g:javascript_plugin_jsdoc = 1 " Syntax highlighting for JsDoc
 let g:javascript_plugin_flow = 1 " Syntax highlighting for Flowtype
@@ -67,18 +74,71 @@ Plug 'JulesWang/css.vim'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'groenewege/vim-less'
 
-"" Display git diffs in sidebar
-Plug 'airblade/vim-gitgutter'
+"" vim keybindings for require
+Plug 'moll/vim-node', { 'for': ['javascript', 'javascript.jsx'] }
+" gF to go to required() file
+
+"" Hot key to auto add import statements
+" Requires 'npm install -g import-js'
+Plug 'galooshi/vim-import-js', { 'for': ['javascript', 'javascript.jsx'] }
+
+""""""""""""""""""""""""""""""
+""" Python
+""""""""""""""""""""""""""""""
+Plug 'vim-python/python-syntax', { 'for': ['python']}
+let g:python_highlight_all = 1
+
+" let g:python_highlight_string_format = 1
+" let g:python_highlight_builtins = 1
+" let g:python_highlight_class_vars = 1
+" let g:python_highlight_operators = 1
+
+Plug 'tmhedberg/SimpylFold', { 'for': ['python']}
+let g:SimplyFold_fold_docstring=0
+
+" Don't fold anything by default
+set foldlevelstart=999
+
+" Folds
+" zM - close all folds
+" zm - close all folds by level
+" zR - open all folds
+" zr - open all folds by level
+"
+" za - open fold
+" zc - close fold
+"
+"
+
+Plug 'zchee/deoplete-jedi'
+Plug 'davidhalter/jedi-vim', { 'for': ['python']}
+let g:jedi#use_splits_not_buffers = "right"
+
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+
+
+" Disable default auto-complete in favor of async deoplete
+let g:jedi#completions_enabled = 0
+
 
 """"""""""""""""""""""""""""""""""""""""""
 "" Use ag (the silver searcher) to find patterns in file
-" Plug 'rking/ag.vim'
 Plug 'mileszs/ack.vim'
 
 " Optionally use silver Searcher
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+" Normal "Ack" jumps to the first result automatically, "Ack!" does not
+" so default to not jumping
+cnoreabbrev Ack Ack!
 """"""""""""""""""""""""""""""""""""""""""
 
 " :Ag [options] {pattern} [{directory}]
@@ -111,7 +171,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 "" Ctrlsf - Searching and editing strings across multiple files
 " EXPERIMENTAL
-Plug 'dyng/ctrlsf.vim'
+" Plug 'dyng/ctrlsf.vim'
 
 """"""""""""""""""""""""""""""
 " => Ctrlp config
@@ -125,6 +185,11 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_cmd = "CtrlPMixed"
 
+""""""""""""""""""""""""""""""
+""" Autocomplete
+""""""""""""""""""""""""""""""
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
 
 "" Easily jump around
 Plug 'Lokaltog/vim-easymotion'
@@ -170,7 +235,9 @@ Plug 'tpope/vim-surround'
 "" Automatically added closing parenthesis/brackets etc
 Plug 'Raimondi/delimitMate'
 
-
+""""""""""""""""""""""""""""""
+" Git stuff
+""""""""""""""""""""""""""""""
 "" Manage git inside vim
 Plug 'tpope/vim-fugitive'
 " dp
@@ -180,6 +247,9 @@ Plug 'tpope/vim-fugitive'
 " :Gbrowse to open repo in Github
 Plug 'tpope/vim-rhubarb'
 
+"" Display git diffs in sidebar
+Plug 'airblade/vim-gitgutter'
+
 "" Others
 " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
@@ -188,7 +258,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 
 "" Give me a powerline style status bar
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 "" Highlight matching tags
 Plug 'Valloric/MatchTagAlways'
@@ -202,7 +273,7 @@ Plug 'junegunn/vim-peekaboo'
 """"""""""""""""""""""""""""""
 "" Search Dash documentation
 " Plug 'rizzatti/dash.vim'
-nmap <silent> <leader>d <Plug>DashSearch
+" nnoremap <silent> <leader>d <Plug>DashSearch
 
 "" Experimental (not necessarily in workflow)
 " Plug 'tpope/vim-sleuth'
@@ -244,6 +315,7 @@ Plug 'junegunn/vim-easy-align'
 """"""""""""""""""""""""""""""""
 Plug 'w0rp/ale'
 let g:ale_sign_column_always = 1
+" Ale option for python specified in ftplugin/python.vim
 
 " Enable option to only lint on file save (file save linting is enabled by default)
 " let g:ale_lint_on_text_changed = 'never'
@@ -277,15 +349,11 @@ if !isdirectory(g:prosession_dir)
   call mkdir(g:prosession_dir, "p")
 endif
 
-"" vim keybindings for require
-Plug 'moll/vim-node'
-" gF to go to required() file
+" Plug 'christoomey/vim-tmux-navigator'
 
-"" Hot key to auto add import statements
-" Requires 'npm install -g import-js'
-Plug 'galooshi/vim-import-js'
-
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'wesQ3/vim-windowswap'
+" <leader>ww to initiate swap
+" <leader>ww again to swap
 
 call plug#end()            " required
 
@@ -378,56 +446,41 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-function! UsePowerlinePatchedFonts()
-  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+let g:airline_right_alt_sep = ''
+" unicode symbols
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 
-  " don't show git status
-  let g:airline#extensions#hunks#enabled = 0
-  let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '◀t
 
-  let g:airline_powerline_fonts = 1
+let g:airline_symbols.linenr = 'Ξ'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.crypt = '🔒'
 
-  " disable showing fileencoding and fileformat
-  let g:airline_section_y = ''
-  " disable showing filetype
-  let g:airline_section_x = airline#section#create_right(['tagbar'])
-endfunction
+" Airline White Space Handling:
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline_symbols.whitespace = '□□'
 
-function! UseNormalFonts()
-  let g:airline_right_alt_sep = ''
-  " unicode symbols
-  let g:airline_left_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_symbols.linenr = 'Ξ'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_detect_spell=0
-  " Airline White Space Handling:
-  let g:airline#extensions#whitespace#enabled = 1
-  let g:airline_symbols.whitespace = '□□'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_detect_spell=0
 
-  let g:airline_mode_map = {
-  \ '__' : '-',
-  \ 'n' : 'N',
-  \ 'i' : 'I',
-  \ 'R' : 'R',
-  \ 'c' : 'C',
-  \ 'v' : 'V',
-  \ 'V' : 'V',
-  \ 's' : 'S',
-  \ 'S' : 'S',
-  \ '�' : 'S',
-  \ }
-endfunction
+" Don't show certain sections
+let g:airline_section_x = ''
+let g:airline_section_y = ''
 
-if has('unix')
-  if has('mac')       " osx
-    " Use powerline fonts
-    call UsePowerlinePatchedFonts()
-  endif
-else
-  " Linux systems that don't have patched fonts
-  call UseNormalFonts()
-endif
+let g:airline_mode_map = {
+\ '__' : '-',
+\ 'n' : 'N',
+\ 'i' : 'I',
+\ 'R' : 'R',
+\ 'c' : 'C',
+\ 'v' : 'V',
+\ 'V' : 'V',
+\ 's' : 'S',
+\ 'S' : 'S',
+\ '�' : 'S',
+\ }
 
 set laststatus=2
 set noshowmode
@@ -502,10 +555,12 @@ augroup reload_vimrc
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and fonts
+" => Colors, themes, and fonts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
 
+" enable 24 bit color
+set termguicolors
 
 "" Automatically highlight @todo
 augroup HighlightTODO
@@ -513,25 +568,18 @@ augroup HighlightTODO
   autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', '@todo', -1)
 augroup END
 
-
 set background=dark
 " colorscheme solarized
 colorscheme jellybeans
-
+" colorscheme base16-default-dark
 " colorscheme flattened_dark
-
-"" Find more Airline themes at
-"" https://github.com/bling/vim-airline/tree/master/autoload/airline/themes
-"" pictures: https://github.com/bling/vim-airline/wiki/Screenshots
-
 " colorscheme neverland
+
 " let g:airline_theme = 'wombat'
-
-" colorscheme jellybeans
-" let g:airline_theme = 'dark'
-
-" let g:airline_theme = 'murmur'
-let g:airline_theme = 'dark'
+" let g:airline_theme = 'jellybeans'
+" let g:airline_theme = 'powerlineish'
+" let g:airline_theme = 'solarized'
+let g:airline_theme = 'papercolor'
 highlight clear SignColumn
 
 " set t_Co=256 "enable 256 colors
@@ -564,7 +612,7 @@ let mapleader = "\<Space>"
 inoremap jk <Esc>
 
 "" easily clear highlighted search - :noh
-nmap <silent> <leader>h :nohlsearch<CR>
+nnoremap <silent> <leader>h :nohlsearch<CR>
 
 "" Strip all whitespace from file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -587,8 +635,8 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 
 "" easily interact with system clipboard
-map <leader>p "*p
-map <leader>P "*P
+noremap <leader>p "*p
+noremap <leader>P "*P
 vnoremap <leader>y "*y
 vnoremap <leader>d "*d
 
@@ -603,19 +651,22 @@ function! ToggleLineNumbers()
     endif
 endfunction
 
-map <leader>tn :call ToggleLineNumbers()<CR>
+noremap <leader>tn :call ToggleLineNumbers()<CR>
 
 "" Toggle NERDTree
-nmap <silent> <F3> :NERDTreeToggle<CR>
+nnoremap <silent> <F3> :NERDTreeToggle<CR>
+
+"" Find current file in NERDTree
+nnoremap <silent> <F4> :NERDTreeFind<CR>
 
 "" Automatically standard format a file
-nmap <silent> <F6> :!standard-format % -w<CR>
+nnoremap <silent> <F6> :!standard-format % -w<CR>
 
 "" Easy Align
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+vnoremap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
 
 "" remap tab key to % for jumping to matching brackets
 nnoremap <tab> %
@@ -639,6 +690,15 @@ noremap L $
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 
+nnoremap <silent> k gk
+
+"" Toggle folds with enter
+noremap <silent> <Enter> za
+noremap <silent> <leader><Enter> zMza
+
+" Not really sure what is overwriting <C-i> but unmap it
+unmap <C-i>
+
 " Allow use of the backspace key at anytime in insert mode
 set backspace=indent,eol,start
 
@@ -658,10 +718,10 @@ endif
 " :vsp - new buffer vertically
 " :sp - new buffer horizontally
 "" remap changing buffers
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 
 " NeoVim terminal emulation
@@ -674,8 +734,7 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 let g:tmux_navigator_no_mappings = 1
 
 " Keymappings for vim-tmux-navigator
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <C-o> :TmuxNavigatePrevious<cr>
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
