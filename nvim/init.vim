@@ -360,6 +360,12 @@ call plug#end()            " required
 "" Better bracket matching with %
 runtime! macros/matchit.vim
 
+
+" Setup a customer virtual environment called `neovim` for neovim and install
+" pip plugins like jedi, and neovim
+"
+let g:python_host_prog = $HOME.'/.virtualenvs/neovim/bin/python'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
