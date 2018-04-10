@@ -693,8 +693,8 @@ nnoremap <silent> k gk
 nnoremap <silent> k gk
 
 "" Toggle folds with enter
-noremap <silent> <Enter> za
-noremap <silent> <leader><Enter> zMza
+" noremap <silent> <Enter> za
+" noremap <silent> <leader><Enter> zMza
 
 " Not really sure what is overwriting <C-i> but unmap it
 unmap <C-i>
