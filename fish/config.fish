@@ -21,8 +21,7 @@ if type vimpager >/dev/null 2>&1
   set -Ux PAGER vimpager
 end
 
-set -x NODE_ENV local
-set -x ANDROID_HOME /Users/matt/Library/Android/sdk
+set -x ANDROID_HOME $HOME/Library/Android/sdk
 set -x JAVA_HOME (/usr/libexec/java_home)
 
 # Add android tools to path
@@ -44,9 +43,9 @@ end
 set -gx OMF_PATH $HOME/.local/share/omf
 
 # Customize Oh My Fish configuration path.
-#set -gx OMF_CONFIG "/Users/matt/.config/omf"
+set -gx OMF_CONFIG "$HOME/.config/omf"
 
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish

@@ -2,6 +2,7 @@ package brew
 package config
 package node
 package osx
+package pyenv
 package spark
 package thefuck
 package vi-mode
