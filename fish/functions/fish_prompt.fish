@@ -1,1 +1,1 @@
-/Users/matt/.local/share/omf/themes/eclm/fish_prompt.fish
+/Users/mgreen/.local/share/omf/themes/eclm/fish_prompt.fish

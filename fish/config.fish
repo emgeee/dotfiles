@@ -39,14 +39,6 @@ if test -e $HOME/.config/fish/private_environment.fish
   source $HOME/.config/fish/private_environment.fish
 end
 
-# if not contains /usr/local/share/npm/bin $PATH
-#   set PATH /usr/local/share/npm/bin $PATH
-# end
-#
-if not contains ./node_modules/.bin $PATH
-  set PATH ./node_modules/.bin $PATH
-end
-
 ## OMF config
 # Path to Oh My Fish install.
 set -gx OMF_PATH $HOME/.local/share/omf
