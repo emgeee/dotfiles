@@ -364,7 +364,8 @@ runtime! macros/matchit.vim
 " Setup a customer virtual environment called `neovim` for neovim and install
 " pip plugins like jedi, and neovim
 "
-let g:python_host_prog = $HOME.'/.virtualenvs/neovim/bin/python'
+" let g:python_host_prog = $HOME.'' " Not using python2 for neovim right now
+let g:python3_host_prog = $HOME.'/.virtualenvs/neovim/bin/python3'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
@@ -468,7 +469,7 @@ let g:airline_symbols.crypt = '🔒'
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline_symbols.whitespace = '□□'
 
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 let g:airline_detect_spell=0
 
 " Don't show certain sections
@@ -591,7 +592,6 @@ highlight clear SignColumn
 " set t_Co=256 "enable 256 colors
 
 
-
 "" Highlight trailing whitespace in vim only (not vimpager or Unite window)
 if ! exists("vimpager")
   highlight ExtraWhitespace ctermbg=red guibg=red
@@ -700,7 +700,7 @@ nnoremap <silent> k gk
 
 "" Toggle folds with enter
 " noremap <silent> <Enter> za
-" noremap <silent> <leader><Enter> zMza
+noremap <silent> <leader><Enter> zMza
 
 " Not really sure what is overwriting <C-i> but unmap it
 unmap <C-i>

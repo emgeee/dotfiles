@@ -6,3 +6,4 @@ tmp/undo/*
 tmp/backup/*
 session/
 .netrwhist
+spell/
