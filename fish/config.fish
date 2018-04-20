@@ -1,15 +1,12 @@
 ### Begin custom fish customization
 
-# PATH
-set -e fish_user_paths
-
 # # prepend ~/.bin/
 if test -e $HOME/.bin
-  set -U fish_user_paths $HOME/.bin $PATH
+  set PATH $HOME/.bin $PATH
 end
 
 if test -e $HOME/.nodebrew/current/bin
-  set -U fish_user_paths $HOME/.nodebrew/current/bin $PATH
+  set PATH $HOME/.nodebrew/current/bin $PATH
 end
 
 # Universal environment variables
@@ -26,8 +23,7 @@ set -x JAVA_HOME (/usr/libexec/java_home)
 
 # Add android tools to path
 if test -e $ANDROID_HOME
-  set -U fish_user_paths $ANDROID_HOME/tools/bin $PATH
-  set -U fish_user_paths $ANDROID_HOME/platform-tools $PATH
+  set -U PATH $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools $PATH
 end
 
 if test -e $HOME/.config/fish/aliases.fish
@@ -50,17 +46,17 @@ source $OMF_PATH/init.fish
 
 test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
 
-# brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper virtualfish
-# configure virtual env
-status --is-interactive; and source (pyenv init -|psub)
-# pyenv virtualenv
-status --is-interactive; and source (pyenv virtualenv-init -|psub)
-
-# brew install virtualfish
-eval (python -m virtualfish)
-
 # Disable virtual env on the left side of the prompt
 # useful if the selected theme has built in support
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 
 set -Ux PYENV_ROOT $HOME/.pyenv
+
+# brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper
+# configure virtual env
+status --is-interactive; and source (pyenv init -|psub)
+# pyenv virtualenv
+status --is-interactive; and source (pyenv virtualenv-init -|psub)
+
+# pip install virtualfish
+eval (python -m virtualfish)
