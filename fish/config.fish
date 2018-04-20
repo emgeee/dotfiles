@@ -49,3 +49,18 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 source $OMF_PATH/init.fish
 
 test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
+
+# brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper virtualfish
+# configure virtual env
+status --is-interactive; and source (pyenv init -|psub)
+# pyenv virtualenv
+status --is-interactive; and source (pyenv virtualenv-init -|psub)
+
+# brew install virtualfish
+eval (python -m virtualfish)
+
+# Disable virtual env on the left side of the prompt
+# useful if the selected theme has built in support
+set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+
+set -Ux PYENV_ROOT $HOME/.pyenv
