@@ -110,6 +110,7 @@ set foldlevelstart=999
 "
 "
 
+Plug 'saltstack/salt-vim'
 Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim', { 'for': ['python']}
 let g:jedi#use_splits_not_buffers = "right"
@@ -220,6 +221,18 @@ Plug 'whatyouhide/vim-textobj-xmlattr'
 " ax and ix
 "
 
+"" Custom text object for indent blocks
+Plug 'michaeljsmith/vim-indent-object'
+" ai aI - full indentiation
+" ii, iI - inner indentation (effectively the same)
+
+"" Allow jumping between indent levels
+Plug 'jeetsukumaran/vim-indentwise'
+" [-, ]-
+" [=, ]=
+" [+, ]+
+"
+
 "" Enable editorconfig in vim
 Plug 'editorconfig/editorconfig-vim'
 
@@ -321,8 +334,8 @@ let g:ale_sign_column_always = 1
 " let g:ale_lint_on_text_changed = 'never'
 
 let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'javascript.jsx': ['eslint']
+\   'javascript': ['standard', 'eslint'],
+\   'javascript.jsx': ['standard', 'eslint']
 \}
 
 " let g:ale_linter_aliases = {
@@ -412,6 +425,7 @@ set wildignore+=*/plugins/*
 set wildignore+=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=DS_Store
 set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=*.pyc
 
 set wildignore+=public
 set wildignore+=submodules
