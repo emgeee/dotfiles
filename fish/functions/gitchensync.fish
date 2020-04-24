@@ -2,7 +2,7 @@
 # push branch to remote origin
 # open PR
 # args: Git commit message
-function gitchen_sync
+function gitchensync
   set msg $argv[1..-1]
   echo "pausing for 3 seconds..."
   sleep 3

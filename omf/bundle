@@ -1,3 +1,4 @@
+package bass
 package brew
 package config
 package node

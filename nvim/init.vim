@@ -88,10 +88,10 @@ Plug 'galooshi/vim-import-js', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'vim-python/python-syntax', { 'for': ['python']}
 let g:python_highlight_all = 1
 
-" let g:python_highlight_string_format = 1
-" let g:python_highlight_builtins = 1
-" let g:python_highlight_class_vars = 1
-" let g:python_highlight_operators = 1
+let g:python_highlight_string_format = 1
+let g:python_highlight_builtins = 1
+let g:python_highlight_class_vars = 1
+let g:python_highlight_operators = 1
 
 Plug 'tmhedberg/SimpylFold', { 'for': ['python']}
 let g:SimplyFold_fold_docstring=0
@@ -161,7 +161,7 @@ cnoreabbrev Ack Ack!
 Plug 'AndrewRadev/splitjoin.vim'
 
 "" File navigation sidebar
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 " type :NERDTreeToggle
 " :NERDTreeFind find location of current file
 " i to open in new split
@@ -169,6 +169,10 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " t to open in new tab
 " p go to parent directory
 " m to open menu
+
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeDirArrows = 1
+let NERDTreeMinimalUI = 1
 
 "" Ctrlsf - Searching and editing strings across multiple files
 " EXPERIMENTAL
@@ -337,6 +341,7 @@ let g:ale_linters = {
 \   'javascript': ['standard', 'eslint'],
 \   'javascript.jsx': ['standard', 'eslint']
 \}
+" \   'python': ['flake8', 'mypy', 'pyls']
 
 " let g:ale_linter_aliases = {
 " \  'javascript.jsx': 'javascript',
@@ -650,9 +655,15 @@ nnoremap <leader>eV :split $MYVIMRC<CR>
 "" Quickly select entire file
 nnoremap <leader>sa ggVG
 
+"" Quickly do a full grep for the word under the curosr
+nnoremap <leader>sw :Ack! <cword><CR>
+
 "" vim fugitive shortcuts
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+
+"" Copy curent filename to clipboard
+nnoremap <leader>cfn :!echo % \| pbcopy<CR>
 
 "" easily interact with system clipboard
 noremap <leader>p "*p

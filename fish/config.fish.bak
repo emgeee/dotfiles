@@ -44,12 +44,6 @@ set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 
 set -Ux PYENV_ROOT $HOME/.pyenv
 
-set -Ux GOPATH $HOME/go
-
-if test -e $GOPATH/bin
-  set PATH $GOPATH/bin $PATH
-end
-
 # brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper
 # configure virtual env
 status --is-interactive; and source (pyenv init -|psub)
@@ -72,4 +66,4 @@ if test -e $HOME/.config/fish/private_environment.fish
   source $HOME/.config/fish/private_environment.fish
 end
 
-# alias prv="pipenv run nvim"
+alias prv="pipenv run vim"
