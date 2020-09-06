@@ -380,10 +380,18 @@ runtime! macros/matchit.vim
 
 
 " Setup a customer virtual environment called `neovim` for neovim and install
-" pip plugins like jedi, and neovim
+" Install virtual env using pyenv:
+" $ pyenv virtualenv neovim  # create the 'neovim' virtualenv'
+"
+" Activate venv
+" $ pyenv activate neovim
+"
+" Install plugins
+" $ pip install neovim jedi
 "
 " let g:python_host_prog = $HOME.'' " Not using python2 for neovim right now
-let g:python3_host_prog = $HOME.'/.virtualenvs/neovim/bin/python3'
+" let g:python3_host_prog = $HOME.'/.virtualenvs/neovim/bin/python3'
+let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim/bin/python3'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
@@ -663,7 +671,12 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 
 "" Copy curent filename to clipboard
-nnoremap <leader>cfn :!echo % \| pbcopy<CR>
+if system('uname -r') =~ "Microsoft"
+  "" For WSL in windows use a different utility
+  nnoremap <leader>cfn :!echo % \| clipcopy<CR>
+else
+  nnoremap <leader>cfn :!echo % \| pbcopy<CR>
+endif
 
 "" easily interact with system clipboard
 noremap <leader>p "*p
