@@ -57,7 +57,7 @@ status --is-interactive; and source (pyenv init -|psub)
 status --is-interactive; and source (pyenv virtualenv-init -|psub)
 
 # pip install virtualfish
-eval (python -m virtualfish)
+# vf install
 
 function sshtmux
   set host $argv[1]
@@ -73,3 +73,4 @@ if test -e $HOME/.config/fish/private_environment.fish
 end
 
 # alias prv="pipenv run nvim"
+set -U PATH "/usr/local/opt/openssl@1.1/bin" $PATH
