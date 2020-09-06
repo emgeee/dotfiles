@@ -5,7 +5,6 @@ package node
 package osx
 package spark
 package thefuck
-package vi-mode
 package weather
 package z
 theme batman
