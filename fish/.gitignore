@@ -1,4 +1,5 @@
 aliases.fish
+fish_variables
 fish_history
 fishd.*
 completions
