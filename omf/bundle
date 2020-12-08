@@ -1,17 +1,10 @@
 package bass
 package brew
 package config
-package node
 package osx
 package spark
 package thefuck
 package weather
 package z
-theme batman
 theme bobthefish
 theme default
-theme eclm
-theme fishbone
-theme idan
-theme ocean
-theme shellder

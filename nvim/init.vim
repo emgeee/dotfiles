@@ -14,8 +14,8 @@
 " M - jump cursor to middle of display "
 "
 " :ju(mp) - print jump list
-
-
+"
+" brew install the_silver_searcher fzf bat fd
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim plugins
@@ -28,6 +28,8 @@ filetype off                  " required!
 
 call plug#begin(s:editor_root . '/plugged')
 
+Plug 'google/vim-maktaba'
+
 
 """"""""""""""""""""""""""""""
 """ Themes
@@ -37,6 +39,194 @@ Plug 'trapd00r/neverland-vim-theme'
 Plug 'nanotech/jellybeans.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'romainl/flattened'
+
+
+""""""""""""""""""""""""""""""
+" Fuzzy file search
+""""""""""""""""""""""""""""""
+" Plug 'ctrlpvim/ctrlp.vim'
+"
+" " Set no max file limit
+" let g:ctrlp_max_files = 0
+" " Search from current directory instead of project root
+" let g:ctrlp_working_path_mode = 'ra'
+" " let g:ctrlp_cmd = "CtrlPMixed"
+" "
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+let g:fzf_buffers_jump = 1
+let g:fzf_layout = { 'down': '30%' }
+
+
+
+" We use the fd command to list files that are then filtered by FZF
+" This gives us more control over which files are listed. For example
+" fd respects gitignore
+nnoremap <silent> <C-p> :call fzf#run(fzf#wrap({'source': 'fd --type f '}))<CR>
+" nnoremap <silent> <C-p> :<C-u>FZF<CR>
+
+" Enable closing the FZF window by pressing Esc https://github.com/junegunn/fzf.vim/issues/544
+if has("nvim")
+  au! TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  au! FileType fzf tunmap <buffer> <Esc>
+endif
+
+" if has('nvim') && !exists('g:fzf_layout')
+"   autocmd! FileType fzf
+"   autocmd  FileType fzf set laststatus=0 noshowmode noruler
+"     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+" endif
+
+""""""""""""""""""""""""""""""
+""" Autocomplete
+""""""""""""""""""""""""""""""
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
 """"""""""""""""""""""""""""""
@@ -110,23 +300,35 @@ set foldlevelstart=999
 "
 "
 
-Plug 'saltstack/salt-vim'
-Plug 'zchee/deoplete-jedi'
-Plug 'davidhalter/jedi-vim', { 'for': ['python']}
-let g:jedi#use_splits_not_buffers = "right"
+""""""""""""""""""""""""""""""
+""" golang
+""""""""""""""""""""""""""""""
 
-let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>r"
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" Allow sharing the same gopls daemon with other vim instances + coc
+" The gopls service needs to be manually started!
+let g:go_gopls_options = ['-remote=unix;/tmp/gopls-daemon-socket']
 
-" Disable default auto-complete in favor of async deoplete
-let g:jedi#completions_enabled = 0
+" Disable vim-go gopls integration since those features are covered by CoC and we mostly want
+" syntax highlighting. https://github.com/josa42/coc-go/issues/76 has suggestions for a fix if
+" it's a problem
+" let g:go_gopls_enabled = 0
 
+" disable vim-go :GoDef and :GoDoc shortcuts since these are better handled by CoC
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
+
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_variable_declarations = 0
+
+Plug 'bazelbuild/vim-bazel'
 
 """"""""""""""""""""""""""""""""""""""""""
 "" Use ag (the silver searcher) to find patterns in file
@@ -140,6 +342,12 @@ endif
 " Normal "Ack" jumps to the first result automatically, "Ack!" does not
 " so default to not jumping
 cnoreabbrev Ack Ack!
+
+Plug 'jremmen/vim-ripgrep'
+
+set grepprg=rg\ --vimgrep\ --smartcase
+set grepformat=%f:%l:%c:%m
+
 """"""""""""""""""""""""""""""""""""""""""
 
 " :Ag [options] {pattern} [{directory}]
@@ -174,27 +382,12 @@ let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeDirArrows = 1
 let NERDTreeMinimalUI = 1
 
-"" Ctrlsf - Searching and editing strings across multiple files
-" EXPERIMENTAL
-" Plug 'dyng/ctrlsf.vim'
-
-""""""""""""""""""""""""""""""
-" => Ctrlp config
-" Fuzzy file search
-""""""""""""""""""""""""""""""
-Plug 'ctrlpvim/ctrlp.vim'
-
-" Set no max file limit
-let g:ctrlp_max_files = 0
-" Search from current directory instead of project root
-let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_cmd = "CtrlPMixed"
-
-""""""""""""""""""""""""""""""
-""" Autocomplete
-""""""""""""""""""""""""""""""
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
+let NERDTreeIgnore=[
+  \ 'bazel-bin/*',
+  \ 'bazel-monorepo/*',
+  \ 'bazel-out/*',
+  \ 'bazel-testlogs/*',
+  \ ]
 
 "" Easily jump around
 Plug 'Lokaltog/vim-easymotion'
@@ -267,9 +460,6 @@ Plug 'tpope/vim-rhubarb'
 "" Display git diffs in sidebar
 Plug 'airblade/vim-gitgutter'
 
-"" Others
-" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-
 "" random key mappings
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -296,7 +486,7 @@ Plug 'junegunn/vim-peekaboo'
 " Plug 'tpope/vim-sleuth'
 " Plug 'mbbill/undotree'
 
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
 " ctrl+n
 
 "" Track usage with Wakatime
@@ -373,6 +563,9 @@ Plug 'wesQ3/vim-windowswap'
 " <leader>ww to initiate swap
 " <leader>ww again to swap
 
+
+Plug 'airblade/vim-rooter'
+
 call plug#end()            " required
 
 "" Better bracket matching with %
@@ -386,12 +579,14 @@ runtime! macros/matchit.vim
 " Activate venv
 " $ pyenv activate neovim
 "
+" ALTERNATE: using pyenv python module by default
+" > python -m venv ~/.virtualenvs/neovim
+" > source ~/.virtualenvs/neovim/bin/activate.fish
+"
 " Install plugins
 " $ pip install neovim jedi
 "
-" let g:python_host_prog = $HOME.'' " Not using python2 for neovim right now
-" let g:python3_host_prog = $HOME.'/.virtualenvs/neovim/bin/python3'
-let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim/bin/python3'
+let g:python3_host_prog = $HOME.'/.virtualenvs/neovim/bin/python3'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
@@ -404,6 +599,7 @@ set scrolloff=3 "keep minimum of 3 lines between cursor and end of screen
 set cursorline "highlight entire line cursor is on
 set number "show line numbers by default
 set relativenumber "line numbers are show relative to position
+set splitright " configure verticle splits to open to the right of the current buffer
 
 augroup CursorLine
   autocmd!
@@ -447,6 +643,11 @@ set wildignore+=bower_components
 set wildignore+=www
 " set wildignore+=*/development/*
 " set wildignore+=*/production/*
+
+set wildignore+=bazel-bin/*
+set wildignore+=bazel-monorepo/*
+set wildignore+=bazel-out/*
+set wildignore+=bazel-testlogs/*
 
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped
@@ -762,14 +963,14 @@ endif
 " :vsp - new buffer vertically
 " :sp - new buffer horizontally
 "" remap changing buffers
+nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 
 " NeoVim terminal emulation
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k

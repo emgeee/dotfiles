@@ -5,10 +5,6 @@ if test -e $HOME/.bin
   set PATH $HOME/.bin $PATH
 end
 
-if test -e $HOME/.nodebrew/current/bin
-  set PATH $HOME/.nodebrew/current/bin $PATH
-end
-
 # Universal environment variables
 set -Ux HOSTNAME (hostname)
 set -Ux EDITOR vim
@@ -18,15 +14,15 @@ if type vimpager >/dev/null 2>&1
   set -Ux PAGER vimpager
 end
 
-set -x ANDROID_HOME $HOME/Library/Android/sdk
-set -x JAVA_HOME (/usr/libexec/java_home)
+# set -x ANDROID_HOME $HOME/Library/Android/sdk
+# set -x JAVA_HOME (/usr/libexec/java_home)
 
 # Add android tools to path
 if test -e $ANDROID_HOME
   set -U PATH $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools $PATH
 end
 
-## OMF config
+####################### OMF config
 # Path to Oh My Fish install.
 set -gx OMF_PATH $HOME/.local/share/omf
 
@@ -36,25 +32,38 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
+# OMF theme - bobthefish: `omf install bobthefish`
+#######################
+
+
+####################### asdf configuration
+# installed via homebrew
+if test -e /usr/local/opt/asdf/asdf.fish
+  source /usr/local/opt/asdf/asdf.fish
+end
+#######################
+#
+
+####################### go config
+# Configure GOROOT and GOPATH
+set -Ux GOPATH $HOME/go
+
+if test -e $GOPATH/bin
+  set PATH $GOPATH/bin $PATH
+end
+#######################
+
 
 # Disable virtual env on the left side of the prompt
 # useful if the selected theme has built in support
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 
 set -Ux PYENV_ROOT $HOME/.pyenv
-
-set -Ux GOPATH $HOME/go
-
-if test -e $GOPATH/bin
-  set PATH $GOPATH/bin $PATH
-end
-
 # brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper
 # configure virtual env
-status --is-interactive; and source (pyenv init -|psub)
+# status --is-interactive; and source (pyenv init -|psub)
 # pyenv virtualenv
-status --is-interactive; and source (pyenv virtualenv-init -|psub)
+# status --is-interactive; and source (pyenv virtualenv-init -|psub)
 
 # pip install virtualfish
 # vf install
@@ -72,5 +81,4 @@ if test -e $HOME/.config/fish/private_environment.fish
   source $HOME/.config/fish/private_environment.fish
 end
 
-# alias prv="pipenv run nvim"
-set -U PATH "/usr/local/opt/openssl@1.1/bin" $PATH
+test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
