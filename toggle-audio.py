@@ -27,17 +27,31 @@ def is_bluetooth_connected():
     is_connected = bool(int(str(output.stdout, 'utf-8').strip()))
     return is_connected
 
+def get_current_device():
+    output = subprocess.run([SWITCH_AUDIO_PATH, '-c'], capture_output=True)
+    current_device = str(output.stdout, 'utf-8').strip()
+    return current_device
+
+def toggle_bluetooth():
+    current_device = get_current_device()
+    subprocess.run([SWITCH_AUDIO_PATH, '-s', audio_source_mappings[current_device]])
+
 
 if __name__ == "__main__":
     if not is_bluetooth_connected():
         print("trying to connect to bluetooth")
+        original_current_device = get_current_device()
         subprocess.run([BLUEUTIL_PATH, '--connect', SPEAKER_BLUETOOTH_ADDRESS], capture_output=True)
-        time.sleep(2)
+        time.sleep(3)
+        toggle_bluetooth()
+        time.sleep(3)
+        # For some reason the autio might switch back so ensure output is properly set
+        if get_current_device() == original_current_device:
+            toggle_bluetooth()
+    else:
+        toggle_bluetooth()
 
     print("Speaker connected, switching audio")
 
-    output = subprocess.run([SWITCH_AUDIO_PATH, '-c'], capture_output=True)
-    current_device = str(output.stdout, 'utf-8').strip()
-    subprocess.run([SWITCH_AUDIO_PATH, '-s', audio_source_mappings[current_device]])
 
 

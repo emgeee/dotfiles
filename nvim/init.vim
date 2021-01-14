@@ -303,6 +303,7 @@ set foldlevelstart=999
 """"""""""""""""""""""""""""""
 """ golang
 """"""""""""""""""""""""""""""
+" Add JSON tags to Go structs: :GoAddTags
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
@@ -565,6 +566,8 @@ Plug 'wesQ3/vim-windowswap'
 
 
 Plug 'airblade/vim-rooter'
+let g:rooter_patterns = ['.git']
+
 
 call plug#end()            " required
 
