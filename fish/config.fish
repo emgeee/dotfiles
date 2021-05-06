@@ -54,16 +54,24 @@ end
 #######################
 
 
+# current instructions for python: https://opensource.com/article/19/5/python-3-default-mac
 # Disable virtual env on the left side of the prompt
 # useful if the selected theme has built in support
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 
 set -Ux PYENV_ROOT $HOME/.pyenv
 # brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper
+
 # configure virtual env
-# status --is-interactive; and source (pyenv init -|psub)
+status --is-interactive; and source (pyenv init -|psub)
+
 # pyenv virtualenv
-# status --is-interactive; and source (pyenv virtualenv-init -|psub)
+status --is-interactive; and source (pyenv virtualenv-init -|psub)
+
+# default bin for brew Python 3.9
+# if test -e $HOME/Library/Python/3.9/bin
+#   set PATH $HOME/Library/Python/3.9/bin $PATH
+# end
 
 # pip install virtualfish
 # vf install

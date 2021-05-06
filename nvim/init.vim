@@ -60,6 +60,11 @@ let g:fzf_buffers_jump = 1
 let g:fzf_layout = { 'down': '30%' }
 
 
+" Format SQL
+Plug 'b4b4r07/vim-sqlfmt'
+" let g:sqlfmt_auto = 0
+let g:sqlfmt_command = "sqlformat"
+let g:sqlfmt_options = "-r -k upper"
 
 " We use the fd command to list files that are then filtered by FZF
 " This gives us more control over which files are listed. For example
@@ -78,6 +83,11 @@ endif
 "   autocmd  FileType fzf set laststatus=0 noshowmode noruler
 "     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 " endif
+
+" Add a tagbar
+Plug 'git://github.com/majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
 
 """"""""""""""""""""""""""""""
 """ Autocomplete
@@ -209,6 +219,8 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" Disable Coc integration as the Errors CoC reports constantly crowd out the filename
+let g:airline#extensions#coc#enabled = 0
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -314,7 +326,7 @@ let g:go_gopls_options = ['-remote=unix;/tmp/gopls-daemon-socket']
 " Disable vim-go gopls integration since those features are covered by CoC and we mostly want
 " syntax highlighting. https://github.com/josa42/coc-go/issues/76 has suggestions for a fix if
 " it's a problem
-" let g:go_gopls_enabled = 0
+let g:go_gopls_enabled = 0
 
 " disable vim-go :GoDef and :GoDoc shortcuts since these are better handled by CoC
 let g:go_def_mapping_enabled = 0
@@ -455,7 +467,7 @@ Plug 'tpope/vim-fugitive'
 " do
 
 "" Adds some Github specific bindings
-" :Gbrowse to open repo in Github
+" :GBrowse to open repo in Github
 Plug 'tpope/vim-rhubarb'
 
 "" Display git diffs in sidebar
@@ -521,17 +533,17 @@ Plug 'junegunn/vim-easy-align'
 """"""""""""""""""""""""""""""""
 " => ALE Linter
 """"""""""""""""""""""""""""""""
-Plug 'w0rp/ale'
-let g:ale_sign_column_always = 1
+" Plug 'w0rp/ale'
+" let g:ale_sign_column_always = 1
 " Ale option for python specified in ftplugin/python.vim
 
 " Enable option to only lint on file save (file save linting is enabled by default)
 " let g:ale_lint_on_text_changed = 'never'
 
-let g:ale_linters = {
-\   'javascript': ['standard', 'eslint'],
-\   'javascript.jsx': ['standard', 'eslint']
-\}
+" let g:ale_linters = {
+" \   'javascript': ['standard', 'eslint'],
+" \   'javascript.jsx': ['standard', 'eslint']
+" \}
 " \   'python': ['flake8', 'mypy', 'pyls']
 
 " let g:ale_linter_aliases = {
@@ -587,9 +599,9 @@ runtime! macros/matchit.vim
 " > source ~/.virtualenvs/neovim/bin/activate.fish
 "
 " Install plugins
-" $ pip install neovim jedi
+" $ pp install neovim jedi sqlparse
 "
-let g:python3_host_prog = $HOME.'/.virtualenvs/neovim/bin/python3'
+let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim/bin/python'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User interface
@@ -683,6 +695,8 @@ augroup END
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
+
+" let g:airline_section_error
 
 let g:airline_right_alt_sep = ''
 " unicode symbols
@@ -873,6 +887,7 @@ nnoremap <leader>sw :Ack! <cword><CR>
 "" vim fugitive shortcuts
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
+cnoreabbrev gb GBrowse
 
 "" Copy curent filename to clipboard
 if system('uname -r') =~ "Microsoft"
