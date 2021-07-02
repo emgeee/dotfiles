@@ -166,11 +166,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap grn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap gf  <Plug>(coc-format-selected)
+nmap gf  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -599,7 +599,7 @@ runtime! macros/matchit.vim
 " > source ~/.virtualenvs/neovim/bin/activate.fish
 "
 " Install plugins
-" $ pp install neovim jedi sqlparse
+" $ pip install neovim jedi sqlparse
 "
 let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim/bin/python'
 
@@ -663,6 +663,7 @@ set wildignore+=bazel-bin/*
 set wildignore+=bazel-monorepo/*
 set wildignore+=bazel-out/*
 set wildignore+=bazel-testlogs/*
+set wildignore+=fakes/*
 
 "" used for viewing lines that are so long they take up the entire screen at
 "" once when wrapped

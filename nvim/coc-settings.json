@@ -1,11 +1,11 @@
 {
   "coc.preferences.jumpCommand": "vsplit",
-  "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "args": ["-remote=unix;/tmp/gopls-daemon-socket"],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"]
-    }
+  "suggest.noselect": false,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "!",
+  "diagnostic.infoSign": "?",
+  "diagnostic.checkCurrentLine": true,
+  "go.goplsOptions": {
+    "staticcheck": true
   }
 }
