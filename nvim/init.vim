@@ -44,27 +44,11 @@ Plug 'romainl/flattened'
 """"""""""""""""""""""""""""""
 " Fuzzy file search
 """"""""""""""""""""""""""""""
-" Plug 'ctrlpvim/ctrlp.vim'
-"
-" " Set no max file limit
-" let g:ctrlp_max_files = 0
-" " Search from current directory instead of project root
-" let g:ctrlp_working_path_mode = 'ra'
-" " let g:ctrlp_cmd = "CtrlPMixed"
-" "
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 let g:fzf_buffers_jump = 1
 let g:fzf_layout = { 'down': '30%' }
-
-
-" Format SQL
-Plug 'b4b4r07/vim-sqlfmt'
-" let g:sqlfmt_auto = 0
-let g:sqlfmt_command = "sqlformat"
-let g:sqlfmt_options = "-r -k upper"
 
 " We use the fd command to list files that are then filtered by FZF
 " This gives us more control over which files are listed. For example
@@ -88,6 +72,12 @@ endif
 Plug 'git://github.com/majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
 
+
+" Format SQL
+Plug 'b4b4r07/vim-sqlfmt'
+" let g:sqlfmt_auto = 0
+let g:sqlfmt_command = "sqlformat"
+let g:sqlfmt_options = "-r -k upper"
 
 """"""""""""""""""""""""""""""
 """ Autocomplete
@@ -341,7 +331,7 @@ let g:go_highlight_function_parameters = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_variable_declarations = 0
 
-Plug 'bazelbuild/vim-bazel'
+" Plug 'bazelbuild/vim-bazel'
 
 """"""""""""""""""""""""""""""""""""""""""
 "" Use ag (the silver searcher) to find patterns in file
@@ -644,7 +634,6 @@ set wildmenu
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/out/*
 set wildignore+=*/vendor/*
-set wildignore+=*/platforms/* "ignore for cordova projects
 set wildignore+=*/plugins/*
 set wildignore+=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=DS_Store
@@ -656,8 +645,6 @@ set wildignore+=submodules
 set wildignore+=node_modules
 set wildignore+=bower_components
 set wildignore+=www
-" set wildignore+=*/development/*
-" set wildignore+=*/production/*
 
 set wildignore+=bazel-bin/*
 set wildignore+=bazel-monorepo/*
@@ -939,9 +926,9 @@ vnoremap <tab> %
 "" use vim magic mode instead of weird regexes
 nnoremap / /\V
 vnoremap / /\V
-
 nnoremap ? ?\V
 vnoremap ? ?\V
+
 "" automatically position cursor to middle of screen after searching
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -952,8 +939,6 @@ noremap L $
 
 "" Navigate wrapped lines (display lines) as you'd expect
 nnoremap <silent> j gj
-nnoremap <silent> k gk
-
 nnoremap <silent> k gk
 
 "" Toggle folds with enter

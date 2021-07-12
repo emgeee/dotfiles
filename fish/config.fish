@@ -1,5 +1,13 @@
 ### Begin custom fish customization
 
+alias lvim "nvim -u ~/.config/nvim/init_new.lua"
+
+# Use lsd instead of ls
+# brew install lsd
+# requires a patched font from https://www.nerdfonts.com/
+# configure Iterm>Profile>Non ASCII font
+alias ls='lsd'
+
 # # prepend ~/.bin/
 if test -e $HOME/.bin
   set PATH $HOME/.bin $PATH
