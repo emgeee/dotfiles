@@ -53,3 +53,27 @@ require('lualine').setup {
   tabline = {},
   extensions = {}
 }
+
+
+-- File Tree config
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+vim.g.nvim_tree_bindings = {
+  { key = "?", cb = tree_cb("toggle_help") },
+}
+
+local key_mapper = require('utils.key_mapper')
+
+key_mapper('n', '<F3>', ':NvimTreeToggle<CR>')
+key_mapper('n', '<F4>', ':NvimTreeFindFile<CR>')
+
+
+-- nvim window
+require('nvim-window').setup({
+  -- Specify a customer Highlight groups
+  -- use :so $VIMRUNTIME/syntax/hitest.vim to view highligh groups
+  normal_hl = 'Search',
+  hint_hl = 'Bold',
+  border = 'none',
+})
+
+key_mapper('', '<C-w>', [[:lua require('nvim-window').pick()<CR>]], {silent=true})

@@ -17,6 +17,7 @@ vim.cmd[[set undofile]]
 --Decrease update time
 vim.o.updatetime = 250
 
+-- Use separate sign and number columns
 vim.wo.signcolumn="yes"
 
 -- Don't pass messages to |ins-completion-menu|.
@@ -112,3 +113,4 @@ vim.opt.wildignore = {
 }
 
 vim.g.rooter_patterns = {'.git'}
+

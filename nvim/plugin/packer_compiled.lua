@@ -69,6 +69,18 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["ack.vim"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/ack.vim"
+  },
+  ["auto-session"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/auto-session"
+  },
+  ["coc.nvim"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/coc.nvim"
+  },
   ["editorconfig-vim"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/editorconfig-vim"
@@ -105,6 +117,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
@@ -112,6 +128,10 @@ _G.packer_plugins = {
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+  },
+  ["nvim-window.git"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/nvim-window.git"
   },
   ["onedark.nvim"] = {
     loaded = true,
@@ -132,6 +152,10 @@ _G.packer_plugins = {
   ["popup.nvim"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/popup.nvim"
+  },
+  ["session-lens"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/session-lens"
   },
   tcomment_vim = {
     loaded = true,
@@ -160,6 +184,10 @@ _G.packer_plugins = {
   ["vim-rhubarb"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/vim-rhubarb"
+  },
+  ["vim-ripgrep"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/vim-ripgrep"
   },
   ["vim-rooter"] = {
     loaded = true,

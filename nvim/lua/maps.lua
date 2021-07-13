@@ -1,3 +1,6 @@
+
+local key_mapper = require('utils.key_mapper')
+
 -- Toggle to disable mouse mode and indentlines for easier paste
 ToggleMouse = function()
   if vim.o.mouse == 'a' then
@@ -13,18 +16,6 @@ ToggleMouse = function()
     vim.wo.number = true
     print("Mouse enabled")
   end
-end
-
-local key_mapper = function(mode, key, result, opts)
-  -- silent defaults to true
-  opts = opts or {noremap = true, silent=true}
-
-  vim.api.nvim_set_keymap(
-    mode,
-    key,
-    result,
-    opts
-  )
 end
 
 --Remap space as leader key
@@ -67,14 +58,10 @@ key_mapper('n', '<leader>v', 'V`')
 -- Quickly select entire file
 key_mapper('n', '<leader>sa', 'ggVG')
 
--- Quickly do a full grep for the word under the curosr
-key_mapper('n', '<leader>sw', ':Ack! <cword><CR>')
-
 -- vim fugitive shortcuts
 key_mapper('n', '<leader>gs', ':Gstatus<CR>')
 key_mapper('n', '<leader>gd', ':Gdiff<CR>')
 vim.cmd([[cnoreabbrev gb GBrowse]])
-
 
 -- Copy curent filename to clipboard
 vim.cmd([[

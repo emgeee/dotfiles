@@ -121,6 +121,7 @@ local function setup_servers()
 
     if server == "go" then
       -- config.cmd = {'gopls','-remote=unix;/tmp/gopls-daemon-socket', '--debug=localhost:6060'}
+      -- config.cmd = {'gopls', '--debug=localhost:6060', '--remote=auto'}
       config.settings = {}
     end
 

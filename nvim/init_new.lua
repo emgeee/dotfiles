@@ -42,6 +42,9 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'kabouzeid/nvim-lspinstall'
 
+  --CoC
+  use {'neoclide/coc.nvim', branch='release'}
+
   -- Install treesitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use {'nvim-treesitter/playground'}
@@ -90,15 +93,26 @@ require('packer').startup(function()
   -- UI to select things (files, grep results, open buffers...)
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}} }
 
+  -- Session management
+  use {'rmagatti/auto-session'}
+  use {'rmagatti/session-lens', requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'}}
+
+  use {'https://gitlab.com/yorickpeterse/nvim-window.git'}
+
   -- still use fzf until we learn telescope and it becomes fast
   use { 'junegunn/fzf' }
   use 'junegunn/fzf.vim'
+
+  use 'jremmen/vim-ripgrep'
+  use 'mileszs/ack.vim'
 
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
 
   -- Autocompletion plugin
   use 'hrsh7th/nvim-compe'
+
+  use 'kyazdani42/nvim-tree.lua'
 
   -- Themes
   use 'navarasu/onedark.nvim'
@@ -107,7 +121,12 @@ end)
 require('settings')
 require('maps')
 require('ui')
+require('coc')
 require('lsp')
 require('autocomplete')
 require('treesitter')
-require('fuzzy')
+require('telescope-config')
+require('fzf')
+require('grep')
+require('sessions')
+require('git')
