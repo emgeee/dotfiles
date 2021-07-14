@@ -58,6 +58,11 @@ key_mapper('n', '<leader>v', 'V`')
 -- Quickly select entire file
 key_mapper('n', '<leader>sa', 'ggVG')
 
+-- Quickly open vimrc in new splits
+key_mapper('n', '<leader>ev', ':vs $MYVIMRC<CR>')
+key_mapper('n', '<leader>eV', ':split $MYVIMRC<CR>')
+
+
 -- vim fugitive shortcuts
 key_mapper('n', '<leader>gs', ':Gstatus<CR>')
 key_mapper('n', '<leader>gd', ':Gdiff<CR>')

@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["ack.vim"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/ack.vim"
+  },
   ["auto-session"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/auto-session"
@@ -180,6 +184,10 @@ _G.packer_plugins = {
   ["vim-rhubarb"] = {
     loaded = true,
     path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/vim-rhubarb"
+  },
+  ["vim-ripgrep"] = {
+    loaded = true,
+    path = "/Users/mattgreen/.local/share/nvim/site/pack/packer/start/vim-ripgrep"
   },
   ["vim-rooter"] = {
     loaded = true,

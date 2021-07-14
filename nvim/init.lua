@@ -103,8 +103,8 @@ require('packer').startup(function()
   use { 'junegunn/fzf' }
   use 'junegunn/fzf.vim'
 
-  use 'jremmen/vim-ripgrep'
-  use 'mileszs/ack.vim'
+  -- use 'jremmen/vim-ripgrep'
+  -- use 'mileszs/ack.vim'
 
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'

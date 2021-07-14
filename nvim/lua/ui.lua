@@ -76,4 +76,4 @@ require('nvim-window').setup({
   border = 'none',
 })
 
-key_mapper('', '<C-w>', [[:lua require('nvim-window').pick()<CR>]], {silent=true})
+key_mapper('', '<C-e>', [[:lua require('nvim-window').pick()<CR>]], {silent=true})

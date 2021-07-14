@@ -1,0 +1,9 @@
+bundle/*
+plugged/*
+.editorconfig
+tmp/swap/*
+tmp/undo/*
+tmp/backup/*
+session/
+.netrwhist
+spell/*
