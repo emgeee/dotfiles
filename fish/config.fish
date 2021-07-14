@@ -1,7 +1,5 @@
 ### Begin custom fish customization
 
-alias lvim "nvim -u ~/.config/nvim/init_new.lua"
-
 # Use lsd instead of ls
 # brew install lsd
 # requires a patched font from https://www.nerdfonts.com/
