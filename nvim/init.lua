@@ -47,6 +47,7 @@ require('packer').startup(function()
 
   -- Install treesitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/nvim-treesitter-textobjects'}
   use {'nvim-treesitter/playground'}
 
   -- Status line plugin

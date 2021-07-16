@@ -108,3 +108,12 @@ key_mapper('n', '<C-h>', '<C-w>h')
 key_mapper('n', '<C-j>', '<C-w>j')
 key_mapper('n', '<C-k>', '<C-w>k')
 key_mapper('n', '<C-l>', '<C-w>l')
+
+
+-- Lua caches required dependencies - this function force refreshes them
+function RefreshRequire(args)
+  require("plenary.reload").reload_module(args)
+  require(args)
+end
+
+vim.cmd([[ command! -nargs=1 RefreshRequire execute 'lua RefreshRequire(<args>)' ]])
