@@ -46,6 +46,11 @@ vim.cmd([[
 ]], false)
 
 
+-- Define the :Browse command - this is needed for vim-rhubarb (provides :GBrowse) to work
+-- TODO why doesn't visual selection work?
+-- vim.cmd([[ command! -nargs=1 Browse silent exec '!open "<args>"' ]])
+-- vim.cmd([[ command! -nargs=1 Browse exece "!echo '<args>'" ]])
+
 -- Save line postion on exit, then restore when opening file
 vim.cmd([[
 function! ResCur()
@@ -113,4 +118,5 @@ vim.opt.wildignore = {
 }
 
 vim.g.rooter_patterns = {'.git'}
+
 

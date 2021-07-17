@@ -57,9 +57,6 @@ require('packer').startup(function()
   }
 
 
-  -- Git commands
-  use 'tpope/vim-fugitive'           -- Git commands in nvim
-  use 'tpope/vim-rhubarb'            -- Fugitive-companion to interact with github
 
 
   -- Simply sets the root directory
@@ -76,6 +73,11 @@ require('packer').startup(function()
 
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-repeat'
+  -- use 'tpope/vim-sleuth'             -- Auto detect tabs/spaces
+
+  -- Git commands
+  use 'tpope/vim-fugitive'           -- Git commands in nvim
+  use 'tpope/vim-rhubarb'            -- Fugitive-companion to interact with github
 
   -- Enable editorconfig in vim
   use 'editorconfig/editorconfig-vim'
