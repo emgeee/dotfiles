@@ -1,48 +1,62 @@
+local opt = vim.opt
+local g = vim.g
+
+-- Configure the UI
+-- Requires a patched font from https://www.nerdfonts.com/
+-- Currently using RobotoMono
+-- configure Iterm>Profile>Non ASCII font
+
+vim.wo.number = true --Make line numbers default
+opt.relativenumber = true --Relative line numbers
+opt.splitright = true --configure verticle splits to open to the right of the current buffer
+opt.scrolloff = 4 --keep minimum of 4 lines between cursor and end of screen
+opt.cursorline = false --highlight entire line cursor is on
 
 --Incremental live completion
-vim.o.inccommand = "nosplit"
+opt.inccommand = "nosplit"
 
 --Do not save when switching buffers
-vim.o.hidden = true
+opt.hidden = true
 
 --Enable mouse mode
-vim.o.mouse = "a"
+opt.mouse = "a"
 
 --Enable break indent
-vim.o.breakindent = true
+opt.breakindent = true
 
 --Save undo history
 vim.cmd[[set undofile]]
 
 --Decrease update time
-vim.o.updatetime = 250
+opt.updatetime = 250
 
 -- Use separate sign and number columns
 vim.wo.signcolumn="yes"
 
 -- Don't pass messages to |ins-completion-menu|.
 -- Avoid showing message extra message when using completion
-vim.o.shortmess = vim.o.shortmess .. "c"
+opt.shortmess = vim.o.shortmess .. "c"
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt="menuone,noinsert"
+opt.completeopt="menuone,noinsert"
 
 --Map blankline
-vim.g.indent_blankline_char = "┊"
-vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-vim.g.indent_blankline_buftype_exclude = {'terminal', 'nofile'}
-vim.g.indent_blankline_char_highlight = 'LineNr'
+-- TODO: is this needed with the indent-blankline plugin?
+-- g.indent_blankline_char = "┊"
+-- g.indent_blankline_filetype_exclude = { 'help', 'packer' }
+-- g.indent_blankline_buftype_exclude = {'terminal', 'nofile'}
+-- g.indent_blankline_char_highlight = 'LineNr'
 
 -- Change preview window location
-vim.g.splitbelow = true
-vim.g.splitright = true
+g.splitbelow = true
+g.splitright = true
 
 -- Highlight on yank
 vim.cmd([[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-  augroup end
+augroup YankHighlight
+autocmd!
+autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup end
 ]], false)
 
 
@@ -54,69 +68,106 @@ vim.cmd([[
 -- Save line postion on exit, then restore when opening file
 vim.cmd([[
 function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
+if line("'\"") <= line("$")
+normal! g`"
+return 1
+endif
 endfunction
 
 augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
+autocmd!
+autocmd BufWinEnter * call ResCur()
 augroup END
 ]], false)
 
 
 
 -- options for searching
-vim.o.hlsearch = true --highlight all matches
-vim.o.incsearch = true --incremently start searching before hitting enter
-vim.o.ignorecase = true --ignore case
-vim.o.smartcase = true --ignore case when only lower case
-vim.o.gdefault = true --default to global search+replace
+opt.hlsearch = true --highlight all matches
+opt.incsearch = true --incremently start searching before hitting enter
+opt.ignorecase = true --ignore case
+opt.smartcase = true --ignore case when only lower case
+opt.gdefault = true --default to global search+replace
 
 
 --  used for viewing lines that are so long they take up the entire screen at
 --  once when wrapped
-vim.o.display = 'lastline'
+opt.display = 'lastline'
 
-vim.o.tabstop = 2 --size of a hard tabstop
-vim.o.shiftwidth = 2 --size of an indent (used for << and >>)
-vim.o.shiftround = true --round to nearest shiftwidth
-vim.o.expandtab = true --Expand TABs to spaces
-vim.o.joinspaces = false -- No double spaces with join
+opt.tabstop = 2 --size of a hard tabstop
+opt.shiftwidth = 2 --size of an indent (used for << and >>)
+opt.shiftround = true --round to nearest shiftwidth
+opt.expandtab = true --Expand TABs to spaces
+opt.joinspaces = false -- No double spaces with join
 
 -- a combination of spaces and tabs are used to simulate tab stops at a width
 -- other than the (hard)tabstop
-vim.o.softtabstop = 2
+opt.softtabstop = 2
+
+-- go to previous/next line with h,l,left arrow and right arrow
+-- when cursor reaches end/beginning of line
+opt.whichwrap:append("<>hl")
 
 -- Ignore these directories
-vim.o.wildmode = 'list:longest,full'
-vim.o.wildmenu = true
+opt.wildmode = 'list:longest,full'
+opt.wildmenu = true
 
-vim.opt.wildignore = {
-  '*/tmp/*,*.so,*.swp,*.zip',
-  '*/out/*',
-  '*/vendor/*',
-  '*/plugins/*',
-  '*.o,*.obj,*~',
-  'DS_Store',
-  '*.png,*.jpg,*.gif',
-  '*.pyc',
+opt.wildignore = {
+	'*/tmp/*,*.so,*.swp,*.zip',
+	'*/out/*',
+	'*/vendor/*',
+	'*/plugins/*',
+	'*.o,*.obj,*~',
+	'DS_Store',
+	'*.png,*.jpg,*.gif',
+	'*.pyc',
 
-  'public',
-  'submodules',
-  'node_modules',
-  'bower_components',
-  'www',
+	'public',
+	'submodules',
+	'node_modules',
+	'bower_components',
+	'www',
 
-  -- 'bazel-bin/*',
-  -- 'bazel-monorepo/*',
-  'bazel-out/*',
-  'bazel-testlogs/*',
-  'fakes/*',
+	'bazel-bin/*',
+	'bazel-monorepo/*',
+	'bazel-out/*',
+	'bazel-testlogs/*',
+	'fakes/*',
 }
 
-vim.g.rooter_patterns = {'.git'}
+g.rooter_patterns = {'.git'}
+
+-- disable builtin vim plugins
+local disabled_built_ins = {
+	-- "netrw",
+	-- "netrwPlugin",
+	-- "netrwSettings",
+	-- "netrwFileHandlers",
+	"gzip",
+	"zip",
+	"zipPlugin",
+	"tar",
+	"tarPlugin",
+	"getscript",
+	"getscriptPlugin",
+	"vimball",
+	"vimballPlugin",
+	"2html_plugin",
+	"logipat",
+	"rrhelper",
+	"spellfile_plugin",
+	"matchit"
+}
+
+for _, plugin in pairs(disabled_built_ins) do
+	g["loaded_" .. plugin] = 1
+end
 
 
+-- Don't show status line on vim terminals
+vim.cmd [[ au TermOpen term://* setlocal nonumber laststatus=0 ]]
+
+-- set shell to bash for running commands since it's faster than fish
+opt.shell = "/bin/bash"
+
+opt.lazyredraw = true

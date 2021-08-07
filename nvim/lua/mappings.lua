@@ -1,4 +1,3 @@
-
 local key_mapper = require('utils.key_mapper')
 
 -- Toggle to disable mouse mode and indentlines for easier paste
@@ -41,7 +40,8 @@ key_mapper('n', 'Y', 'y$', {noremap=true})
 
 
 -- Map J-K to escape
-key_mapper('i', 'jk', "<Esc>")
+-- using better-escape
+-- key_mapper('i', 'jk', "<Esc>")
 
 -- easily clear highlighted search - :noh
 key_mapper('n', '<leader>h', ":nohlsearch<CR>")
@@ -53,7 +53,7 @@ key_mapper('n', '<leader>W', [[:%s/\s\+$//<cr>:let @/=''<CR>]])
 key_mapper('n', '<leader>q', 'gqip')
 
 -- reselect recent pasted text
-key_mapper('n', '<leader>v', 'V`')
+key_mapper('n', '<leader>v', '`[v`]')
 
 -- Quickly select entire file
 key_mapper('n', '<leader>sa', 'ggVG')
@@ -78,9 +78,12 @@ else
 endif
 ]])
 
+
 -- easily interact with system clipboard
 key_mapper('n', '<leader>p', '"*p')
+key_mapper('v', '<leader>p', '"*p')
 key_mapper('n', '<leader>P', '"*P')
+key_mapper('v', '<leader>P', '"*P')
 key_mapper('v', '<leader>y', '"*y')
 key_mapper('v', '<leader>d', '"*d')
 
@@ -109,6 +112,8 @@ key_mapper('n', '<C-j>', '<C-w>j')
 key_mapper('n', '<C-k>', '<C-w>k')
 key_mapper('n', '<C-l>', '<C-w>l')
 
+-- Don't copy the replaced text after pasting in visual mode
+key_mapper("v", "p", '"_dP')
 
 -- Lua caches required dependencies - this function force refreshes them
 function RefreshRequire(args)
@@ -117,3 +122,15 @@ function RefreshRequire(args)
 end
 
 vim.cmd([[ command! -nargs=1 RefreshRequire execute 'lua RefreshRequire(<args>)' ]])
+vim.cmd([[ command! HighlightGroups execute ':so $VIMRUNTIME/syntax/hitest.vim' ]])
+
+-- Packer commands till because we are not loading it at startup
+vim.cmd("silent! command PackerCompile lua require 'pluginList' require('packer').compile()")
+vim.cmd("silent! command PackerInstall lua require 'pluginList' require('packer').install()")
+vim.cmd("silent! command PackerStatus lua require 'pluginList' require('packer').status()")
+vim.cmd("silent! command PackerSync lua require 'pluginList' require('packer').sync()")
+vim.cmd("silent! command PackerUpdate lua require 'pluginList' require('packer').update()")
+
+
+-- Easily start profiling actions
+vim.cmd("silent! command StartProfile :profile start ~/profile.log | :profile func * | :profile file *<CR>")
