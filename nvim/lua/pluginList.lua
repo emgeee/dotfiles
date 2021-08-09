@@ -239,14 +239,14 @@ return packer.startup(
 
     -- Syntax highlighting for kitty config file
     use {
-      use "fladson/vim-kitty",
+      "fladson/vim-kitty",
       ft = "kitty",
     }
 
     -- Git commands in nvim
     -- Fugitive-companion to interact with github
 		use {
-      'tpope/vim-fugitive'
+      'tpope/vim-fugitive',
     }
 		use {
       'tpope/vim-rhubarb',
