@@ -18,6 +18,10 @@ return packer.startup(
 		}
 
 		use {
+			"nvim-lua/plenary.nvim",
+		}
+
+		use {
 			'jdhao/better-escape.vim',
 			event = 'InsertEnter',
 			config = function()
@@ -27,9 +31,9 @@ return packer.startup(
 		}
 
 		-- Treesitter
+    -- Rune :TSUpdate to update language definitions
 		use {
 			'nvim-treesitter/nvim-treesitter',
-			run = ':TSUpdate',
 			event = 'BufRead',
 			config = function()
 				require 'plugins.treesitter'
@@ -77,7 +81,6 @@ return packer.startup(
 			end
 		}
 
-
 		-- UI to select things (files, grep results, open buffers...)
 		use {
 			'nvim-telescope/telescope.nvim',
@@ -103,7 +106,9 @@ return packer.startup(
 		}
 
 
+    --
 		-- Session management
+    --
 		use {
 			'rmagatti/auto-session'
 		}
@@ -113,7 +118,9 @@ return packer.startup(
 			after = 'telescope.nvim',
 		}
 
+    --
 		-- UI Plugins
+    --
 		use {
 			'navarasu/onedark.nvim',
 			config = function()
@@ -123,10 +130,6 @@ return packer.startup(
 				vim.g.onedark_style = 'deep'
 				require('onedark').setup()
 			end
-		}
-
-		use {
-			"nvim-lua/plenary.nvim",
 		}
 
 		-- Status line plugin
@@ -153,16 +156,29 @@ return packer.startup(
 			event = "BufRead",
 			config = function()
 				require('indent_blankline').setup {
-					char = '▏',
+					char = '┊',
 					buftype_exclude = {'terminal', 'nofile'},
 					filetype_exclude = {"help", "terminal", "dashboard", "packer"},
 					use_treesitter = true,
-					show_current_context = true,
+					-- show_current_context = true,
 				}
 			end
 		}
 
+		-- Add git related info in the signs columns and popups
+		use {
+			'lewis6991/gitsigns.nvim',
+			requires = {'nvim-lua/plenary.nvim'},
+      event = 'BufRead',
+			after = 'plenary.nvim',
+			config = function()
+				require('gitsigns').setup()
+			end
+		}
+
+    --
 		-- Navigation
+    --
 		use {
 			'https://gitlab.com/yorickpeterse/nvim-window.git',
 			config = function()
@@ -179,25 +195,19 @@ return packer.startup(
 		--   end
 		-- }
 
+    --
 		-- MISC
+    --
+
+    -- Intelligently set the root directory
 		use 'airblade/vim-rooter'
 
 		-- surround things
-		-- ys<text object><surround char> - wrap text object
-		-- cs<old char><new char> - Change Surround
-		-- ds<old char> - Delete Surround
-		-- In virtual mode - S<char> - wrap current selection in <char>
 		use 'tpope/vim-surround'
-
-		use 'tpope/vim-unimpaired'
 		use 'tpope/vim-repeat'
-		-- use 'tpope/vim-sleuth'             -- Auto detect tabs/spaces
+		-- use 'tpope/vim-unimpaired'
 
-		-- Git commands
-		use 'tpope/vim-fugitive'           -- Git commands in nvim
-		use 'tpope/vim-rhubarb'            -- Fugitive-companion to interact with github
-
-		-- Enable editorconfig in vim
+    -- Enable editorconfig in vim
 		use 'editorconfig/editorconfig-vim'
 
 		-- Comment plugin
@@ -205,11 +215,19 @@ return packer.startup(
 		-- Press <c-_><c-_> to comment lines
 		-- Press <c-_>i for inline commenting
 
+    use {
+        "windwp/nvim-autopairs",
+        after = "nvim-compe",
+        config = function()
+            require "plugins.autopairs"
+        end
+    }
 
-		use {
-			'bazelbuild/vim-bazel',
-			requires = {'google/vim-maktaba'},
-		}
+		-- use {
+		-- 	'bazelbuild/vim-bazel',
+		-- 	ft = 'go',
+		-- 	requires = {'google/vim-maktaba'},
+		-- }
 
 		use {
 			'fatih/vim-go',
@@ -219,14 +237,21 @@ return packer.startup(
 			end
 		}
 
-		-- Add git related info in the signs columns and popups
+    -- Syntax highlighting for kitty config file
+    use {
+      use "fladson/vim-kitty",
+      ft = "kitty",
+    }
+
+    -- Git commands in nvim
+    -- Fugitive-companion to interact with github
 		use {
-			'lewis6991/gitsigns.nvim',
-			requires = {'nvim-lua/plenary.nvim'},
-			after = 'plenary.nvim',
-			config = function()
-				require('gitsigns').setup()
-			end
-		}
+      'tpope/vim-fugitive'
+    }
+		use {
+      'tpope/vim-rhubarb',
+      after = 'vim-fugitive',
+    }
+
 	end
 )

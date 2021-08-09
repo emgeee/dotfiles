@@ -8,8 +8,8 @@ local config = {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {},
-    lualine_c = {{'filename', color="WarningMsg", path=1}},
+    lualine_b = {{"branch", icon = ""}},
+    lualine_c = {{'filename', path=1}},
     lualine_x = {},
     lualine_y = {},
     lualine_z = {}
@@ -34,7 +34,7 @@ local function ins_left(component)
   table.insert(config.sections.lualine_c, component)
 end
 
--- Inserts a component in lualine_x ot right section
+-- Inserts a component in lualine_x to right section
 local function ins_right(component)
   table.insert(config.sections.lualine_x, component)
 end

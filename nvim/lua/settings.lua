@@ -12,6 +12,11 @@ opt.splitright = true --configure verticle splits to open to the right of the cu
 opt.scrolloff = 4 --keep minimum of 4 lines between cursor and end of screen
 opt.cursorline = false --highlight entire line cursor is on
 
+-- set shell to bash for running commands since it's faster than fish
+opt.shell = "/bin/bash"
+
+opt.lazyredraw = true
+
 --Incremental live completion
 opt.inccommand = "nosplit"
 
@@ -31,55 +36,19 @@ vim.cmd[[set undofile]]
 opt.updatetime = 250
 
 -- Use separate sign and number columns
-vim.wo.signcolumn="yes"
+vim.wo.signcolumn="auto:2"
 
 -- Don't pass messages to |ins-completion-menu|.
 -- Avoid showing message extra message when using completion
 opt.shortmess = vim.o.shortmess .. "c"
 
 -- Set completeopt to have a better completion experience
-opt.completeopt="menuone,noinsert"
-
---Map blankline
--- TODO: is this needed with the indent-blankline plugin?
--- g.indent_blankline_char = "┊"
--- g.indent_blankline_filetype_exclude = { 'help', 'packer' }
--- g.indent_blankline_buftype_exclude = {'terminal', 'nofile'}
--- g.indent_blankline_char_highlight = 'LineNr'
+-- Needed for compe
+opt.completeopt="menuone,noselect"
 
 -- Change preview window location
 g.splitbelow = true
 g.splitright = true
-
--- Highlight on yank
-vim.cmd([[
-augroup YankHighlight
-autocmd!
-autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-augroup end
-]], false)
-
-
--- Define the :Browse command - this is needed for vim-rhubarb (provides :GBrowse) to work
--- TODO why doesn't visual selection work?
--- vim.cmd([[ command! -nargs=1 Browse silent exec '!open "<args>"' ]])
--- vim.cmd([[ command! -nargs=1 Browse exece "!echo '<args>'" ]])
-
--- Save line postion on exit, then restore when opening file
-vim.cmd([[
-function! ResCur()
-if line("'\"") <= line("$")
-normal! g`"
-return 1
-endif
-endfunction
-
-augroup resCur
-autocmd!
-autocmd BufWinEnter * call ResCur()
-augroup END
-]], false)
-
 
 
 -- options for searching
@@ -156,7 +125,8 @@ local disabled_built_ins = {
 	"logipat",
 	"rrhelper",
 	"spellfile_plugin",
-	"matchit"
+	"matchit",
+  "matchparen",
 }
 
 for _, plugin in pairs(disabled_built_ins) do
@@ -167,7 +137,26 @@ end
 -- Don't show status line on vim terminals
 vim.cmd [[ au TermOpen term://* setlocal nonumber laststatus=0 ]]
 
--- set shell to bash for running commands since it's faster than fish
-opt.shell = "/bin/bash"
+-- Highlight on yank
+vim.cmd([[
+augroup YankHighlight
+autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup end
+]], false)
 
-opt.lazyredraw = true
+-- Save line postion on exit, then restore when opening file
+vim.cmd([[
+function! ResCur()
+  if line("'\"") <= line("$")
+  normal! g`"
+  return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+]], false)
+

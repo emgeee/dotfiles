@@ -4,7 +4,8 @@
 # brew install lsd
 # requires a patched font from https://www.nerdfonts.com/
 # configure Iterm>Profile>Non ASCII font
-alias ls='lsd'
+# alias ls='lsd'
+alias icat="kitty +kitten icat"
 
 # # prepend ~/.bin/
 if test -e $HOME/.bin
