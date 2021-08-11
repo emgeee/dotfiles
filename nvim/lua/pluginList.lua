@@ -21,6 +21,16 @@ return packer.startup(
 			"nvim-lua/plenary.nvim",
 		}
 
+    -- Git commands in nvim
+    -- Fugitive-companion to interact with github
+		use {
+      'tpope/vim-fugitive',
+    }
+		use {
+      'tpope/vim-rhubarb',
+      after = 'vim-fugitive',
+    }
+
 		use {
 			'jdhao/better-escape.vim',
 			event = 'InsertEnter',
@@ -95,15 +105,15 @@ return packer.startup(
 		}
 
 		-- fzf
-		use {
-			'junegunn/fzf',
-			config = function()
-				require('plugins.fzf')
-			end
-		}
-		use {
-			'junegunn/fzf.vim',
-		}
+		-- use {
+		-- 	'junegunn/fzf',
+		-- 	config = function()
+		-- 		require('plugins.fzf-config')
+		-- 	end
+		-- }
+		-- use {
+		-- 	'junegunn/fzf.vim',
+		-- }
 
 
     --
@@ -138,8 +148,16 @@ return packer.startup(
 			requires = {'kyazdani42/nvim-web-devicons', opt = true},
 			config = function()
 				require 'plugins.lualine-config'
-			end
-		}
+    	end
+    }
+    -- use {
+    --   'glepnir/galaxyline.nvim',
+    --   branch = 'main',
+    --   requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    --   config = function()
+    --     require('plugins.spaceline')
+    --   end,
+    -- }
 
 		-- file tree
 		use {
@@ -241,16 +259,6 @@ return packer.startup(
     use {
       "fladson/vim-kitty",
       ft = "kitty",
-    }
-
-    -- Git commands in nvim
-    -- Fugitive-companion to interact with github
-		use {
-      'tpope/vim-fugitive',
-    }
-		use {
-      'tpope/vim-rhubarb',
-      after = 'vim-fugitive',
     }
 
 	end

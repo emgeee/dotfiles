@@ -12,3 +12,6 @@ vim.cmd([[
 vim.cmd([[
   tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
 ]])
+
+-- Quickly do a full grep for the word under the curosr
+key_mapper('n', '<leader>sw', [[:call fzf#vim#grep("Rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(expand('<cword>')), 1, fzf#vim#with_preview())<CR>]])

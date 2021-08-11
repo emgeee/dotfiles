@@ -1,5 +1,3 @@
-local key_mapper = require('utils.key_mapper')
-
 vim.cmd([[
   set grepprg=rg\ --vimgrep\ --smartcase
   set grepformat=%f:%l:%c:%m
@@ -11,9 +9,6 @@ vim.g.rg_highlight= true
 vim.cmd([[cnoreabbrev rg Rg]])
 
 -- key_mapper('n', '<leader>sw', ':Rg<CR>')
-
--- Quickly do a full grep for the word under the curosr
-key_mapper('n', '<leader>sw', [[:call fzf#vim#grep("Rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(expand('<cword>')), 1, fzf#vim#with_preview())<CR>]])
 
 -- Optionally use silver Searcher
 -- not sure how to check if an executable exists in lua
