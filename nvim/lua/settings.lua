@@ -133,6 +133,7 @@ for _, plugin in pairs(disabled_built_ins) do
 	g["loaded_" .. plugin] = 1
 end
 
+vim.o.tabline = '%!v:lua.require\'tabline\'.tabline()'
 
 -- Don't show status line on vim terminals
 vim.cmd [[ au TermOpen term://* setlocal nonumber laststatus=0 ]]

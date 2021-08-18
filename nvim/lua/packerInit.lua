@@ -33,5 +33,6 @@ end
 return packer.init {
     git = {
         clone_timeout = 600 -- Timeout, in seconds, for git clones
-    }
+    },
+    log = { level = 'debug' },
 }

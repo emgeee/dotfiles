@@ -22,13 +22,11 @@ return packer.startup(
 		}
 
     -- Git commands in nvim
-    -- Fugitive-companion to interact with github
 		use {
       'tpope/vim-fugitive',
     }
 		use {
       'tpope/vim-rhubarb',
-      after = 'vim-fugitive',
     }
 
 		use {
@@ -99,7 +97,9 @@ return packer.startup(
 				require('plugins.telescope-config')
 			end
 		}
-
+    use {
+      'nvim-telescope/telescope-fzy-native.nvim'
+    }
 		use {
 			'nvim-telescope/telescope-media-files.nvim',
 		}
