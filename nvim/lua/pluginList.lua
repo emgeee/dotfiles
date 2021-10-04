@@ -104,6 +104,10 @@ return packer.startup(
 			'nvim-telescope/telescope-media-files.nvim',
 		}
 
+		use {
+			'mileszs/ack.vim',
+		}
+
 		-- fzf
 		-- use {
 		-- 	'junegunn/fzf',

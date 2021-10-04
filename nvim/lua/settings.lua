@@ -126,7 +126,7 @@ local disabled_built_ins = {
 	"rrhelper",
 	"spellfile_plugin",
 	"matchit",
-  "matchparen",
+  -- "matchparen",
 }
 
 for _, plugin in pairs(disabled_built_ins) do

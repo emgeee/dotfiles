@@ -1,5 +1,5 @@
 vim.cmd([[
-  set grepprg=rg\ --vimgrep\ --smartcase
+  set grepprg=rg\ --vimgrep\ --smart-case
   set grepformat=%f:%l:%c:%m
 ]])
 
