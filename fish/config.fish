@@ -8,8 +8,11 @@
 alias icat="kitty +kitten icat"
 
 # # prepend ~/.bin/
-if test -e $HOME/.bin
-  set PATH $HOME/.bin $PATH
+fish_add_path $HOME/.bin
+
+# For ARM Mac
+if test -e /opt/homebrew/bin/brew
+  eval (/opt/homebrew/bin/brew shellenv)
 end
 
 # Universal environment variables
@@ -19,14 +22,6 @@ set -Ux REACT_EDITOR code
 
 if type vimpager >/dev/null 2>&1
   set -Ux PAGER vimpager
-end
-
-# set -x ANDROID_HOME $HOME/Library/Android/sdk
-# set -x JAVA_HOME (/usr/libexec/java_home)
-
-# Add android tools to path
-if test -e $ANDROID_HOME
-  set -U PATH $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools $PATH
 end
 
 ####################### OMF config
@@ -57,9 +52,7 @@ end
 # Configure GOROOT and GOPATH
 set -Ux GOPATH $HOME/go
 
-if test -e $GOPATH/bin
-  set PATH $GOPATH/bin $PATH
-end
+fish_add_path $GOPATH/bin
 #######################
 
 
