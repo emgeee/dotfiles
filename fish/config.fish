@@ -45,6 +45,11 @@ source $OMF_PATH/init.fish
 if test -e /usr/local/opt/asdf/asdf.fish
   source /usr/local/opt/asdf/asdf.fish
 end
+
+# For ARM architecture
+if test -e/opt/homebrew/opt/asdf/libexec/asdf.fish
+  source /opt/homebrew/opt/asdf/libexec/asdf.fish
+end
 #######################
 #
 
