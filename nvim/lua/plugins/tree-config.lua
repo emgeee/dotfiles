@@ -1,4 +1,6 @@
 
+require('nvim-tree').setup()
+
 -- File Tree config
 local key_mapper = require('utils.key_mapper')
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
