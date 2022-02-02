@@ -141,8 +141,11 @@ return packer.startup(
 				--Set colorscheme (order is important here)
 				vim.o.termguicolors = true
 				vim.g.onedark_terminal_italics = 2
-				vim.g.onedark_style = 'deep'
-				require('onedark').setup()
+
+				require('onedark').setup({
+					style = "deep"
+				})
+				require('onedark').load()
 			end
 		}
 
