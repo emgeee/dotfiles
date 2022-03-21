@@ -8,7 +8,7 @@ local list = {
 
 require('nvim-tree').setup({
   auto_close = true,
-  open_on_setup = true,
+  -- open_on_setup = true,
   disable_netrw = false,
   view = {
     mappings = {
