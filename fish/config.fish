@@ -10,6 +10,9 @@ alias icat="kitty +kitten icat"
 # # prepend ~/.bin/
 fish_add_path $HOME/.bin
 
+# add Solana
+fish_add_path $HOME/.local/share/solana/install/active_release/bin
+
 # For ARM Mac
 if test -e /opt/homebrew/bin/brew
   eval (/opt/homebrew/bin/brew shellenv)
