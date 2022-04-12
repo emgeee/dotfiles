@@ -1,6 +1,7 @@
 package bass
 package brew
 package config
+package https://github.com/sentriz/fish-pipenv
 package osx
 package spark
 package thefuck

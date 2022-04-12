@@ -85,6 +85,7 @@ fish_add_path $GOPATH/bin
 
 # pip install virtualfish
 # vf install
+set pipenv_fish_fancy yes
 
 function sshtmux
   set host $argv[1]
