@@ -67,7 +67,7 @@ fish_add_path $GOPATH/bin
 # current instructions for python: https://opensource.com/article/19/5/python-3-default-mac
 # Disable virtual env on the left side of the prompt
 # useful if the selected theme has built in support
-# set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 
 # set -Ux PYENV_ROOT $HOME/.pyenv
 # brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper
@@ -101,3 +101,6 @@ if test -e $HOME/.config/fish/private_environment.fish
 end
 
 test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
+
+# Created by `pipx` on 2022-05-20 20:14:28
+set PATH $PATH /Users/matt/.local/bin
