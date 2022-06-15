@@ -64,7 +64,7 @@ key_mapper('n', '<leader>eV', ':split $MYVIMRC<CR>')
 
 
 -- vim fugitive shortcuts
-key_mapper('n', '<leader>gs', ':Gstatus<CR>')
+key_mapper('n', '<leader>gs', ':Git<CR>')
 key_mapper('n', '<leader>gd', ':Gdiff<CR>')
 vim.cmd([[cnoreabbrev gb GBrowse]])
 
