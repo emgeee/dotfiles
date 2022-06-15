@@ -22,7 +22,5 @@ function gitchensync
   git push -u origin $current_branch
 
   echo "opening PR"
-  set url (hub pull-request -m $msg -e)
-  echo "PR URL: $url"
-  open $url
+  gh pr create
 end
