@@ -5,6 +5,8 @@ local g = vim.g
 -- Requires a patched font from https://www.nerdfonts.com/
 -- Currently using RobotoMono
 -- configure Iterm>Profile>Non ASCII font
+g.neovide_cursor_animation_length=0
+
 
 vim.wo.number = true --Make line numbers default
 opt.relativenumber = true --Relative line numbers
@@ -147,17 +149,19 @@ augroup end
 ]], false)
 
 -- Save line postion on exit, then restore when opening file
-vim.cmd([[
-function! ResCur()
-  if line("'\"") <= line("$")
-  normal! g`"
-  return 1
-  endif
-endfunction
+-- vim.cmd([[
+-- function! ResCur()
+--   if line("'\"") <= line("$")
+--   normal! g`"
+--   return 1
+--   endif
+-- endfunction
+--
+-- augroup resCur
+--   autocmd!
+--   autocmd BufWinEnter * call ResCur()
+-- augroup END
+-- ]], false)
 
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
-]], false)
-
+-- Recommend by auto-session plugin
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"

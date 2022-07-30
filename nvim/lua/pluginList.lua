@@ -59,7 +59,7 @@ return packer.startup(
 		}
 
 
-		-- LSP
+		-- LSP and completions
 		use {
 			'williamboman/nvim-lsp-installer',
 		}
@@ -70,6 +70,29 @@ return packer.startup(
 				require 'plugins.lspconfig'
 			end
 		}
+
+    -- Works by combining inputs from different sources to generate autocomplete
+		use {
+			'hrsh7th/nvim-cmp',
+      -- requires a list of different sources
+      requires = {
+        {
+           -- snippets engine
+          'hrsh7th/vim-vsnip',
+          requires = {'rafamadriz/friendly-snippets'}
+        },
+        'hrsh7th/cmp-vsnip', -- source for snippets
+        'hrsh7th/cmp-nvim-lsp', -- source for builtin lsp
+        'hrsh7th/cmp-buffer', -- source for words in buffers
+        'hrsh7th/cmp-path', -- source for file system path
+        'hrsh7th/cmp-cmdline', -- source for vims cmd line
+        'onsails/lspkind.nvim', -- adds vscode-like pictograms to complete menue
+      },
+			config = function()
+				require 'plugins.cmp-config'
+			end
+		}
+
 
 		-- UI to select things (files, grep results, open buffers...)
 		use {
@@ -234,6 +257,9 @@ return packer.startup(
       "fladson/vim-kitty",
       ft = "kitty",
     }
+
+    -- Lua replit run :Luadev
+    use {"bfredl/nvim-luadev"}
 
 	end
 )

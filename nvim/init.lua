@@ -32,11 +32,22 @@
 --  :PackerSync --> Sync packer cache with what's defined in pluginList.lua and updates existing versions (same as PackerClean + PackerUpdate)
 --  :PackerCompile --> Compiles plugines in to new cache-- Must be run!
 --  :TSUpdate --> Update treesitter configs
+--
+--  List of interesting plugins:
+--  https://github.com/rockerBOO/awesome-neovim
+--  https://neovimcraft.com/
+--
+--  Plugins to investigate
+--  https://github.com/simrat39/symbols-outline.nvim
+--  https://github.com/echasnovski/mini.nvim#miniindentscope
+--  https://github.com/folke/which-key.nvim
+--  https://github.com/hrsh7th/nvim-cmp
 
 local modules = {
 	"settings",
 	"mappings",
 	"grep",
+  -- packer gets lazy loaded when needed (see the mappings.lua file)
 	-- "pluginList",
 }
 
