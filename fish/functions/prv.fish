@@ -4,6 +4,6 @@ function prv
   if set -q VIRTUAL_ENV;
     nvim;
   else;
-    pipenv shell nvim
+    poetry run nvim
   end
 end
