@@ -38,6 +38,8 @@ return packer.startup(
 			end
 		}
 
+    use {'kevinhwang91/nvim-bqf', ft = 'qf'}
+
 		-- Treesitter
     -- Rune :TSUpdate to update language definitions
 		use {
@@ -69,24 +71,6 @@ return packer.startup(
 			end
 		}
 
-		use {
-			'hrsh7th/nvim-compe',
-			event = 'InsertEnter',
-			config = function()
-				require 'plugins.compe'
-			end
-		}
-
-		--CoC
-		use {
-			'neoclide/coc.nvim',
-			branch = 'release',
-			ft = 'go',
-			config = function()
-				require 'plugins.coc-config'
-			end
-		}
-
 		-- UI to select things (files, grep results, open buffers...)
 		use {
 			'nvim-telescope/telescope.nvim',
@@ -107,16 +91,7 @@ return packer.startup(
 		}
 
 		-- fzf
-		-- use {
-		-- 	'junegunn/fzf',
-		-- 	config = function()
-		-- 		require('plugins.fzf-config')
-		-- 	end
-		-- }
-		-- use {
-		-- 	'junegunn/fzf.vim',
-		-- }
-
+		use { 'junegunn/fzf' }
 
     --
 		-- Session management
@@ -241,17 +216,10 @@ return packer.startup(
 
     use {
         "windwp/nvim-autopairs",
-        after = "nvim-compe",
         config = function()
             require "plugins.autopairs"
         end
     }
-
-		-- use {
-		-- 	'bazelbuild/vim-bazel',
-		-- 	ft = 'go',
-		-- 	requires = {'google/vim-maktaba'},
-		-- }
 
 		use {
 			'fatih/vim-go',

@@ -134,3 +134,4 @@ vim.cmd("silent! command PackerUpdate lua require 'pluginList' require('packer')
 
 -- Easily start profiling actions
 vim.cmd("silent! command StartProfile :profile start ~/profile.log | :profile func * | :profile file *<CR>")
+-- to stop profiling -- :profile stop

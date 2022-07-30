@@ -8,9 +8,16 @@ require'nvim-treesitter.configs'.setup {
 	highlight = { 
 		enable = true,
 		additional_vim_regex_highlighting = false,
+    disable = function(lang, bufnr)
+      -- These features are slow as hell on large files so disable them
+      return vim.api.nvim_buf_line_count(bufnr) > 1000 
+    end,
 	},
 	indent = {
-		enable = true 
+		enable = true,
+    disable = function(lang, bufnr)
+      return vim.api.nvim_buf_line_count(bufnr) > 1000
+    end,
 	},
 
 	textobjects = {

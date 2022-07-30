@@ -9,6 +9,7 @@ alias icat="kitty +kitten icat"
 
 # # prepend ~/.bin/
 fish_add_path $HOME/.bin
+fish_add_path $HOME/.local/bin
 
 # add Solana
 fish_add_path $HOME/.local/share/solana/install/active_release/bin
@@ -59,6 +60,8 @@ end
 ####################### go config
 # Configure GOROOT and GOPATH
 set -Ux GOPATH $HOME/go
+
+# set -gx GO1MODULE on
 
 fish_add_path $GOPATH/bin
 #######################

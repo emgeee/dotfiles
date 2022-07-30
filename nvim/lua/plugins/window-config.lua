@@ -2,7 +2,7 @@
 local key_mapper = require('utils.key_mapper')
 
 require('nvim-window').setup({
-  -- Specify a customer Highlight groups
+  -- Specify a custom Highlight groups
   -- use :so $VIMRUNTIME/syntax/hitest.vim to view highligh groups
   normal_hl = 'Search',
   hint_hl = 'Bold',

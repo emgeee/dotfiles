@@ -26,6 +26,12 @@
 --  Tricks to decrease startup time: https://www.reddit.com/r/neovim/comments/opipij/guide_tips_and_tricks_to_reduce_startup_and/
 --
 --  A well structured nvim config: https://github.com/siduck76/NvChad
+--
+--  Commands to run to update
+--  :PackerUpdate --> Update dependencies that are installed
+--  :PackerSync --> Sync packer cache with what's defined in pluginList.lua and updates existing versions (same as PackerClean + PackerUpdate)
+--  :PackerCompile --> Compiles plugines in to new cache-- Must be run!
+--  :TSUpdate --> Update treesitter configs
 
 local modules = {
 	"settings",
