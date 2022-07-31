@@ -11,6 +11,10 @@ alias icat="kitty +kitten icat"
 fish_add_path $HOME/.bin
 fish_add_path $HOME/.local/bin
 
+
+# Scala management
+fish_add_path $HOME/Library/Application\ Support/Coursier/bin
+
 # add Solana
 fish_add_path $HOME/.local/share/solana/install/active_release/bin
 
@@ -50,6 +54,10 @@ if test -e /usr/local/opt/asdf/asdf.fish
   source /usr/local/opt/asdf/asdf.fish
 end
 
+if test -e $HOME/.asdf/plugins/java/set-java-home.fish 
+  . $HOME/.asdf/plugins/java/set-java-home.fish
+end
+
 # For ARM architecture
 if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
   source /opt/homebrew/opt/asdf/libexec/asdf.fish
@@ -67,24 +75,11 @@ fish_add_path $GOPATH/bin
 #######################
 
 
+
 # current instructions for python: https://opensource.com/article/19/5/python-3-default-mac
 # Disable virtual env on the left side of the prompt
 # useful if the selected theme has built in support
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
-
-# set -Ux PYENV_ROOT $HOME/.pyenv
-# brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper
-
-# configure virtual env
-# status --is-interactive; and source (pyenv init -|psub)
-
-# pyenv virtualenv
-# status --is-interactive; and source (pyenv virtualenv-init -|psub)
-
-# default bin for brew Python 3.9
-# if test -e $HOME/Library/Python/3.9/bin
-#   set PATH $HOME/Library/Python/3.9/bin $PATH
-# end
 
 # pip install virtualfish
 # vf install
@@ -104,6 +99,3 @@ if test -e $HOME/.config/fish/private_environment.fish
 end
 
 test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
-
-# Created by `pipx` on 2022-05-20 20:14:28
-set PATH $PATH /Users/matt/.local/bin

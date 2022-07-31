@@ -60,12 +60,17 @@ return packer.startup(
 
 
 		-- LSP and completions
-		use {
-			'williamboman/nvim-lsp-installer',
-		}
+		-- use {
+		-- 	'williamboman/nvim-lsp-installer',
+		-- }
 
 		use {
 			'neovim/nvim-lspconfig',
+      requires={
+        "williamboman/mason.nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        "williamboman/mason-lspconfig.nvim",
+      },
 			config = function()
 				require 'plugins.lspconfig'
 			end
