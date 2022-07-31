@@ -30,9 +30,11 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
- 
+
   -- Map :Format to vim.lsp.buf.formatting()
   vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+
+  require('illuminate').on_attach(_client)
 end
 
 -- Mason config

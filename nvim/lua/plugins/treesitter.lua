@@ -2,21 +2,21 @@
 require'nvim-treesitter.configs'.setup {
 	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
   -- I don't see a reason not to use all maintained languages
-  ensure_installed = "all",
+  ensure_installed = "maintained",
   ignore_install = {"phpdoc"},
   sync_install = false,
-	highlight = { 
+	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
     disable = function(lang, bufnr)
       -- These features are slow as hell on large files so disable them
-      return vim.api.nvim_buf_line_count(bufnr) > 1000 
+      return vim.api.nvim_buf_line_count(bufnr) > 1000
     end,
 	},
 	indent = {
 		enable = true,
     disable = function(lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 1000
+      return vim.api.nvim_buf_line_count(bufnr) > 1000 or lang == "python"
     end,
 	},
 
@@ -35,14 +35,6 @@ require'nvim-treesitter.configs'.setup {
 				['il'] = '@loop.inner',
 				['aa'] = '@parameter.outer',
 				['ia'] = '@parameter.inner',
-
-				-- Or you can define your own textobjects like this
-				-- ["iF"] = {
-				--     python = "(function_definition) @function",
-				--     cpp = "(function_definition) @function",
-				--     c = "(function_definition) @function",
-				--     java = "(method_declaration) @function",
-				-- },
 			},
 		},
 		move = {

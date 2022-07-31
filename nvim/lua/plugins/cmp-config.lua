@@ -2,6 +2,11 @@
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 
+-- Set completeopt to have a better completion experience
+-- Needed for cmp
+vim.opt.completeopt = "menu,menuone,noselect"
+
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -21,10 +26,10 @@ cmp.setup({
   }),
   -- Configure sources, order of sources determines order in completion menu
   sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-    }, {
-      { name = 'buffer' },
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' }, -- For vsnip users.
+  }, {
+    { name = 'buffer' },
   }),
   formatting = {
     format = lspkind.cmp_format({
@@ -33,7 +38,7 @@ cmp.setup({
 
       -- The function below will be called before any actual modifications from lspkind
       -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      before = function (entry, vim_item)
+      before = function(entry, vim_item)
         return vim_item
       end
     })
@@ -45,8 +50,8 @@ cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
   }, {
-      { name = 'buffer' },
-    })
+    { name = 'buffer' },
+  })
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -63,7 +68,6 @@ cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
     { name = 'path' }
   }, {
-      { name = 'cmdline' }
-    })
+    { name = 'cmdline' }
+  })
 })
-

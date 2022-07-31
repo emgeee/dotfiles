@@ -70,6 +70,7 @@ return packer.startup(
         "williamboman/mason.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         "williamboman/mason-lspconfig.nvim",
+        "RRethy/vim-illuminate", -- illuminate works under the cursor
       },
 			config = function()
 				require 'plugins.lspconfig'

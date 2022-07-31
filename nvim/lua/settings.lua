@@ -44,10 +44,6 @@ vim.wo.signcolumn="auto:2"
 -- Avoid showing message extra message when using completion
 opt.shortmess = vim.o.shortmess .. "c"
 
--- Set completeopt to have a better completion experience
--- Needed for compe
-opt.completeopt="menuone,noselect"
-
 -- Change preview window location
 g.splitbelow = true
 g.splitright = true
@@ -147,21 +143,6 @@ autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
 ]], false)
-
--- Save line postion on exit, then restore when opening file
--- vim.cmd([[
--- function! ResCur()
---   if line("'\"") <= line("$")
---   normal! g`"
---   return 1
---   endif
--- endfunction
---
--- augroup resCur
---   autocmd!
---   autocmd BufWinEnter * call ResCur()
--- augroup END
--- ]], false)
 
 -- Recommend by auto-session plugin
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
