@@ -2,7 +2,7 @@
 require'nvim-treesitter.configs'.setup {
 	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
   -- I don't see a reason not to use all maintained languages
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   ignore_install = {"phpdoc"},
   sync_install = false,
 	highlight = {

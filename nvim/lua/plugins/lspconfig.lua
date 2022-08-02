@@ -6,6 +6,31 @@
 -- vim.lsp.set_log_level("debug")
 -- check logs with :lua vim.cmd('vs'..vim.lsp.get_log_path())
 
+-- Custom format function
+local format_func = function()
+  local formatters = {
+    -- Use black for python. Black is managed via the Mason plugin
+    ['python'] = function ()
+      vim.cmd([[!black %]])
+    end
+  }
+
+  local ftype = vim.bo.filetype
+  local func = formatters[ftype]
+
+  if func then
+    func()
+  else
+    -- Default to using the LSP formatter
+    vim.lsp.buf.formatting()
+  end
+
+end
+
+-- Map :Format to vim.lsp.buf.formatting()
+vim.api.nvim_create_user_command("Format", format_func, {})
+
+
 -- LSP settings
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -30,9 +55,6 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-
-  -- Map :Format to vim.lsp.buf.formatting()
-  vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
   require('illuminate').on_attach(_client)
 end
