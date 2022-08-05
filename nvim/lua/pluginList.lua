@@ -103,24 +103,21 @@ return packer.startup(
 		-- UI to select things (files, grep results, open buffers...)
 		use {
 			'nvim-telescope/telescope.nvim',
-			requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+			requires = {
+        {'nvim-lua/popup.nvim'},
+        {'nvim-lua/plenary.nvim'},
+        {'nvim-telescope/telescope-fzy-native.nvim'},
+        {'nvim-telescope/telescope-media-files.nvim'},
+        {'junegunn/fzf'},
+      },
 			config = function()
 				require('plugins.telescope-config')
 			end
-		}
-    use {
-      'nvim-telescope/telescope-fzy-native.nvim'
-    }
-		use {
-			'nvim-telescope/telescope-media-files.nvim',
 		}
 
 		use {
 			'mileszs/ack.vim',
 		}
-
-		-- fzf
-		use { 'junegunn/fzf' }
 
     --
 		-- Session management

@@ -2,37 +2,46 @@
 local present, telescope = pcall(require, "telescope")
 
 if not present then
-	print("Error loading telescope")
-	return
+  print("Error loading telescope")
+  return
 end
 
-telescope.setup{
-	defaults = {
-		mappings = {
-			i = {
-				["<C-u>"] = false,
-				["<C-d>"] = false,
-			},
-		},
-		generic_sorter =  require'telescope.sorters'.get_fzy_sorter,
-		file_sorter =  require'telescope.sorters'.get_fzy_sorter,
-	}
+telescope.setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-u>"] = false,
+        ["<C-d>"] = false,
+      },
+    },
+    generic_sorter = require 'telescope.sorters'.get_fzy_sorter,
+    file_sorter = require 'telescope.sorters'.get_fzy_sorter,
+  },
+  pickers = {
+    find_files = {
+      theme = "ivy",
+    },
+    grep_string = {
+      theme = "ivy",
+    },
+  },
 }
 
 telescope.load_extension('fzy_native')
 telescope.load_extension("media_files")
 
+-- small local function for shorter line length
+local bi = function ()
+  return require('telescope.builtin')
+end
+
 --Add leader shortcuts
--- vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_ivy())<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<C-p>', [[<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_ivy())<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags({ctags_file=vim.g.gutentags_cache_dir .. 'tags'})<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>sw', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
+vim.keymap.set('n', '<C-p>', function() bi().find_files() end)
+vim.keymap.set('n', '<leader><space>', function() bi().buffers() end)
+vim.keymap.set('n', '<leader>?', function() bi().oldfiles() end)
+vim.keymap.set('n', '<leader>gc', function() bi().git_commits() end)
+-- vim.keymap.set('n', '<leader>gb', function() bi().git_branches() end)
+vim.keymap.set('n', '<leader>gs', function() bi().git_status() end)
+vim.keymap.set('n', '<leader>gp', function() bi().git_bcommits() end)
+vim.keymap.set('n', '<leader>sp', function() bi().live_grep() end)
+vim.keymap.set('n', '<leader>sw', function() bi().grep_string({word_match = "-w"}) end)

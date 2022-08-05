@@ -41,6 +41,9 @@
 --  https://github.com/simrat39/symbols-outline.nvim
 --  https://github.com/echasnovski/mini.nvim#miniindentscope
 --  https://github.com/folke/which-key.nvim
+--
+-- To print variables
+--  print(vim.inspect(x))
 
 local modules = {
 	"settings",
