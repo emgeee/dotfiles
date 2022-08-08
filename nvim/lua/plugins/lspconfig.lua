@@ -57,6 +57,7 @@ local on_attach = function(_client, bufnr)
   vim.keymap.set('n', '<leader>q', function () vim.lsp.diagnostic.set_loclist() end, opts)
 
 
+  -- TODO (WIP) switch to using telescope for lsp pickers
   vim.keymap.set('n', 'gd', function ()
     vim.cmd('vsplit')
     -- local win = vim.api.nvim_get_current_win()
