@@ -2,56 +2,53 @@ local config = {
   options = {
     icons_enabled = true,
     theme = 'onedark',
-    component_separators = {'', ''},
-    section_separators = {'', ''},
-    disabled_filetypes = {}
+    component_separators = { '', '' },
+    section_separators = { '', '' },
+    disabled_filetypes = {},
+    -- globalstatus = true,
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {{"branch", icon = ""}},
-    lualine_c = {{'filename', path=1}},
-    lualine_x = {},
+    lualine_a = {
+      { 'mode' },
+    },
+    lualine_b = {
+      { "branch", icon = "" },
+    },
+    lualine_c = {
+      { 'filename', path = 1 },
+    },
+    lualine_x = {
+      { 'filetype' },
+      { 'progress' },
+      { 'location' },
+    },
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = { require('auto-session-library').current_session_name }
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {{'filename', color="Title", path=1}},
-    lualine_x = {{'location', color="Title"}},
+    lualine_c = { { 'filename', color = "Title", path = 1 } },
+    lualine_x = { { 'location', color = "Title" } },
     lualine_y = {},
     lualine_z = {}
   },
-  tabline = {},
-  extensions = {'fzf', 'quickfix', 'fugitive'}
-}
-
---  require('utils.get-function-name')
-
--- The following functions are pulled from https://gist.github.com/hoob3rt/b200435a765ca18f09f83580a606b878
--- Inserts a component in lualine_c at left section
-local function ins_left(component)
-  table.insert(config.sections.lualine_c, component)
-end
-
--- Inserts a component in lualine_x to right section
-local function ins_right(component)
-  table.insert(config.sections.lualine_x, component)
-end
-
--- WIP
--- ins_right {
---   function() return require('nvim-treesitter').statusline({indicator_size=20}) end
--- }
-
-ins_right {
-  'filetype'
-}
-ins_right {
-  'progress'
-}
-ins_right {
-  'location'
+  tabline = {
+    -- There were a bunch of bugs with this, update and try again later
+      -- lualine_a = {},
+      -- lualine_b = {},
+      -- lualine_c = {},
+      -- lualine_x = {},
+      -- lualine_y = {},
+      -- lualine_z = {}
+  },
+  extensions = {
+    'fzf',
+    'quickfix',
+    'fugitive',
+    'nvim-tree',
+    'symbols-outline',
+  }
 }
 
 

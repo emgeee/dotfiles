@@ -131,8 +131,6 @@ for _, plugin in pairs(disabled_built_ins) do
 	g["loaded_" .. plugin] = 1
 end
 
-vim.o.tabline = '%!v:lua.require\'tabline\'.tabline()'
-
 -- Don't show status line on vim terminals
 vim.cmd [[ au TermOpen term://* setlocal nonumber laststatus=0 ]]
 
@@ -145,4 +143,4 @@ augroup end
 ]], false)
 
 -- Recommend by auto-session plugin
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal"

@@ -10,7 +10,9 @@
 local format_func = function()
   local formatters = {
     -- Use black for python. Black is managed via the Mason plugin
-    ['python'] = function ()
+    ['python'] = function()
+      -- Save the current buffer before running format
+      vim.cmd("write")
       vim.cmd([[!black %]])
     end
   }
@@ -28,7 +30,7 @@ local format_func = function()
 end
 
 -- Map :Format to vim.lsp.buf.formatting()
-vim.api.nvim_create_user_command("Format", format_func, {})
+vim.api.nvim_create_user_command("Format", function() vim.lsp.buf.formatting() end, {})
 
 
 -- LSP settings
@@ -37,35 +39,38 @@ local on_attach = function(_client, bufnr)
 
   -- require('utils.callbacks')
 
-  local opts = { noremap=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
+  local opts = { noremap = true, buffer = bufnr }
+  -- vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
   -- vim.keymap.set('n', 'gd', function () vim.lsp.buf.definition() end, opts)
   -- vim.keymap.set('n', 'gd', function () vsplit | vim.lsp.buf.definition() end, opts)
+  -- vim.keymap.set('n', 'gy', function () vim.lsp.buf.type_definition() end, opts)
+  -- vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
 
-  vim.keymap.set('n', 'gy', function () vim.lsp.buf.type_definition() end, opts)
-  vim.keymap.set('n', 'gi', function () vim.lsp.buf.implementation() end, opts)
   -- vim.keymap.set('n', 'gr', function () vim.lsp.buf.references() end, opts)
-  vim.keymap.set('n', '<leader>rn', function () vim.lsp.buf.rename() end, opts)
-  vim.keymap.set('n', 'K', function () vim.lsp.buf.hover() end, opts)
+  vim.keymap.set('n', 'grn', function() vim.lsp.buf.rename() end, opts)
+  -- vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
   -- vim.keymap.set('n', '<C-k>', function () vim.lsp.buf.signature_help() end, opts)
-  vim.keymap.set('n', '<leader>wa', function () vim.lsp.buf.add_workspace_folder() end, opts)
-  vim.keymap.set('n', '<leader>wr', function () vim.lsp.buf.remove_workspace_folder() end, opts)
-  vim.keymap.set('n', '<leader>wl', function () print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
-  vim.keymap.set('n', '<leader>ca', function () vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set('n', '[d', function () vim.lsp.diagnostic.goto_prev() end, opts)
-  vim.keymap.set('n', ']d', function () vim.lsp.diagnostic.goto_next() end, opts)
-  vim.keymap.set('n', '<leader>q', function () vim.lsp.diagnostic.set_loclist() end, opts)
+  -- vim.keymap.set('n', '<leader>wa', function() vim.lsp.buf.add_workspace_folder() end, opts)
+  -- vim.keymap.set('n', '<leader>wr', function() vim.lsp.buf.remove_workspace_folder() end, opts)
+  -- vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
+  -- vim.keymap.set('n', 'gca', function() vim.lsp.buf.code_action() end, opts)
+  vim.keymap.set('n', '[d', function() vim.lsp.diagnostic.goto_prev() end, opts)
+  vim.keymap.set('n', ']d', function() vim.lsp.diagnostic.goto_next() end, opts)
+  -- vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, opts)
 
+  -- Mappings for Telescope
+  vim.keymap.set('n', 'gd', function() require('telescope.builtin').lsp_definitions() end, opts)
+  vim.keymap.set('n', 'gD', function() require('telescope.builtin').lsp_definitions({ jump_type = "vsplit" }) end, opts)
+  vim.keymap.set('n', 'gr', function() require('telescope.builtin').lsp_references() end, opts)
+  vim.keymap.set('n', 'gy', function() require('telescope.builtin').lsp_type_definitions() end, opts)
+  vim.keymap.set('n', 'gi', function() require('telescope.builtin').lsp_implementations() end, opts)
+  vim.keymap.set('n', 'gco', function() require('telescope.builtin').lsp_outgoing_calls() end, opts)
+  vim.keymap.set('n', 'gci', function() require('telescope.builtin').lsp_incoming_calls() end, opts)
 
-  -- TODO (WIP) switch to using telescope for lsp pickers
-  vim.keymap.set('n', 'gd', function ()
-    vim.cmd('vsplit')
-    -- local win = vim.api.nvim_get_current_win()
-    -- local buf = vim.api.nvim_create_buf(true, true)
-    -- vim.api.nvim_win_set_buf(win, buf)
-    require('telescope.builtin').lsp_definitions()
-  end, opts)
-  vim.keymap.set('n', 'gr', function () require('telescope.builtin').lsp_references() end, opts)
+  -- Mappings for lspsaga
+  vim.keymap.set('n', 'K', function() require('lspsaga.hover').render_hover_doc() end, opts)
+  -- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
+  vim.keymap.set('n', 'gca', '<cmd>Lspsaga code_action<CR>', opts)
 
   require('illuminate').on_attach(_client)
 end
@@ -77,8 +82,8 @@ end
 require("mason").setup()
 
 --  Small plugin to ensure various formatters are installed
-require'mason-tool-installer'.setup({
-  ensure_installed={
+require 'mason-tool-installer'.setup({
+  ensure_installed = {
     "lua-language-server",
     "yaml-language-server",
     "vim-language-server",
@@ -160,7 +165,10 @@ mason_lspconfig.setup_handlers({
 
   ["pyright"] = function()
     lspconfig.pyright.setup({
-      on_attach = opts.on_attach,
+      on_attach = function(client, bufrn)
+        -- client.resolved_capabilities.hover = false
+        opts.on_attach(client, bufrn)
+      end,
       capabilities = opts.capabilities,
 
       settings = {
@@ -172,5 +180,17 @@ mason_lspconfig.setup_handlers({
         }
       },
     })
+  end,
+
+  ["jedi_language_server"] = function()
+    lspconfig.jedi_language_server.setup({
+      on_attach = function(client, bufrn)
+        -- client.resolved_capabilities.hover = false
+        opts.on_attach(client, bufrn)
+      end,
+      capabilities = opts.capabilities,
+      settings = {},
+    })
+
   end,
 })

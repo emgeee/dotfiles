@@ -3,7 +3,8 @@
 # Use lsd instead of ls
 # brew install lsd
 # requires a patched font from https://www.nerdfonts.com/
-# configure Iterm>Profile>Non ASCII font
+# configure iTerm>Profile>Non ASCII font
+
 # alias ls='lsd'
 alias icat="kitty +kitten icat"
 

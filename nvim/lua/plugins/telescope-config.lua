@@ -11,7 +11,7 @@ telescope.setup {
     mappings = {
       i = {
         ["<C-u>"] = false,
-        ["<C-d>"] = false,
+        ["<C-d>"] = require('telescope.actions').delete_buffer,
       },
     },
     generic_sorter = require 'telescope.sorters'.get_fzy_sorter,
@@ -39,9 +39,11 @@ end
 vim.keymap.set('n', '<C-p>', function() bi().find_files() end)
 vim.keymap.set('n', '<leader><space>', function() bi().buffers() end)
 vim.keymap.set('n', '<leader>?', function() bi().oldfiles() end)
+vim.keymap.set('n', '<leader>sg', function() bi().live_grep() end)
+vim.keymap.set('n', '<leader>sw', function() bi().grep_string({word_match = "-w"}) end)
+vim.keymap.set('n', '<leader>ss', function() require('session-lens').search_session() end)
+
 vim.keymap.set('n', '<leader>gc', function() bi().git_commits() end)
 -- vim.keymap.set('n', '<leader>gb', function() bi().git_branches() end)
 vim.keymap.set('n', '<leader>gs', function() bi().git_status() end)
 vim.keymap.set('n', '<leader>gp', function() bi().git_bcommits() end)
-vim.keymap.set('n', '<leader>sp', function() bi().live_grep() end)
-vim.keymap.set('n', '<leader>sw', function() bi().grep_string({word_match = "-w"}) end)

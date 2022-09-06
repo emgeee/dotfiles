@@ -27,11 +27,12 @@
 --
 --  A well structured nvim config: https://github.com/siduck76/NvChad
 --
---  Commands to run to update
+--  Commands to run to update things
 --  :PackerUpdate --> Update dependencies that are installed
 --  :PackerSync --> Sync packer cache with what's defined in pluginList.lua and updates existing versions (same as PackerClean + PackerUpdate)
 --  :PackerCompile --> Compiles plugines in to new cache-- Must be run!
 --  :TSUpdate --> Update treesitter configs
+--  :MasonToolsUpdate --> Update LSP servers
 --
 --  List of interesting plugins:
 --  https://github.com/rockerBOO/awesome-neovim
@@ -44,6 +45,7 @@
 --
 -- To print variables
 --  print(vim.inspect(x))
+--
 
 local modules = {
 	"settings",

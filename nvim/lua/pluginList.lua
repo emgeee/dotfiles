@@ -92,12 +92,20 @@ return packer.startup(
         'hrsh7th/cmp-buffer', -- source for words in buffers
         'hrsh7th/cmp-path', -- source for file system path
         'hrsh7th/cmp-cmdline', -- source for vims cmd line
-        'onsails/lspkind.nvim', -- adds vscode-like pictograms to complete menue
+        'onsails/lspkind.nvim', -- adds vscode-like pictograms to complete menu
       },
 			config = function()
 				require 'plugins.cmp-config'
 			end
 		}
+
+    -- Support for linters
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+            require("plugins.null-ls-config")
+        end,
+    })
 
 
 		-- UI to select things (files, grep results, open buffers...)
@@ -115,6 +123,18 @@ return packer.startup(
 			end
 		}
 
+    -- mostly used for a pretty LSP hover functionality
+    -- hotkeys specified in lspconfig.lua
+    use({
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = function()
+            local saga = require("lspsaga")
+
+            saga.init_lsp_saga({})
+        end,
+    })
+
 		use {
 			'mileszs/ack.vim',
 		}
@@ -123,12 +143,18 @@ return packer.startup(
 		-- Session management
     --
 		use {
-			'rmagatti/auto-session'
+			'rmagatti/auto-session',
+      config = function ()
+        require('auto-session').setup({})
+      end
 		}
 		use {
 			'rmagatti/session-lens',
-			requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'},
+			requires = {'rmagatti/auto-session'},
 			after = 'telescope.nvim',
+      config = function ()
+        require('session-lens').setup({})
+      end
 		}
 
     --
@@ -148,14 +174,17 @@ return packer.startup(
 			end
 		}
 
-		-- Status line plugin
-		use {
-			'hoob3rt/lualine.nvim',
-			requires = {'kyazdani42/nvim-web-devicons', opt = true},
-      after = 'onedark.nvim',
-			config = function()
-				require 'plugins.lualine-config'
-    	end
+    -- Status line plugin
+    use {
+      'hoob3rt/lualine.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true},
+      after = {
+        'onedark.nvim',
+        'auto-session',
+      },
+      config = function()
+        require 'plugins.lualine-config'
+      end
     }
     -- use {
     --   'glepnir/galaxyline.nvim',
@@ -174,6 +203,20 @@ return packer.startup(
 			  require 'plugins.tree-config'
 			end,
 		}
+
+    -- :SymbolsOutline to open window
+    use {
+      'simrat39/symbols-outline.nvim',
+      config = function()
+        require("symbols-outline").setup({
+          keymaps = {
+            close = { 'q' }, -- Keep pressing esc by accident so unbind it
+          },
+        })
+
+        vim.api.nvim_create_user_command("Outline", 'SymbolsOutline', {})
+      end,
+    }
 
 		-- Add indentation guides even on blank lines
 		use {
@@ -223,6 +266,18 @@ return packer.startup(
     --
 		-- MISC
     --
+
+    -- Hack
+    use {
+      'stevearc/stickybuf.nvim',
+      config = function()
+        require("stickybuf").setup({
+          filetype = {
+            outline = "filetype",
+          },
+        })
+      end
+    }
 
     -- Intelligently set the root directory
 		use 'airblade/vim-rooter'
