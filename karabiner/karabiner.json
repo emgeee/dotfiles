@@ -2,7 +2,8 @@
     "global": {
         "check_for_updates_on_startup": true,
         "show_in_menu_bar": false,
-        "show_profile_name_in_menu_bar": false
+        "show_profile_name_in_menu_bar": false,
+        "unsafe_ui": false
     },
     "profiles": [
         {
@@ -46,7 +47,128 @@
             "devices": [
                 {
                     "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
+                    "fn_function_keys": [
+                        {
+                            "from": {
+                                "key_code": "f1"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f1"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f2"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f2"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f3"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f3"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f4"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f4"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f5"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f5"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f6"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f6"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f7"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f7"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f8"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f8"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f9"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f9"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f10"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f10"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f11"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f11"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f12"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f12"
+                                }
+                            ]
+                        }
+                    ],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
@@ -55,7 +177,8 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -68,7 +191,8 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -81,7 +205,8 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -94,7 +219,8 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -107,7 +233,8 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -120,7 +247,8 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -133,7 +261,8 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -146,7 +275,8 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -159,7 +289,143 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": []
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [
+                        {
+                            "from": {
+                                "key_code": "f1"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f1"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f2"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f2"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f3"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f3"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f4"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f4"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f5"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f5"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f6"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f6"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f7"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f7"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f8"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f8"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f9"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f9"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f10"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f10"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f11"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f11"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "f12"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f12"
+                                }
+                            ]
+                        }
+                    ],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 24616,
+                        "vendor_id": 7504
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 }
             ],
             "fn_function_keys": [

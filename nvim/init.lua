@@ -51,12 +51,12 @@ local modules = {
 	"settings",
 	"mappings",
 	"grep",
-  -- packer gets lazy loaded when needed (see the mappings.lua file)
+	-- packer gets lazy loaded when needed (see the mappings.lua file)
 	-- "pluginList",
 }
 
 for i = 1, #modules, 1 do
-  -- pcall is safer but swallows errors
+	-- pcall is safer but swallows errors
 	-- pcall(require, modules[i])
 	require(modules[i])
 end

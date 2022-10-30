@@ -6,31 +6,8 @@
 -- vim.lsp.set_log_level("debug")
 -- check logs with :lua vim.cmd('vs'..vim.lsp.get_log_path())
 
--- Custom format function
-local format_func = function()
-  local formatters = {
-    -- Use black for python. Black is managed via the Mason plugin
-    ['python'] = function()
-      -- Save the current buffer before running format
-      vim.cmd("write")
-      vim.cmd([[!black %]])
-    end
-  }
-
-  local ftype = vim.bo.filetype
-  local func = formatters[ftype]
-
-  if func then
-    func()
-  else
-    -- Default to using the LSP formatter
-    vim.lsp.buf.formatting()
-  end
-
-end
-
 -- Map :Format to vim.lsp.buf.formatting()
-vim.api.nvim_create_user_command("Format", function() vim.lsp.buf.formatting() end, {})
+vim.api.nvim_create_user_command("Format", function() vim.lsp.buf.format() end, {})
 
 
 -- LSP settings
@@ -68,7 +45,7 @@ local on_attach = function(_client, bufnr)
   vim.keymap.set('n', 'gci', function() require('telescope.builtin').lsp_incoming_calls() end, opts)
 
   -- Mappings for lspsaga
-  vim.keymap.set('n', 'K', function() require('lspsaga.hover').render_hover_doc() end, opts)
+  vim.keymap.set('n', 'K', function() require('lspsaga.hover'):render_hover_doc() end, opts)
   -- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
   vim.keymap.set('n', 'gca', '<cmd>Lspsaga code_action<CR>', opts)
 
@@ -107,7 +84,7 @@ end
 mason_lspconfig.setup({})
 
 
--- cmp config -- we need to advetise to LSP servers additional features supported by the cmp complete plugin
+-- cmp config -- we need to advertise to LSP servers additional features supported by the cmp complete plugin
 local cmp_nvim_lsp_okay, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_nvim_lsp_okay then
   vim.notify("Couldn't load cmp_nvim_lsp" .. mason_lspconfig, "error")
