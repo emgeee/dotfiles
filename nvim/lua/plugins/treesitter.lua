@@ -1,23 +1,22 @@
-
-require'nvim-treesitter.configs'.setup {
+require("nvim-treesitter.configs").setup({
 	-- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  -- I don't see a reason not to use all maintained languages
-  ensure_installed = "all",
-  ignore_install = {"phpdoc"},
-  sync_install = false,
+	-- I don't see a reason not to use all maintained languages
+	ensure_installed = "all",
+	ignore_install = { "phpdoc" },
+	sync_install = false,
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
-    disable = function(lang, bufnr)
-      -- These features are slow as hell on large files so disable them
-      return vim.api.nvim_buf_line_count(bufnr) > 1000
-    end,
+		disable = function(lang, bufnr)
+			-- These features are slow as hell on large files so disable them
+			return vim.api.nvim_buf_line_count(bufnr) > 1000
+		end,
 	},
 	indent = {
 		enable = true,
-    disable = function(lang, bufnr)
-      return vim.api.nvim_buf_line_count(bufnr) > 1000 or lang == "python"
-    end,
+		disable = function(lang, bufnr)
+			return vim.api.nvim_buf_line_count(bufnr) > 1000 or lang == "python"
+		end,
 	},
 
 	textobjects = {
@@ -27,35 +26,46 @@ require'nvim-treesitter.configs'.setup {
 			lookahead = true,
 			keymaps = {
 				-- You can use the capture groups defined in textobjects.scm
-				['af'] = '@function.outer',
-				['if'] = '@function.inner',
-				['ac'] = '@class.outer',
-				['ic'] = '@class.inner',
-				['al'] = '@loop.outer',
-				['il'] = '@loop.inner',
-				['aa'] = '@parameter.outer',
-				['ia'] = '@parameter.inner',
+        -- NOTE: for HTML/JSX ust 'at' and 'it' (t = tag)
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = "@class.inner",
+				["al"] = "@loop.outer",
+				["il"] = "@loop.inner",
+				["aa"] = "@parameter.outer",
+				["ia"] = "@parameter.inner",
 			},
 		},
 		move = {
 			enable = true,
 			set_jumps = true, -- whether to set jumps in the jumplist
 			goto_next_start = {
-				[']f'] = '@function.outer',
-				[']]'] = '@class.outer',
+				["]f"] = "@function.outer",
+				["]]"] = "@class.outer",
 			},
 			goto_next_end = {
-				[']F'] = '@function.outer',
-				[']['] = '@class.outer',
+				["]F"] = "@function.outer",
+				["]["] = "@class.outer",
 			},
 			goto_previous_start = {
-				['[f'] = '@function.outer',
-				['[['] = '@class.outer',
+				["[f"] = "@function.outer",
+				["[["] = "@class.outer",
 			},
 			goto_previous_end = {
-				['[F'] = '@function.outer',
-				['[]'] = '@class.outer',
+				["[F"] = "@function.outer",
+				["[]"] = "@class.outer",
 			},
+		},
+	},
+
+	textsubjects = {
+		enable = true,
+		prev_selection = ",", -- (Optional) keymap to select the previous selection
+		keymaps = {
+			["."] = "textsubjects-smart",
+			[";"] = "textsubjects-container-outer",
+			["i;"] = "textsubjects-container-inner",
 		},
 	},
 
@@ -67,16 +77,16 @@ require'nvim-treesitter.configs'.setup {
 		updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
 		persist_queries = false, -- Whether the query persists across vim sessions
 		keybindings = {
-			toggle_query_editor = 'o',
-			toggle_hl_groups = 'i',
-			toggle_injected_languages = 't',
-			toggle_anonymous_nodes = 'a',
-			toggle_language_display = 'I',
-			focus_language = 'f',
-			unfocus_language = 'F',
-			update = 'R',
-			goto_node = '<cr>',
-			show_help = '?',
+			toggle_query_editor = "o",
+			toggle_hl_groups = "i",
+			toggle_injected_languages = "t",
+			toggle_anonymous_nodes = "a",
+			toggle_language_display = "I",
+			focus_language = "f",
+			unfocus_language = "F",
+			update = "R",
+			goto_node = "<cr>",
+			show_help = "?",
 		},
 	},
-}
+})

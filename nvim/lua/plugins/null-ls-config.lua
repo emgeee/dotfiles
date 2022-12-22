@@ -21,6 +21,7 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.gofmt,
     require("null-ls").builtins.formatting.shfmt,
     require("null-ls").builtins.formatting.fixjson,
-
+    require("null-ls").builtins.code_actions.eslint_d,
+    require("null-ls").builtins.formatting.prettierd,
   },
 })

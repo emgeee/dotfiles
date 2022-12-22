@@ -53,14 +53,13 @@ return packer.startup(function()
 		after = "nvim-treesitter",
 	})
 	use({
+		"RRethy/nvim-treesitter-textsubjects",
+		after = "nvim-treesitter",
+	})
+	use({
 		"nvim-treesitter/playground",
 		after = "nvim-treesitter",
 	})
-
-	-- LSP and completions
-	-- use {
-	-- 	'williamboman/nvim-lsp-installer',
-	-- }
 
 	use({
 		"neovim/nvim-lspconfig",
@@ -69,6 +68,7 @@ return packer.startup(function()
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"RRethy/vim-illuminate", -- illuminate works under the cursor
+      "scalameta/nvim-metals"
 		},
 		config = function()
 			require("plugins.lspconfig")
@@ -93,6 +93,7 @@ return packer.startup(function()
 			"hrsh7th/cmp-buffer", -- source for words in buffers
 			"hrsh7th/cmp-path", -- source for file system path
 			"hrsh7th/cmp-cmdline", -- source for vims cmd line
+      "hrsh7th/cmp-nvim-lua", -- nvim lua completion
 			"onsails/lspkind.nvim", -- adds vscode-like pictograms to complete menu
 		},
 		config = function()

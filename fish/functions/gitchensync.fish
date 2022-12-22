@@ -15,7 +15,7 @@ function gitchensync
   echo "pausing for 3 seconds..."
   sleep 3
 
-  echo "commiting to git"
+  echo "committing to git"
   git commit -am $msg
 
   echo "pushing to origin"

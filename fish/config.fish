@@ -13,6 +13,9 @@ fish_add_path $HOME/.bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.cargo/bin
 
+set -gx PNPM_HOME $HOME/Library/pnpm
+fish_add_path $PNPM_HOME
+
 
 # Scala management
 fish_add_path $HOME/Library/Application\ Support/Coursier/bin
@@ -101,3 +104,4 @@ if test -e $HOME/.config/fish/private_environment.fish
 end
 
 test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
+
