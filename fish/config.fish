@@ -59,7 +59,7 @@ if test -e /usr/local/opt/asdf/asdf.fish
   source /usr/local/opt/asdf/asdf.fish
 end
 
-if test -e $HOME/.asdf/plugins/java/set-java-home.fish 
+if test -e $HOME/.asdf/plugins/java/set-java-home.fish
   . $HOME/.asdf/plugins/java/set-java-home.fish
 end
 
@@ -79,6 +79,8 @@ set -Ux GOPATH $HOME/go
 fish_add_path $GOPATH/bin
 #######################
 
+#
+set -gx USE_GKE_GCLOUD_AUTH_PLUGIN True
 
 
 # current instructions for python: https://opensource.com/article/19/5/python-3-default-mac

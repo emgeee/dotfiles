@@ -3,320 +3,333 @@ local present, _ = pcall(require, "packerInit")
 local packer
 
 if present then
-	packer = require("packer")
+  packer = require("packer")
 else
-	return false
+  return false
 end
 
 local use = packer.use
 
 return packer.startup(function()
-	use({
-		"wbthomason/packer.nvim",
-		event = "VimEnter",
-	})
+  use({
+    "wbthomason/packer.nvim",
+    event = "VimEnter",
+  })
 
-	use({
-		"nvim-lua/plenary.nvim",
-	})
+  use({
+    "nvim-lua/plenary.nvim",
+  })
 
-	-- Git commands in nvim
-	use({
-		"tpope/vim-fugitive",
-	})
-	use({
-		"tpope/vim-rhubarb",
-	})
+  -- Git commands in nvim
+  use({
+    "tpope/vim-fugitive",
+  })
+  use({
+    "tpope/vim-rhubarb",
+  })
 
-	use({
-		"jdhao/better-escape.vim",
-		event = "InsertEnter",
-		config = function()
-			vim.g.better_escape_interval = 300
-			vim.g.better_escape_shortcut = { "jk" }
-		end,
-	})
+  use({
+    "jdhao/better-escape.vim",
+    event = "InsertEnter",
+    config = function()
+      vim.g.better_escape_interval = 300
+      vim.g.better_escape_shortcut = { "jk" }
+    end,
+  })
 
-	use({ "kevinhwang91/nvim-bqf", ft = "qf" })
+  use({ "kevinhwang91/nvim-bqf", ft = "qf" })
 
-	-- Treesitter
-	-- Rune :TSUpdate to update language definitions
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		event = "BufRead",
-		config = function()
-			require("plugins.treesitter")
-		end,
-	})
-	use({
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		after = "nvim-treesitter",
-	})
-	use({
-		"RRethy/nvim-treesitter-textsubjects",
-		after = "nvim-treesitter",
-	})
-	use({
-		"nvim-treesitter/playground",
-		after = "nvim-treesitter",
-	})
+  -- Treesitter
+  -- Rune :TSUpdate to update language definitions
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    event = "BufRead",
+    config = function()
+      require("plugins.treesitter")
+    end,
+  })
+  use({
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter",
+  })
+  use({
+    "RRethy/nvim-treesitter-textsubjects",
+    after = "nvim-treesitter",
+  })
+  use({
+    "nvim-treesitter/playground",
+    after = "nvim-treesitter",
+  })
 
-	use({
-		"neovim/nvim-lspconfig",
-		requires = {
-			"williamboman/mason.nvim",
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"RRethy/vim-illuminate", -- illuminate works under the cursor
-      "scalameta/nvim-metals"
-		},
-		config = function()
-			require("plugins.lspconfig")
-		end,
-	})
+  use({
+    "neovim/nvim-lspconfig",
+    requires = {
+      "williamboman/mason.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "RRethy/vim-illuminate", -- illuminate works under the cursor
+      "scalameta/nvim-metals", -- Scala metals integration
+    },
+    config = function()
+      require("plugins.lspconfig")
+    end,
+  })
 
-	-- Works by combining inputs from different sources to generate autocomplete
-	use({
-		"hrsh7th/nvim-cmp",
-		-- requires a list of different sources
-		requires = {
-			{
-				-- snippets engine
-				"hrsh7th/vim-vsnip",
-				requires = { "rafamadriz/friendly-snippets" },
-			},
-			{
-				"hrsh7th/cmp-vsnip",
-				requires = { "hrsh7th/vim-vsnip" },
-			}, -- source for snippets
-			"hrsh7th/cmp-nvim-lsp", -- source for builtin lsp
-			"hrsh7th/cmp-buffer", -- source for words in buffers
-			"hrsh7th/cmp-path", -- source for file system path
-			"hrsh7th/cmp-cmdline", -- source for vims cmd line
+  -- Works by combining inputs from different sources to generate autocomplete
+  use({
+    "hrsh7th/nvim-cmp",
+    -- requires a list of different sources
+    requires = {
+      {
+        -- snippets engine
+        "hrsh7th/vim-vsnip",
+        requires = { "rafamadriz/friendly-snippets" },
+      },
+      {
+        "hrsh7th/cmp-vsnip",
+        requires = { "hrsh7th/vim-vsnip" },
+      }, -- source for snippets
+      "hrsh7th/cmp-nvim-lsp", -- source for builtin lsp
+      "hrsh7th/cmp-buffer", -- source for words in buffers
+      "hrsh7th/cmp-path", -- source for file system path
+      "hrsh7th/cmp-cmdline", -- source for vims cmd line
       "hrsh7th/cmp-nvim-lua", -- nvim lua completion
-			"onsails/lspkind.nvim", -- adds vscode-like pictograms to complete menu
-		},
-		config = function()
-			require("plugins.cmp-config")
-		end,
-	})
+      "onsails/lspkind.nvim", -- adds vscode-like pictograms to complete menu
+    },
+    config = function()
+      require("plugins.cmp-config")
+    end,
+  })
 
-	-- Support for linters
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("plugins.null-ls-config")
-		end,
-	})
+  -- Support for linters
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("plugins.null-ls-config")
+    end,
+  })
 
-	-- UI to select things (files, grep results, open buffers...)
-	use({
-		"nvim-telescope/telescope.nvim",
-		requires = {
-			{ "nvim-lua/popup.nvim" },
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope-fzy-native.nvim" },
-			{ "nvim-telescope/telescope-media-files.nvim" },
-			{ "junegunn/fzf" },
-		},
-		config = function()
-			require("plugins.telescope-config")
-		end,
-	})
+  -- Open diagnostic pane with :Trouble
+  use({
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup({
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      })
+    end,
+  })
 
-	-- mostly used for a pretty LSP hover functionality
-	-- hotkeys specified in lspconfig.lua
-	use({
-		"glepnir/lspsaga.nvim",
-		branch = "main",
-		config = function()
-			local saga = require("lspsaga")
+  -- UI to select things (files, grep results, open buffers...)
+  use({
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      { "nvim-lua/popup.nvim" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope-fzy-native.nvim" },
+      { "nvim-telescope/telescope-media-files.nvim" },
+      { "junegunn/fzf" },
+    },
+    config = function()
+      require("plugins.telescope-config")
+    end,
+  })
 
-			saga.init_lsp_saga({})
-		end,
-	})
+  -- mostly used for a pretty LSP hover functionality
+  -- hotkeys specified in lspconfig.lua
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+      local saga = require("lspsaga")
 
-	use({
-		"mileszs/ack.vim",
-	})
+      saga.init_lsp_saga({})
+    end,
+  })
 
-	--
-	-- Session management
-	--
-	use({
-		"rmagatti/auto-session",
-		config = function()
-			require("auto-session").setup({})
-		end,
-	})
-	use({
-		"rmagatti/session-lens",
-		requires = { "rmagatti/auto-session" },
-		after = "telescope.nvim",
-		config = function()
-			require("session-lens").setup({})
-		end,
-	})
+  use({
+    "mileszs/ack.vim",
+  })
 
-	--
-	-- UI Plugins
-	--
-	use({
-		"navarasu/onedark.nvim",
-		config = function()
-			--Set colorscheme (order is important here)
-			vim.o.termguicolors = true
-			vim.g.onedark_terminal_italics = 2
+  --
+  -- Session management
+  --
+  use({
+    "rmagatti/auto-session",
+    config = function()
+      require("auto-session").setup({})
+    end,
+  })
+  use({
+    "rmagatti/session-lens",
+    requires = { "rmagatti/auto-session" },
+    after = "telescope.nvim",
+    config = function()
+      require("session-lens").setup({})
+    end,
+  })
 
-			require("onedark").setup({
-				style = "deep",
-			})
-			require("onedark").load()
-		end,
-	})
+  --
+  -- UI Plugins
+  --
+  use({
+    "navarasu/onedark.nvim",
+    config = function()
+      --Set colorscheme (order is important here)
+      vim.o.termguicolors = true
+      vim.g.onedark_terminal_italics = 2
 
-	-- Status line plugin
-	use({
-		"hoob3rt/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-		after = {
-			"onedark.nvim",
-			"auto-session",
-		},
-		config = function()
-			require("plugins.lualine-config")
-		end,
-	})
-	-- use {
-	--   'glepnir/galaxyline.nvim',
-	--   branch = 'main',
-	--   requires = {'kyazdani42/nvim-web-devicons', opt = true},
-	--   config = function()
-	--     require('plugins.spaceline')
-	--   end,
-	-- }
+      require("onedark").setup({
+        style = "deep",
+      })
+      require("onedark").load()
+    end,
+  })
 
-	-- file tree
-	use({
-		"kyazdani42/nvim-tree.lua",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("plugins.tree-config")
-		end,
-	})
+  -- Status line plugin
+  use({
+    "hoob3rt/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    after = {
+      "onedark.nvim",
+      "auto-session",
+    },
+    config = function()
+      require("plugins.lualine-config")
+    end,
+  })
+  -- use {
+  --   'glepnir/galaxyline.nvim',
+  --   branch = 'main',
+  --   requires = {'kyazdani42/nvim-web-devicons', opt = true},
+  --   config = function()
+  --     require('plugins.spaceline')
+  --   end,
+  -- }
 
-	-- :SymbolsOutline to open window
-	use({
-		"simrat39/symbols-outline.nvim",
-		config = function()
-			require("symbols-outline").setup({
-				keymaps = {
-					close = { "q" }, -- Keep pressing esc by accident so unbind it
-				},
-			})
+  -- file tree
+  use({
+    "kyazdani42/nvim-tree.lua",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("plugins.tree-config")
+    end,
+  })
 
-			vim.api.nvim_create_user_command("Outline", "SymbolsOutline", {})
-			vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>", { noremap = true })
-		end,
-	})
+  -- :SymbolsOutline to open window
+  use({
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require("symbols-outline").setup({
+        keymaps = {
+          close = { "q" }, -- Keep pressing esc by accident so unbind it
+        },
+      })
 
-	-- Add indentation guides even on blank lines
-	use({
-		"lukas-reineke/indent-blankline.nvim",
-		event = "BufRead",
-		config = function()
-			require("indent_blankline").setup({
-				char = "┊",
-				buftype_exclude = { "terminal", "nofile" },
-				filetype_exclude = { "help", "terminal", "dashboard", "packer" },
-				use_treesitter = true,
-				-- show_current_context = true,
-			})
-		end,
-	})
+      vim.api.nvim_create_user_command("Outline", "SymbolsOutline", {})
+      vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>", { noremap = true })
+    end,
+  })
 
-	-- Add git related info in the signs columns and popups
-	use({
-		"lewis6991/gitsigns.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		event = "BufRead",
-		after = "plenary.nvim",
-		config = function()
-			require("gitsigns").setup()
-		end,
-	})
+  -- Add indentation guides even on blank lines
+  use({
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufRead",
+    config = function()
+      require("indent_blankline").setup({
+        char = "┊",
+        buftype_exclude = { "terminal", "nofile" },
+        filetype_exclude = { "help", "terminal", "dashboard", "packer" },
+        use_treesitter = true,
+        -- show_current_context = true,
+      })
+    end,
+  })
 
-	--
-	-- Navigation
-	--
-	use({
-		"https://gitlab.com/yorickpeterse/nvim-window.git",
-		config = function()
-			require("plugins.window-config")
-		end,
-	})
+  -- Add git related info in the signs columns and popups
+  use({
+    "lewis6991/gitsigns.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    event = "BufRead",
+    after = "plenary.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end,
+  })
 
-	-- Automatic tags management
-	-- use {
-	--   'ludovicchabant/vim-gutentags',
-	--   config=function()
-	--     require('plugins.gutentags')
-	--   end
-	-- }
+  --
+  -- Navigation
+  --
+  use({
+    "https://gitlab.com/yorickpeterse/nvim-window.git",
+    config = function()
+      require("plugins.window-config")
+    end,
+  })
 
-	--
-	-- MISC
-	--
+  -- Automatic tags management
+  -- use {
+  --   'ludovicchabant/vim-gutentags',
+  --   config=function()
+  --     require('plugins.gutentags')
+  --   end
+  -- }
 
-	-- Hack
-	use({
-		"stevearc/stickybuf.nvim",
-		config = function()
-			require("stickybuf").setup({
-				filetype = {
-					outline = "filetype",
-				},
-			})
-		end,
-	})
+  --
+  -- MISC
+  --
 
-	-- Intelligently set the root directory
-	use("airblade/vim-rooter")
+  -- Hack
+  use({
+    "stevearc/stickybuf.nvim",
+    config = function()
+      require("stickybuf").setup({
+        filetype = {
+          outline = "filetype",
+        },
+      })
+    end,
+  })
 
-	-- surround things
-	use("tpope/vim-surround")
-	use("tpope/vim-repeat")
-	-- use 'tpope/vim-unimpaired'
+  -- Intelligently set the root directory
+  use("airblade/vim-rooter")
 
-	-- Enable editorconfig in vim
-	use("editorconfig/editorconfig-vim")
+  -- surround things
+  use("tpope/vim-surround")
+  use("tpope/vim-repeat")
+  -- use 'tpope/vim-unimpaired'
 
-	-- Comment plugin
-	use("tomtom/tcomment_vim")
-	-- Press <c-_><c-_> to comment lines
-	-- Press <c-_>i for inline commenting
+  -- Enable editorconfig in vim
+  use("editorconfig/editorconfig-vim")
 
-	use({
-		"windwp/nvim-autopairs",
-		config = function()
-			require("plugins.autopairs")
-		end,
-	})
+  -- Comment plugin
+  use("tomtom/tcomment_vim")
+  -- Press <c-_><c-_> to comment lines
+  -- Press <c-_>i for inline commenting
 
-	use({
-		"fatih/vim-go",
-		ft = "go",
-		config = function()
-			require("plugins.go-config")
-		end,
-	})
+  use({
+    "windwp/nvim-autopairs",
+    config = function()
+      require("plugins.autopairs")
+    end,
+  })
 
-	-- Syntax highlighting for kitty config file
-	use({
-		"fladson/vim-kitty",
-		ft = "kitty",
-	})
+  use({
+    "fatih/vim-go",
+    ft = "go",
+    config = function()
+      require("plugins.go-config")
+    end,
+  })
 
-	-- Lua replit run :Luadev
-	use({ "bfredl/nvim-luadev" })
+  -- Syntax highlighting for kitty config file
+  use({
+    "fladson/vim-kitty",
+    ft = "kitty",
+  })
+
+  -- Lua replit run :Luadev
+  use({ "bfredl/nvim-luadev" })
 end)
