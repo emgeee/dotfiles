@@ -5,7 +5,7 @@ vim.cmd([[
 
 vim.g.rg_highlight= true
 
--- remove needing to capitolize 'R'
+-- remove needing to capitalize 'R'
 vim.cmd([[cnoreabbrev rg Rg]])
 
 -- key_mapper('n', '<leader>sw', ':Rg<CR>')
