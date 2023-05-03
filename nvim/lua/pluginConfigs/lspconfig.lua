@@ -78,7 +78,7 @@ end
 require("mason-tool-installer").setup({
   ensure_installed = {
     "lua-language-server",
-    "yaml-language-server",
+    -- "yaml-language-server",
     "vim-language-server",
     "gopls",
     "pyright",
@@ -88,6 +88,7 @@ require("mason-tool-installer").setup({
     "marksman", -- Markdown
     "shfmt",  -- format bash
     "luacheck",
+    "xmlformatter",
   },
 })
 

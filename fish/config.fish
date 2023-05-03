@@ -27,6 +27,7 @@ fish_add_path $HOME/.local/share/solana/install/active_release/bin
 if test -e /opt/homebrew/bin/brew
   eval (/opt/homebrew/bin/brew shellenv)
 end
+set HOMEBREW_NO_ANALYTICS 1
 
 # Universal environment variables
 set -Ux HOSTNAME (hostname)

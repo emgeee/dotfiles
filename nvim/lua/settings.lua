@@ -88,7 +88,6 @@ opt.wildignore = {
 	'DS_Store',
 	'*.png,*.jpg,*.gif',
 	'*.pyc',
-
 	'public',
 	'submodules',
 	'node_modules',
@@ -100,6 +99,7 @@ opt.wildignore = {
 	'bazel-out/*',
 	'bazel-testlogs/*',
 	'fakes/*',
+  'target/*',
 }
 
 g.rooter_patterns = {'.git'}
