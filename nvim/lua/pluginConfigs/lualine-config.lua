@@ -23,7 +23,7 @@ local config = {
       { 'location' },
     },
     lualine_y = {},
-    lualine_z = { require('auto-session-library').current_session_name }
+    lualine_z = {}
   },
   inactive_sections = {
     lualine_a = {},
