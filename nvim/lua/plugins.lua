@@ -47,7 +47,7 @@ return {
   },
 
   -- better quickfix window
-  { "kevinhwang91/nvim-bqf", ft = "qf" },
+  { "kevinhwang91/nvim-bqf", ft = "qf"},
 
   -- Treesitter
   -- Rune :TSUpdate to update language definitions
@@ -97,7 +97,7 @@ return {
       "hrsh7th/cmp-vsnip", -- source for snippets
       "hrsh7th/cmp-nvim-lsp", -- source for builtin lsp
       "hrsh7th/cmp-buffer", -- source for words in buffers
-      "hrsh7th/cmp-path", -- source for file system path
+      "hrsh7th/cmp-path",  -- source for file system path
       "hrsh7th/cmp-cmdline", -- source for vims cmd line
       "hrsh7th/cmp-nvim-lua", -- nvim lua completion
       "onsails/lspkind.nvim", -- adds vscode-like pictograms to complete menu
@@ -140,9 +140,19 @@ return {
   -- mostly used for a pretty LSP hover functionality
   -- hotkeys specified in lspconfig.lua
   {
-    "glepnir/lspsaga.nvim",
-    branch = "main",
-    config = true,
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup({
+        lightbulb = {
+          -- enabld = false,
+          sign = false,
+        },
+      })
+    end,
+    dependencies = {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-tree/nvim-web-devicons',
+    }
   },
 
   { "mileszs/ack.vim" },
@@ -177,6 +187,7 @@ return {
   },
 
   -- :SymbolsOutline to open window
+  -- Lspsaga can also do this - :Lspsaga outline .
   {
     "simrat39/symbols-outline.nvim",
     config = function()
@@ -194,15 +205,17 @@ return {
   -- Add indentation guides even on blank lines
   {
     "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {},
     event = "BufRead",
     config = function()
-      require("indent_blankline").setup({
-        char = "┊",
-        buftype_exclude = { "terminal", "nofile" },
-        filetype_exclude = { "help", "terminal", "dashboard", "lazy" },
-        use_treesitter = true,
-        show_current_context = true,
-        show_current_context_start = true,
+      require("ibl").setup({
+        indent = { char = "┊" },
+        exclude = {
+          filetypes = {"help", "terminal", "dashboard", "lazy" },
+          buftypes = { "terminal", "nofile" },
+        },
+        scope = {show_start = true, },
       })
     end,
   },

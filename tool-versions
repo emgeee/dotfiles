@@ -1,5 +1,5 @@
-python 3.10.5
-nodejs lts
+python 3.10.13
+nodejs 20.1.0
 ruby 3.1.2
 java adoptopenjdk-11.0.15+10
 scala 2.12.17

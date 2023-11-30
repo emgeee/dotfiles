@@ -34,10 +34,10 @@ local on_attach = function(_client, bufnr)
   -- vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
   -- vim.keymap.set('n', 'gca', function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "[d", function()
-    vim.lsp.diagnostic.goto_prev()
+    vim.diagnostic.goto_prev()
   end, opts)
   vim.keymap.set("n", "]d", function()
-    vim.lsp.diagnostic.goto_next()
+    vim.diagnostic.goto_next()
   end, opts)
   -- vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, opts)
 
@@ -107,8 +107,7 @@ if not cmp_nvim_lsp_okay then
   return
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
@@ -159,8 +158,10 @@ mason_lspconfig.setup_handlers({
       end,
       capabilities = opts.capabilities,
       settings = {
+        pyright = { autoImportCompletion = true },
         python = {
           analysis = {
+            autoSearchPaths = true,
             -- Disable strict type checking
             typeCheckingMode = "off",
           },
@@ -178,6 +179,22 @@ mason_lspconfig.setup_handlers({
       settings = {},
     })
   end,
+  -- ["rust_analyzer"] = function()
+  --   lspconfig.rust_analyzer.setup({
+  --     on_attach = function(client, bufrn)
+  --       -- client.resolved_capabilities.hover = false
+  --       opts.on_attach(client, bufrn)
+  --     end,
+  --     capabilities = opts.capabilities,
+  --     settings = {
+  --       ["rust-analyzer"] = {
+  --         diagnostics = {
+  --           enable = false,
+  --         },
+  --       },
+  --     },
+  --   })
+  -- end,
 })
 
 -- Specific to scala metals
