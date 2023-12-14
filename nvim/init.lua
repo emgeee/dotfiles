@@ -28,6 +28,10 @@
 --  :TSUpdate --> Update treesitter configs
 --  :MasonToolsUpdate --> Update LSP servers
 --
+--  Useful commands
+--  :Trouble - show error list using LSP output
+--  :SymbolsOutline or ':Lspsaga outline .' to view code outline
+--
 --  List of interesting plugins:
 --  https://github.com/rockerBOO/awesome-neovim
 --  https://neovimcraft.com/

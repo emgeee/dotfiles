@@ -70,6 +70,9 @@ local on_attach = function(_client, bufnr)
   end, opts)
   -- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
   vim.keymap.set("n", "gca", "<cmd>Lspsaga code_action<CR>", opts)
+  vim.keymap.set("n", "<leader>ff", function()
+    vim.lsp.buf.format()
+  end, opts)
 
   require("illuminate").on_attach(_client)
 end
@@ -179,22 +182,22 @@ mason_lspconfig.setup_handlers({
       settings = {},
     })
   end,
-  -- ["rust_analyzer"] = function()
-  --   lspconfig.rust_analyzer.setup({
-  --     on_attach = function(client, bufrn)
-  --       -- client.resolved_capabilities.hover = false
-  --       opts.on_attach(client, bufrn)
-  --     end,
-  --     capabilities = opts.capabilities,
-  --     settings = {
-  --       ["rust-analyzer"] = {
-  --         diagnostics = {
-  --           enable = false,
-  --         },
-  --       },
-  --     },
-  --   })
-  -- end,
+  ["rust_analyzer"] = function()
+    lspconfig.rust_analyzer.setup({
+      on_attach = function(client, bufrn)
+        -- client.resolved_capabilities.hover = false
+        opts.on_attach(client, bufrn)
+      end,
+      capabilities = opts.capabilities,
+      settings = {
+        ["rust-analyzer"] = {
+          diagnostics = {
+            enable = false,
+          },
+        },
+      },
+    })
+  end,
 })
 
 -- Specific to scala metals
