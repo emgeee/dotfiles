@@ -84,7 +84,6 @@ require("mason-tool-installer").setup({
     -- "yaml-language-server",
     "vim-language-server",
     "gopls",
-    "pyright",
     "typescript-language-server",
     "json-lsp",
     "bash-language-server",

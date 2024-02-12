@@ -108,3 +108,10 @@ end
 
 test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
 
+# Use new paths for jupyter notebooks
+set -Ux JUPYTER_PLATFORM_DIRS 1
+
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
