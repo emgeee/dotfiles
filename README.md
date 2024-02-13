@@ -18,10 +18,11 @@ For a new Mac:
 - Install Karabiner elements
 
 
-`ln -s yabai/skhdrc ~/.skhdrc`
-`ln -s yabai/yabairc ~/.yabairc`
-`ln -s aerospace/ ~/.config/aerospace`
-`ln -s fish/ ~/.config/fish`
-`ln -s kitty/ ~/.config/kitty`
-`ln -s nvim/ ~/.config/nvim`
-`ln -s karabiner/ ~/.config/karabiner`
+`ln -s (pwd)/yabai/skhdrc ~/.skhdrc`
+`ln -s (pwd)/yabai/yabairc ~/.yabairc`
+`ln -s (pwd)/yabai/ ~/.config/yabai`
+`ln -s (pwd)/aerospace/ ~/.config/aerospace`
+`ln -s (pwd)/fish/ ~/.config/fish`
+`ln -s (pwd)/kitty/ ~/.config/kitty`
+`ln -s (pwd)/nvim/ ~/.config/nvim`
+`ln -s (pwd)/karabiner/ ~/.config/karabiner`
