@@ -48,6 +48,10 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
+if test -e $HOME/.config/fish/yabai.fish
+  source $HOME/.config/fish/yabai.fish
+end
+
 # OMF theme - bobthefish: `omf install bobthefish`
 #######################
 

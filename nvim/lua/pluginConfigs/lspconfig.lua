@@ -109,7 +109,7 @@ if not cmp_nvim_lsp_okay then
   return
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
@@ -192,6 +192,20 @@ mason_lspconfig.setup_handlers({
         ["rust-analyzer"] = {
           diagnostics = {
             enable = false,
+          },
+          imports = {
+            granularity = {
+              group = "module",
+            },
+            prefix = "self",
+          },
+          cargo = {
+            buildScripts = {
+              enable = true,
+            },
+          },
+          procMacro = {
+            enable = true,
           },
         },
       },

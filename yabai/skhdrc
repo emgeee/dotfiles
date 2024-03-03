@@ -1,6 +1,10 @@
 # Navigation
 # Yabai API: https://github.com/koekeishiya/yabai/blob/master/doc/yabai.asciidoc
 
+.blacklist [
+    "AltTab"
+]
+
 alt - h : yabai -m window --focus west || \
           yabai -m window --focus $(yabai -m query --spaces --display west | jq '.[] | select(."is-visible" == true) | ."last-window"')
 alt - j : yabai -m window --focus south || \
@@ -12,8 +16,11 @@ alt - l : yabai -m window --focus east || \
 
 
 # Focus next window in either bsp or stack layout
-alt - tab : yabai -m window --focus stack.next || yabai -m window --focus stack.first
-shift + alt - tab : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+# alt - tab : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+# shift + alt - tab : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+
+alt - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+alt - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 # Moving windows
 shift + alt - h : yabai -m window --warp west
@@ -68,15 +75,13 @@ shift + alt - x : yabai -m space --mirror x-axis
 shift + alt - y : yabai -m space --mirror y-axis
 
 # Float / Unfloat window
-shift + alt - f : \
-    yabai -m window --toggle float; \
-    yabai -m window --toggle border
-
-alt - t : yabai -m window --toggle float --grid 1:12:3:0:6:1
+alt - f : yabai_toggle_floating
 
 # Make window native fullscreen
-alt - f         : yabai -m window --toggle zoom-fullscreen
+shift + alt - f : yabai -m window --toggle zoom-fullscreen
+
 # shift + alt - f : yabai -m window --toggle native-fullscreen
+
 
 # Toggle between bsp and stacked
 alt - b : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')
@@ -86,3 +91,26 @@ alt - v : yabai -m window --swap largest
 
 # Toggle vertical vs horizontal split
 alt - s : yabai -m window --toggle split
+
+
+###################
+# Declare a new mode
+:: window_resize @
+ctrl + cmd - a ; window_resize  # switch to mode
+window_resize < escape ; default # exit mode
+
+window_resize < ctrl + cmd - a : yabai_set_float; skhd -k "escape" 
+
+window_resize < q : yabai_set_float; yabai -m window --grid 1:2:0:0:1:1 ; skhd -k "escape"
+window_resize < w : yabai_set_float; yabai -m window --grid 1:12:3:0:6:1 ; skhd -k "escape"
+window_resize < e : yabai_set_float; yabai -m window --grid 1:2:1:0:1:1 ; skhd -k "escape"
+
+# window_resize < h : yabai -m window --minimize ; skhd -k "escape"
+
+window_resize < g : yabai -m window --warp mouse || yabai -m window --display mouse; skhd -k "escape"
+window_resize < s : yabai -m window --stack mouse || yabai -m window --stack next ; skhd -k "escape"
+
+window_resize < t : terminal-notifier -message "status running" -title "skhd" ; skhd -k "escape"
+
+# Restart yabai
+window_resize < alt - 0 : terminal-notifier -message "restarting yabai" -title "skhd"  && yabai --restart-service ; skhd -k "escape"
