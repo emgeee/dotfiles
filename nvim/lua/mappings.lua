@@ -68,7 +68,7 @@ key_mapper('n', '<leader>gs', ':Git<CR>')
 key_mapper('n', '<leader>gd', ':Gdiff<CR>')
 vim.cmd([[cnoreabbrev gb GBrowse]])
 
--- Copy curent filename to clipboard
+-- Copy current filename to clipboard
 vim.cmd([[
 if system('uname -r') =~ "Microsoft"
   "" For WSL in windows use a different utility
