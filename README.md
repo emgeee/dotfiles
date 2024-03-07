@@ -46,16 +46,23 @@ The following will disable cmd+H for all applications except for Kitty, because 
 }
 ```
 
-- For Kitty to work we must remap Hide window to a different hotkey to free up Cmd+H: https://superuser.com/questions/1043596/mac-osx-remove-hide-window-keyboard-shortcut
+For the following programs you must remap the Hide window to a different key to free up Cmd+H (https://superuser.com/questions/1043596/mac-osx-remove-hide-window-keyboard-shortcut)
+- Kitty
+- vscode
+
+*Note*: these programs are also listed in the karabiner elements config for "Disable Cmd+H Hide (rev 2)"
 
 
 
 ## Set up proper symlinks
-`ln -s (pwd)/yabai/skhdrc ~/.skhdrc`
-`ln -s (pwd)/yabai/yabairc ~/.yabairc`
-`ln -s (pwd)/yabai/ ~/.config/yabai`
-`ln -s (pwd)/aerospace/ ~/.config/aerospace`
-`ln -s (pwd)/fish/ ~/.config/fish`
-`ln -s (pwd)/kitty/ ~/.config/kitty`
-`ln -s (pwd)/nvim/ ~/.config/nvim`
-`ln -s (pwd)/karabiner/ ~/.config/karabiner`
+```
+ln -s (pwd)/yabai/skhdrc ~/.skhdrc;
+ln -s (pwd)/yabai/yabairc ~/.yabairc;
+ln -s (pwd)/yabai/ ~/.config/yabai;
+ln -s (pwd)/aerospace/ ~/.config/aerospace;
+ln -s (pwd)/fish/ ~/.config/fish;
+ln -s (pwd)/kitty/ ~/.config/kitty;
+ln -s (pwd)/nvim/ ~/.config/nvim;
+ln -s (pwd)/karabiner/ ~/.config/karabiner;
+ln -s (pwd)/sketchybar/ ~/.config/sketchybar;
+```
