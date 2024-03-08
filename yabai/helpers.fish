@@ -53,7 +53,7 @@ function yabai_set_all_float
   for window_id in (echo $json_output | \
       jq --argjson status "$floating_status" '.[] | select(.["is-floating"] == $status | not) | .id')
 
-    yabai -m window --focus $window_id 
+    yabai -m window --focus $window_id
     yabai -m window --toggle float
   end
 
@@ -78,31 +78,47 @@ function yabai_stack_window
 end
 
 function yabai_warp_mouse
-  # @TODO get the display of the mouse window, move current window to that display, then stack
+  echo "running warp_mouse"
+
   set current_window (yabai -m query --windows --window)
+
+  if test -z "$current_window"
+    echo "No window focused" >&2
+    skhd -k "escape"
+    return
+  end
+
+
   set current_window_id (echo $current_window | jq '.id')
   set current_window_app (echo $current_window | jq '.app')
   set current_window_display_id (echo $current_window | jq '.display')
 
   set mouse_hover_window (yabai -m query --windows --window mouse)
-  
   if test -n "$mouse_hover_window"
     echo "hovering over a window!!"
     set mouse_hover_window_id (echo $mouse_hover_window | jq '.id')
     set mouse_hover_window_app (echo $mouse_hover_window | jq '.app')
     set mouse_hover_display_id (echo $mouse_hover_window | jq '.display')
+
+    if test $current_window_id = $mouse_hover_window_id
+      echo "current window and hover window are the same" >&2
+      skhd -k "escape"
+      return
+    end
   else
-    echo "hovering over no window"
+    echo "hovering over no window, fetching mouse hover display id..."
     set mouse_hover_display_id (yabai -m query --displays --display mouse | jq '.id')
+    echo "display id" $mouse_hover_display_id
+
+    if test -z "$mouse_hover_display_id"
+      echo "Can't find display under mouse..." >&2
+      skhd -k "escape"
+      return
+    end
   end
 
-  # echo ""
-  # echo "" >&2 
-  # echo "running warp_mouse" >&2 
-  #
-  # echo "current window: " $current_window_app " mouse window: " $mouse_hover_window_app
-  # echo "current id: " $current_window_id " mouse id: " $mouse_hover_window_id
-  # echo "current display: " $current_window_display_id " mouse display: " $mouse_hover_display_id
+  echo "current window: " $current_window_app "id:" $current_window_id "display_id:" $current_window_display_id
+  echo "mouse window: " $mouse_hover_window_app "id:" $mouse_hover_window_id "display_id:" $mouse_hover_display_id
 
   # float the window first to remove it from any stacks it may be part of
   yabai_set_float true

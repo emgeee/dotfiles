@@ -21,7 +21,7 @@ alt - l : yabai -m window --focus east || \
 # shift + alt - tab : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 alt - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
-alt - 0x32 : yabai -m window --focus stack.next || yabai -m window --focus stack.first 
+alt - 0x32 : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 alt - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 # Moving windows
@@ -104,22 +104,22 @@ alt - s : yabai -m window --toggle split
 ctrl + cmd - a ; window_resize  # switch to mode
 window_resize < escape ; default # exit mode
 
-window_resize < ctrl + cmd - a : yabai_set_float true; skhd -k "escape" 
+window_resize < ctrl + cmd - a : yabai_set_float true; skhd -k "escape"
 
-window_resize < q : yabai_set_float; yabai -m window --display mouse --grid 1:2:0:0:1:1 ; \
+window_resize < q : yabai_set_float true; yabai -m window --display mouse --grid 1:2:0:0:1:1 ; \
                     sketchybar --trigger window_focus; \
                     skhd -k "escape"
-window_resize < w : yabai_set_float; yabai -m window --display mouse --grid 1:12:3:0:6:1 ; \
+window_resize < w : yabai_set_float true; yabai -m window --display mouse --grid 1:12:3:0:6:1 ; \
                     sketchybar --trigger window_focus; \
                     skhd -k "escape"
-window_resize < e : yabai_set_float; yabai -m window --display mouse --grid 1:2:1:0:1:1 ; \
+window_resize < e : yabai_set_float true; yabai -m window --display mouse --grid 1:2:1:0:1:1 ; \
                     sketchybar --trigger window_focus; \
                     skhd -k "escape"
 
-window_resize < g : yabai_warp_mouse 
-window_resize < 2 : yabai_warp_mouse 
+window_resize < g : yabai_warp_mouse
+window_resize < 2 : yabai_warp_mouse
 
-window_resize < s : yabai_warp_mouse 
+window_resize < s : yabai_warp_mouse
 
 window_resize < h : yabai_stack_window west
 window_resize < j : yabai_stack_window south
