@@ -24,6 +24,10 @@ window_state() {
     ICON+=$YABAI_STACK
     LABEL="$(printf "[%s/%s]" "$STACK_INDEX" "$LAST_STACK_INDEX")"
     COLOR=$MAGENTA
+  else 
+    ICON+=$YABAI_GRID
+    LABEL=""
+    COLOR=$WHITE
   fi
 
   args=(--bar border_color=$COLOR --animate sin 10 --set $NAME icon.color=$COLOR)

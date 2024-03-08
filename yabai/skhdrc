@@ -1,5 +1,6 @@
 # Navigation
 # Yabai API: https://github.com/koekeishiya/yabai/blob/master/doc/yabai.asciidoc
+# Helper functions are defined in helpers.fish
 
 .blacklist [
     "AltTab"
@@ -8,9 +9,9 @@
 alt - h : yabai -m window --focus west || \
           yabai -m window --focus $(yabai -m query --spaces --display west | jq '.[] | select(."is-visible" == true) | ."last-window"')
 alt - j : yabai -m window --focus south || \
-          yabai -m window --focus $(yabai -m query --spaces --display south | jq '.[] | select(."is-visible" == true) | ."last-window"')
+          yabai -m window --focus $(yabai -m query --spaces --display south | jq '.[] | select(."is-visible" == true) | ."first-window"')
 alt - k : yabai -m window --focus north || \
-          yabai -m window --focus $(yabai -m query --spaces --display north | jq '.[] | select(."is-visible" == true) | ."last-window"')
+          yabai -m window --focus $(yabai -m query --spaces --display north | jq '.[] | select(."is-visible" == true) | ."first-window"')
 alt - l : yabai -m window --focus east || \
           yabai -m window --focus $(yabai -m query --spaces --display east | jq '.[] | select(."is-visible" == true) | ."first-window"')
 
@@ -20,6 +21,7 @@ alt - l : yabai -m window --focus east || \
 # shift + alt - tab : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 alt - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+alt - 0x32 : yabai -m window --focus stack.next || yabai -m window --focus stack.first 
 alt - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 # Moving windows
@@ -75,8 +77,7 @@ shift + alt - x : yabai -m space --mirror x-axis
 shift + alt - y : yabai -m space --mirror y-axis
 
 # Float / Unfloat window
-alt - f : yabai_toggle_floating; \
-          sketchybar --trigger window_focus
+alt - f : yabai_toggle_floating
 
 # Make window native fullscreen
 shift + alt - f : yabai -m window --toggle zoom-fullscreen; \
@@ -103,7 +104,7 @@ alt - s : yabai -m window --toggle split
 ctrl + cmd - a ; window_resize  # switch to mode
 window_resize < escape ; default # exit mode
 
-window_resize < ctrl + cmd - a : yabai_set_float; skhd -k "escape" 
+window_resize < ctrl + cmd - a : yabai_set_float true; skhd -k "escape" 
 
 window_resize < q : yabai_set_float; yabai -m window --display mouse --grid 1:2:0:0:1:1 ; \
                     sketchybar --trigger window_focus; \
@@ -115,10 +116,15 @@ window_resize < e : yabai_set_float; yabai -m window --display mouse --grid 1:2:
                     sketchybar --trigger window_focus; \
                     skhd -k "escape"
 
-window_resize < g : yabai -m window --warp mouse || yabai -m window --display mouse; skhd -k "escape"
-window_resize < s : yabai_set_unfloat ; yabai -m window --stack mouse ;  \
-                          sketchybar --trigger window_focus; \
-                          skhd -k "escape"
+window_resize < g : yabai_warp_mouse 
+window_resize < 2 : yabai_warp_mouse 
+
+window_resize < s : yabai_warp_mouse 
+
+window_resize < h : yabai_stack_window west
+window_resize < j : yabai_stack_window south
+window_resize < k : yabai_stack_window north
+window_resize < l : yabai_stack_window east
 
 window_resize < alt - b : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "float" then "bsp" else "float" end') ; \
                           sketchybar --trigger window_focus; \
@@ -127,4 +133,4 @@ window_resize < alt - b : yabai -m space --layout $(yabai -m query --spaces --sp
 window_resize < t : terminal-notifier -message "status running" -title "skhd" ; skhd -k "escape"
 
 # Restart yabai
-window_resize < alt - 0 : terminal-notifier -message "restarting yabai" -title "skhd"  && yabai --restart-service ; skhd -k "escape"
+window_resize < alt - 0 : yabai_restart

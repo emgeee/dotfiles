@@ -23,8 +23,6 @@ yabai -m config left_padding                "${gaps["left"]}"
 yabai -m config right_padding               "${gaps["right"]}"
 yabai -m config window_gap                  "${gaps["inner"]}"
 
-yabai -m config mouse_follows_focus         off
-
 # focus_follows_mouse [autofocus|autoraise|off]
 yabai -m config focus_follows_mouse         off
 
@@ -38,7 +36,7 @@ yabai -m config mouse_modifier              alt
 yabai -m config mouse_action1               move
 yabai -m config mouse_action2               resize
 
-yabai -m config external_bar main:37:0
+yabai -m config external_bar all:37:0
 
 # ===== Rules ==================================
 # Find app name: `yabai -m query --windows`

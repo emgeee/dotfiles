@@ -8,6 +8,6 @@ media=(
   updates=on
 )
 
-sketchybar --add item media center \
+sketchybar --add item media left \
            --set media "${media[@]}" \
            --subscribe media media_change

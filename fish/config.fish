@@ -3,9 +3,10 @@
 # Use lsd instead of ls
 # brew install lsd
 # requires a patched font from https://www.nerdfonts.com/
+# brew tap homebrew/cask-fonts && brew install --cask font-hack-nerd-font
 # configure iTerm>Profile>Non ASCII font
 
-# alias ls='lsd'
+alias ls='lsd'
 alias icat="kitty +kitten icat"
 
 # # prepend ~/.bin/
@@ -48,8 +49,9 @@ set -gx OMF_CONFIG "$HOME/.config/omf"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-if test -e $HOME/.config/fish/yabai.fish
-  source $HOME/.config/fish/yabai.fish
+# Load yabai helper functions
+if test -e $HOME/.config/yabai/helpers.fish
+  source $HOME/.config/yabai/helpers.fish 
 end
 
 # OMF theme - bobthefish: `omf install bobthefish`
