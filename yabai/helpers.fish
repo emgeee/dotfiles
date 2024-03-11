@@ -77,6 +77,7 @@ function yabai_stack_window
   skhd -k "escape"
 end
 
+# Move a window and stack it on top of another window
 function yabai_warp_mouse
   echo "running warp_mouse"
 
@@ -149,4 +150,40 @@ function yabai_restart
   yabai --restart-service
 
   skhd -k "escape"
+end
+
+function yabai_display_added
+  # List the Ids of screens that should be used for aux puproses (usually the laptop's screen)
+  # fetch uuids with `yabai -m query --displays`
+  set aux_screen_uuid "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+
+  # Add app names that should be moved
+  set aux_app_names \
+    "Spotify" \
+    "Discord" \
+    "Slack" \
+    "Messages" \
+    "KeePassXC" \
+    "Obsidian"
+
+  # Find the Aux screen and configure to be a stack orientation (as opposed to bsp)
+  set aux_screen (yabai -m query --displays | jq --arg uuid "$aux_screen_uuid" '.[] | select(.uuid == $uuid)')
+  set aux_screen_space (echo $aux_screen | jq -rj .spaces[0] )
+  yabai -m space $aux_screen_space --layout stack
+
+  # Move specified apps to the aux display
+  # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
+
+  for app in $aux_app_names
+    set app_id (yabai -m query --windows | jq --arg app_name "$app" '.[] | select(.app == $app_name) | .id')
+
+    if test -n "$app_id"
+      echo "moving $app ($app_id) to space $aux_screen_space"
+      yabai -m window $app_id --space $aux_screen_space
+    else
+      echo "$app not running"
+    end
+  end
+
+  yabai_update_sketchybar
 end

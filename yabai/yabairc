@@ -62,6 +62,8 @@ yabai -m signal --add event=window_focused action="sketchybar --trigger window_f
 yabai -m signal --add event=application_launched action="sketchybar --trigger window_focus"
 yabai -m signal --add event=application_terminated action="sketchybar --trigger window_focus"
 
+yabai -m signal --add event=display_added action="fish -c 'source ~/code/dotfiles/yabai/helpers.fish; yabai_display_added'"
+
 
 set +x
 printf "yabai: configuration loaded...\\n"
