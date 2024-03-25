@@ -1,3 +1,8 @@
+-- 
+--
+-- :CmpStatus -> Check the status of sources
+-- Note: nvim_lsp is loaded after the first insert
+--
 -- -- Compe setup
 local cmp = require("cmp")
 local lspkind = require("lspkind")

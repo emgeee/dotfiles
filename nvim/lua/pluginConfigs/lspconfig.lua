@@ -81,7 +81,6 @@ end
 require("mason-tool-installer").setup({
   ensure_installed = {
     "lua-language-server",
-    -- "yaml-language-server",
     "vim-language-server",
     "gopls",
     "typescript-language-server",
@@ -91,6 +90,7 @@ require("mason-tool-installer").setup({
     "shfmt",  -- format bash
     "luacheck",
     "xmlformatter",
+    "rust-analyzer",
   },
 })
 
@@ -171,6 +171,26 @@ mason_lspconfig.setup_handlers({
       },
     })
   end,
+  ["basedpyright"] = function()
+    lspconfig.basedpyright.setup({
+      on_attach = function(client, bufrn)
+        -- client.resolved_capabilities.hover = false
+        opts.on_attach(client, bufrn)
+      end,
+      capabilities = opts.capabilities,
+      settings = {
+        {
+          basedpyright = {
+            analysis = {
+              autoSearchPaths = true,
+              diagnosticMode = "openFilesOnly",
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      },
+    })
+  end,
   ["jedi_language_server"] = function()
     lspconfig.jedi_language_server.setup({
       on_attach = function(client, bufrn)
@@ -191,7 +211,7 @@ mason_lspconfig.setup_handlers({
       settings = {
         ["rust-analyzer"] = {
           diagnostics = {
-            enable = false,
+            enable = true,
           },
           imports = {
             granularity = {

@@ -116,9 +116,12 @@ window_resize < e : yabai_set_float true; yabai -m window --display mouse --grid
                     sketchybar --trigger window_focus; \
                     skhd -k "escape"
 
-window_resize < g : yabai_warp_mouse
-window_resize < 2 : yabai_warp_mouse
 
+# window_resize < 1 : yabai_move_to_display
+# window_resize < 2 : yabai_move_to_display 
+# window_resize < 3 : yabai_move_to_display 
+
+window_resize < g : yabai_warp_mouse
 window_resize < s : yabai_warp_mouse
 
 window_resize < h : yabai_stack_window west

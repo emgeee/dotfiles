@@ -152,18 +152,24 @@ function yabai_restart
   skhd -k "escape"
 end
 
+function yabai_move_to_display
+  # @todo
+end
+
 function yabai_display_added
   # List the Ids of screens that should be used for aux puproses (usually the laptop's screen)
   # fetch uuids with `yabai -m query --displays`
   set aux_screen_uuid "37D8832A-2D66-02CA-B9F7-8F30A301B230"
 
   # Add app names that should be moved
+  # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
   set aux_app_names \
     "Spotify" \
     "Discord" \
     "Slack" \
     "Messages" \
     "KeePassXC" \
+    "Docker Desktop" \
     "Obsidian"
 
   # Find the Aux screen and configure to be a stack orientation (as opposed to bsp)

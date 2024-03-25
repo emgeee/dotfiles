@@ -1,32 +1,40 @@
 -- Builtin sources here https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-require("null-ls").setup({
+
+local null_ls_ok, null_ls = pcall(require, "null-ls")
+if not null_ls_ok then
+  vim.notify("Couldn't load none-ls (aka null_ls)" .. null_ls, "error")
+  return
+end
+
+null_ls.setup({
   debug = true,
   sources = {
-    require("null-ls").builtins.completion.spell,
-    -- require("null-ls").builtins.diagnostics.write_good,
-    require("null-ls").builtins.diagnostics.codespell,
+    -- null_ls.builtins.completion.spell,
+    null_ls.builtins.diagnostics.codespell,
+
     -- Python
-    require("null-ls").builtins.formatting.black,
-    require("null-ls").builtins.formatting.isort,
-    require("null-ls").builtins.diagnostics.flake8,
-    -- require("null-ls").builtins.diagnostics.mypy,
-    -- require("null-ls").builtins.diagnostics.pydocstyle,
-    -- require("null-ls").builtins.diagnostics.pylint.with({
-    --   extra_args={"--disable=C0111"}
-    -- }),
-    -- Lua
-    require("null-ls").builtins.formatting.stylua,
-    require("null-ls").builtins.diagnostics.luacheck.with({
-      extra_args={"--globals vim"},
+    null_ls.builtins.diagnostics.pylint.with({
+      diagnostics_postprocess = function(diagnostic)
+        diagnostic.code = diagnostic.message_id
+      end,
     }),
-    --
-    require("null-ls").builtins.formatting.gofmt,
-    require("null-ls").builtins.formatting.shfmt,
-    require("null-ls").builtins.formatting.fixjson,
-    require("null-ls").builtins.code_actions.eslint_d,
-    require("null-ls").builtins.formatting.prettierd,
-    require("null-ls").builtins.diagnostics.yamllint.with({
-      args={ "--format", "parsable", "-d", "{extends: relaxed, rules: {line-length: {max: 180}}}", "-"},
+    null_ls.builtins.formatting.black,
+    null_ls.builtins.formatting.isort,
+    -- null_ls.builtins.diagnostics.mypy,
+
+    -- Lua
+    null_ls.builtins.formatting.stylua,
+
+    -- Javascript
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.biome,
+
+    -- Misc
+    null_ls.builtins.formatting.gofmt,
+    null_ls.builtins.formatting.shfmt,
+    null_ls.builtins.diagnostics.fish,
+    null_ls.builtins.diagnostics.yamllint.with({
+      args = { "--format", "parsable", "-d", "{extends: relaxed, rules: {line-length: {max: 180}}}", "-" },
     }),
   },
 })
