@@ -5,6 +5,7 @@
 # requires a patched font from https://www.nerdfonts.com/
 # brew tap homebrew/cask-fonts && brew install --cask font-hack-nerd-font
 # configure iTerm>Profile>Non ASCII font
+# `set -U` stores variables in the fish_variables file.
 
 alias ls='lsd'
 alias icat="kitty +kitten icat"
@@ -23,6 +24,9 @@ fish_add_path $HOME/Library/Application\ Support/Coursier/bin
 
 # add Solana
 fish_add_path $HOME/.local/share/solana/install/active_release/bin
+
+# Rye python project/package manager
+fish_add_path $HOME/.rye/shims
 
 # For ARM Mac
 if test -e /opt/homebrew/bin/brew
@@ -66,6 +70,7 @@ if test -e /usr/local/opt/asdf/asdf.fish
   source /usr/local/opt/asdf/asdf.fish
 end
 
+
 if test -e $HOME/.asdf/plugins/java/set-java-home.fish
   . $HOME/.asdf/plugins/java/set-java-home.fish
 end
@@ -79,7 +84,7 @@ end
 
 ####################### go config
 # Configure GOROOT and GOPATH
-set -Ux GOPATH $HOME/go
+set -gx GOPATH $HOME/go
 
 # set -gx GO1MODULE on
 
@@ -90,14 +95,23 @@ fish_add_path $GOPATH/bin
 set -gx USE_GKE_GCLOUD_AUTH_PLUGIN True
 
 
+#######################
+# python configuration
+
 # current instructions for python: https://opensource.com/article/19/5/python-3-default-mac
 # Disable virtual env on the left side of the prompt
 # useful if the selected theme has built in support
-set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
 
-# pip install virtualfish
-# vf install
-set pipenv_fish_fancy yes
+# Require a virtual env to be activated to pip install
+set -gx PIP_REQUIRE_VIRTUALENV true
+
+# activate the venv if a new session is started or the PWD changes
+function __auto_activate_venv --on-event fish_prompt --on-variable PWD --description "Auto activate/deactivate virtualenv when I change directories"
+    auto_activate_venv
+end
+#######################
+
 
 function sshtmux
   set host $argv[1]
