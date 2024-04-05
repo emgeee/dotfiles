@@ -15,7 +15,7 @@ opt.scrolloff = 4 --keep minimum of 4 lines between cursor and end of screen
 opt.cursorline = false --highlight entire line cursor is on
 
 -- set shell to bash for running commands since it's faster than fish
-opt.shell = "/bin/bash"
+-- opt.shell = "/bin/bash"
 
 opt.lazyredraw = true
 

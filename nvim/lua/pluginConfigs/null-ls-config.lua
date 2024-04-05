@@ -1,8 +1,9 @@
--- Builtin sources here https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+-- Builtin sources here https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
+-- Formatting, diagnostics etc can also be done through LSP servers.
 
 local null_ls_ok, null_ls = pcall(require, "null-ls")
 if not null_ls_ok then
-  vim.notify("Couldn't load none-ls (aka null_ls)" .. null_ls, "error")
+  vim.notify("Couldn't load none-ls (aka null_ls)" .. null_ls, vim.log.levels.ERROR)
   return
 end
 
@@ -10,7 +11,7 @@ null_ls.setup({
   debug = true,
   sources = {
     -- null_ls.builtins.completion.spell,
-    null_ls.builtins.diagnostics.codespell,
+    -- null_ls.builtins.diagnostics.codespell,
 
     -- Python
     null_ls.builtins.diagnostics.pylint.with({

@@ -4,6 +4,7 @@
 
 -- vim.lsp.set_log_level("debug")
 -- check logs with :lua vim.cmd('vs'..vim.lsp.get_log_path())
+-- :LspLog can help troubleshoot issues
 
 -- Map :Format to vim.lsp.buf.formatting()
 vim.api.nvim_create_user_command("Format", function()
@@ -16,7 +17,9 @@ local on_attach = function(_client, bufnr)
 
   -- require('utils.callbacks')
 
-  local opts = { noremap = true, buffer = bufnr }
+  local opts = function(desc)
+    return { desc = desc, noremap = true, buffer = bufnr }
+  end
   -- vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
   -- vim.keymap.set('n', 'gd', function () vim.lsp.buf.definition() end, opts)
   -- vim.keymap.set('n', 'gd', function () vsplit | vim.lsp.buf.definition() end, opts)
@@ -26,7 +29,7 @@ local on_attach = function(_client, bufnr)
   -- vim.keymap.set('n', 'gr', function () vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "grn", function()
     vim.lsp.buf.rename()
-  end, opts)
+  end, opts("rename symbol (LSP)"))
   -- vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
   -- vim.keymap.set('n', '<C-k>', function () vim.lsp.buf.signature_help() end, opts)
   -- vim.keymap.set('n', '<leader>wa', function() vim.lsp.buf.add_workspace_folder() end, opts)
@@ -35,45 +38,58 @@ local on_attach = function(_client, bufnr)
   -- vim.keymap.set('n', 'gca', function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "[d", function()
     vim.diagnostic.goto_prev()
-  end, opts)
+  end, opts("goto previous error (diagnostics)"))
   vim.keymap.set("n", "]d", function()
     vim.diagnostic.goto_next()
-  end, opts)
+  end, opts("goto next error (diagnostics)"))
   -- vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, opts)
+
+  local bi = function ()
+    return require('telescope.builtin')
+  end
 
   -- Mappings for Telescope
   vim.keymap.set("n", "gd", function()
-    require("telescope.builtin").lsp_definitions()
-  end, opts)
+    bi().lsp_definitions()
+  end, opts("goto definition, same buffer (LSP)(Telescope)"))
   vim.keymap.set("n", "gD", function()
-    require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
-  end, opts)
+    bi().lsp_definitions({ jump_type = "vsplit" })
+  end, opts("goto definition, vertical split (LSP)(Telescope)"))
+
+  vim.keymap.set("n", "gds", function()
+    bi().lsp_document_symbols()
+  end, opts("show symbols (LSP)(Telescope)"))
   vim.keymap.set("n", "gr", function()
-    require("telescope.builtin").lsp_references()
-  end, opts)
+    bi().lsp_references()
+  end, opts("show references (LSP)(Telescope)"))
   vim.keymap.set("n", "gy", function()
-    require("telescope.builtin").lsp_type_definitions()
-  end, opts)
+    bi().lsp_type_definitions()
+  end, opts("show type definitions (LSP)(Telescope)"))
   vim.keymap.set("n", "gi", function()
-    require("telescope.builtin").lsp_implementations()
-  end, opts)
+    bi().lsp_implementations()
+  end, opts("show implementations (LSP)(Telescope)"))
   vim.keymap.set("n", "gco", function()
-    require("telescope.builtin").lsp_outgoing_calls()
-  end, opts)
+    bi().lsp_outgoing_calls()
+  end, opts("show outgoing calls (LSP)(Telescope)"))
   vim.keymap.set("n", "gci", function()
-    require("telescope.builtin").lsp_incoming_calls()
-  end, opts)
+    bi().lsp_incoming_calls()
+  end, opts("show incoming calls (LSP)(Telescope)"))
 
   -- Mappings for lspsaga
   vim.keymap.set("n", "K", function()
     require("lspsaga.hover"):render_hover_doc()
-  end, opts)
+  end, opts("hover docs (lspsaga)"))
+    -- require("lspsaga.hover"):open_link()
   -- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
-  vim.keymap.set("n", "gca", "<cmd>Lspsaga code_action<CR>", opts)
+  vim.keymap.set("n", "gca", "<cmd>Lspsaga code_action<CR>", opts("code action (lspsaga)"))
+  vim.keymap.set("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>", opts("show line diagnostics (lspsaga)"))
+
+  -- Format file
   vim.keymap.set("n", "<leader>ff", function()
     vim.lsp.buf.format()
-  end, opts)
+  end, { desc = "Format file (LSP)" })
 
+  -- highlights instances of the same word under the cursor
   require("illuminate").on_attach(_client)
 end
 
@@ -87,17 +103,19 @@ require("mason-tool-installer").setup({
     "json-lsp",
     "bash-language-server",
     "marksman", -- Markdown
-    "shfmt",  -- format bash
+    "shfmt",    -- format bash
     "luacheck",
     "xmlformatter",
     "rust-analyzer",
+    "taplo", -- TOML
   },
 })
 
 -- Mason-lspconfig helps bridge the gap between Mason and native LSP client
+-- Install LSP clients with mason and then configure them to work with nvim-lspconfig
 local mason_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not mason_status_ok then
-  vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, "error")
+  vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
   return
 end
 mason_lspconfig.setup({})
@@ -105,15 +123,14 @@ mason_lspconfig.setup({})
 -- cmp config -- we need to advertise to LSP servers additional features supported by the cmp complete plugin
 local cmp_nvim_lsp_okay, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_nvim_lsp_okay then
-  vim.notify("Couldn't load cmp_nvim_lsp" .. mason_lspconfig, "error")
+  vim.notify("Couldn't load cmp_nvim_lsp" .. mason_lspconfig, vim.log.levels.ERROR)
   return
 end
-
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = cmp_nvim_lsp.default_capabilities()
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
-  vim.notify("Couldn't load LSP-Config" .. lspconfig, "error")
+  vim.notify("Couldn't load LSP-Config" .. lspconfig, vim.log.levels.ERROR)
   return
 end
 
@@ -122,6 +139,8 @@ local opts = {
   capabilities = capabilities,
 }
 
+-- Information for configuration various lsp servers: :h lspconfig-all
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 mason_lspconfig.setup_handlers({
   -- The first entry (without a key) will be the default handler
   -- and will be called for each installed server that doesn't have
@@ -172,6 +191,7 @@ mason_lspconfig.setup_handlers({
     })
   end,
   ["basedpyright"] = function()
+    -- basedpyright threw a whole bunch of errors so I'm not currently using it
     lspconfig.basedpyright.setup({
       on_attach = function(client, bufrn)
         -- client.resolved_capabilities.hover = false
@@ -181,6 +201,7 @@ mason_lspconfig.setup_handlers({
       settings = {
         {
           basedpyright = {
+            typeCheckingMode = "standard",
             analysis = {
               autoSearchPaths = true,
               diagnosticMode = "openFilesOnly",

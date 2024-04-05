@@ -3,9 +3,10 @@
 local key_mapper = require('utils.key_mapper')
 
 require('auto-session').setup({
+  log_level = "error",
+  auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 })
 
-require('session-lens').setup({
-})
+require('session-lens').setup({})
 
-key_mapper('n', '<leader>ss', ":SearchSession<CR>")
+key_mapper('n', '<leader>ss', ":SearchSession<CR>", { desc = "Search session (SessonLens)" })

@@ -13,6 +13,19 @@
 --  Healthcheck
 --    :checkhealth
 --
+--  Quickfix window - project wide jump list
+--  :copen
+--  :cclose, :ccl
+--  :cnext, :cn
+--  :cprev :cp
+--
+--  Location list - like quickfix window but local to current window
+--  (Can have one location list for each buffer)
+--  Commands are the same as quickfix but prefixed with an 'l' so
+--  :lopen, :lcl etc
+--  https://freshman.tech/vim-quickfix-and-location-list/
+--
+--
 --  buffers
 --  :bd --> deletes a buffer
 --  :%bd --> deletes all open buffers
