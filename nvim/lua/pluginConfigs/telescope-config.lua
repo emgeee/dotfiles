@@ -13,9 +13,9 @@ telescope.setup {
     mappings = {
       i = {
         -- ["<C-u>"] = false,
-        -- ["<C-d>"] = require('telescope.actions').delete_buffer,
-        ["<C-d>"] = require('telescope.actions').results_scrolling_down,
-        ["<C-u>"] = require('telescope.actions').results_scrolling_up,
+        ["<C-d>"] = require('telescope.actions').delete_buffer,
+        -- ["<C-n>"] = require('telescope.actions').results_scrolling_down,
+        -- ["<C-u>"] = require('telescope.actions').results_scrolling_up,
 
         ["<C-h>"] = require('telescope.actions').preview_scrolling_left,
         ["<C-j>"] = require('telescope.actions').preview_scrolling_down,
@@ -56,4 +56,6 @@ vim.keymap.set('n', '<leader>gc', function() bi().git_commits() end, {desc = "sh
 -- vim.keymap.set('n', '<leader>gb', function() bi().git_branches() end, {desc = "show git branches (Telescope)"})
 vim.keymap.set('n', '<leader>gs', function() bi().git_status() end, {desc = "show git status (Telescope)"})
 vim.keymap.set('n', '<leader>gp', function() bi().git_bcommits() end, {desc = "show buffer's git commits  (Telescope)"})
-vim.keymap.set('n', '<leader>gkm', function() bi().keymaps() end, {desc = "Show keymaps (Telescope)"})
+vim.keymap.set('n', '<leader>gkm', function() bi().keymaps() end, {desc = "Show keymaps/hotkeys (Telescope)"})
+
+vim.api.nvim_create_user_command("Hotkeys", function() bi().keymaps() end, {desc = "Show hotkeys"})
