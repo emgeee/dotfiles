@@ -8,50 +8,55 @@ requires SwitchAudioSource
 > brew install blueutil
 """
 
-import time
-import sys
 import subprocess
+import time
 
-SWITCH_AUDIO_PATH = '/usr/local/bin/SwitchAudioSource'
-BLUEUTIL_PATH = '/usr/local/bin/blueutil'
+SWITCH_AUDIO_PATH = "/opt/homebrew/bin/SwitchAudioSource"
+BLUEUTIL_PATH = "/opt/homebrew/bin/blueutil"
 
-SPEAKER_BLUETOOTH_ADDRESS = '68-37-e9-69-74-8c'
+AIRPODS_BLUETOOTH_ADDRESS = "00-f3-9f-64-2a-0e"
 
 audio_source_mappings = {
-    'MacBook Pro Speakers': 'Echo Dot-9P9',
-    'Echo Dot-9P9': 'MacBook Pro Speakers',
+    "MacBook Pro Speakers": "Matt’s AirPods Pro",
+    "Matt’s AirPods Pro": "MacBook Pro Speakers",
 }
 
+
 def is_bluetooth_connected():
-    output = subprocess.run([BLUEUTIL_PATH, '--is-connected', SPEAKER_BLUETOOTH_ADDRESS], capture_output=True)
-    is_connected = bool(int(str(output.stdout, 'utf-8').strip()))
+    output = subprocess.run(
+        [BLUEUTIL_PATH, "--is-connected", AIRPODS_BLUETOOTH_ADDRESS],
+        capture_output=True,
+    )
+    is_connected = bool(int(str(output.stdout, "utf-8").strip()))
     return is_connected
 
+
 def get_current_device():
-    output = subprocess.run([SWITCH_AUDIO_PATH, '-c'], capture_output=True)
-    current_device = str(output.stdout, 'utf-8').strip()
+    output = subprocess.run([SWITCH_AUDIO_PATH, "-c"], capture_output=True)
+    current_device = str(output.stdout, "utf-8").strip()
     return current_device
+
 
 def toggle_bluetooth():
     current_device = get_current_device()
-    subprocess.run([SWITCH_AUDIO_PATH, '-s', audio_source_mappings[current_device]])
+    subprocess.run(
+        [SWITCH_AUDIO_PATH, "-s", audio_source_mappings[current_device]])
 
 
 if __name__ == "__main__":
     if not is_bluetooth_connected():
-        print("trying to connect to bluetooth")
+        print("connecting via bluetooth")
         original_current_device = get_current_device()
-        subprocess.run([BLUEUTIL_PATH, '--connect', SPEAKER_BLUETOOTH_ADDRESS], capture_output=True)
-        time.sleep(3)
+        subprocess.run(
+            [BLUEUTIL_PATH, "--connect", AIRPODS_BLUETOOTH_ADDRESS], capture_output=True
+        )
+        time.sleep(1)
         toggle_bluetooth()
-        time.sleep(3)
-        # For some reason the autio might switch back so ensure output is properly set
+        time.sleep(1)
+        # For some reason the audio might switch back so ensure output is properly set
         if get_current_device() == original_current_device:
             toggle_bluetooth()
     else:
         toggle_bluetooth()
 
-    print("Speaker connected, switching audio")
-
-
-
+    # print(f"Switching audio to {get_current_device()}")
