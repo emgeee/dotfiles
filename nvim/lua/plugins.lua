@@ -1,3 +1,10 @@
+-- if `opts` is specified, it is passed to the `require(<plugin>).setup(opts)` automatically
+-- if `config` function is set, `opts` is passed as the second param so you must call setup() manually
+-- Ex:
+-- config = function(_, opts)
+--     ...
+-- end
+
 return {
 	--
 	-- UI pluginConfigs
@@ -31,6 +38,13 @@ return {
 	-- },
 
 	"nvim-lua/plenary.nvim",
+
+	{
+		"folke/neodev.nvim",
+		opts = {
+			library = { plugins = { "neotest" }, types = true },
+		},
+	},
 
 	-- Git commands in nvim
 	"tpope/vim-fugitive",
@@ -361,6 +375,18 @@ return {
 	{ "bfredl/nvim-luadev", cmd = "Luadev" },
 
 	-- Rust stuff
+	-- {
+	--   'mrcjkb/rustaceanvim',
+	--   version = '^4', -- Recommended
+	--   lazy = false, -- This plugin is already lazy
+	-- },
+
+	{
+		"vxpm/ferris.nvim",
+		opts = {
+			create_commands = true,
+		},
+	},
 	-- Work with crates inside Cargo.toml files
 	{
 		"saecki/crates.nvim",
@@ -372,6 +398,25 @@ return {
 					actions = true,
 					completion = true,
 					hover = true,
+				},
+			})
+		end,
+	},
+
+	-- Testing
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"rouge8/neotest-rust",
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = {
+					require("neotest-rust"),
 				},
 			})
 		end,
