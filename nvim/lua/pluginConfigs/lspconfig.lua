@@ -9,14 +9,10 @@
 -- Map :Format to vim.lsp.buf.formatting()
 vim.api.nvim_create_user_command("Format", function()
 	vim.lsp.buf.format()
-end, {})
+end, { desc = "Format the current file" })
 
 -- LSP settings
 local on_attach = function(_client, bufnr)
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	-- require('utils.callbacks')
-
 	local opts = function(desc)
 		return { desc = desc, noremap = true, buffer = bufnr }
 	end
@@ -58,7 +54,10 @@ local on_attach = function(_client, bufnr)
 
 	vim.keymap.set("n", "gds", function()
 		bi().lsp_document_symbols()
-	end, opts("show symbols (LSP)(Telescope)"))
+	end, opts("show document symbols (LSP)(Telescope)"))
+	vim.keymap.set("n", "gws", function()
+		bi().lsp_workspace_symbols()
+	end, opts("show workspace symbols (LSP)(Telescope)"))
 	vim.keymap.set("n", "gr", function()
 		bi().lsp_references()
 	end, opts("show references (LSP)(Telescope)"))
@@ -75,11 +74,16 @@ local on_attach = function(_client, bufnr)
 		bi().lsp_incoming_calls()
 	end, opts("show incoming calls (LSP)(Telescope)"))
 
+  -----------------------
 	-- Mappings for lspsaga
+  -----------------------
 	vim.keymap.set("n", "K", function()
 		require("lspsaga.hover"):render_hover_doc()
 	end, opts("hover docs (lspsaga)"))
-	-- require("lspsaga.hover"):open_link()
+
+	vim.keymap.set("n", "<leader>K", function()
+		require("lspsaga.hover"):render_hover_doc({"++keep"})
+	end, opts("hover docs (lspsaga)"))
 	-- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
 	vim.keymap.set("n", "gca", "<cmd>Lspsaga code_action<CR>", opts("code action (lspsaga)"))
 	vim.keymap.set("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>", opts("show line diagnostics (lspsaga)"))
@@ -91,6 +95,9 @@ local on_attach = function(_client, bufnr)
 
 	-- highlights instances of the same word under the cursor
 	require("illuminate").on_attach(_client)
+
+  -- enable inlayed types
+  vim.lsp.inlay_hint.enable()
 end
 
 --  Small plugin to ensure various formatters are installed
@@ -109,7 +116,7 @@ require("mason-tool-installer").setup({
 		"taplo", -- TOML
 		"rust-analyzer",
 		"codelldb", -- VSCode lldb
-    "cpptools", -- Needed for rust
+		"cpptools", -- Needed for rust
 	},
 })
 
@@ -226,31 +233,31 @@ mason_lspconfig.setup_handlers({
 	end,
 	["rust_analyzer"] = function()
 		lspconfig.rust_analyzer.setup({
-		  on_attach = function(client, bufrn)
-		    opts.on_attach(client, bufrn)
-		  end,
-		  capabilities = opts.capabilities,
-		  settings = {
-		    ["rust-analyzer"] = {
-		      diagnostics = {
-		        enable = true,
-		      },
-		      imports = {
-		        granularity = {
-		          group = "module",
-		        },
-		        prefix = "self",
-		      },
-		      cargo = {
-		        buildScripts = {
-		          enable = true,
-		        },
-		      },
-		      procMacro = {
-		        enable = true,
-		      },
-		    },
-		  },
+			on_attach = function(client, bufrn)
+				opts.on_attach(client, bufrn)
+			end,
+			capabilities = opts.capabilities,
+			settings = {
+				["rust-analyzer"] = {
+					diagnostics = {
+						enable = true,
+					},
+					imports = {
+						granularity = {
+							group = "module",
+						},
+						prefix = "self",
+					},
+					cargo = {
+						buildScripts = {
+							enable = true,
+						},
+					},
+					procMacro = {
+						enable = true,
+					},
+				},
+			},
 		})
 	end,
 })

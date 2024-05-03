@@ -8,5 +8,3 @@ require('auto-session').setup({
 })
 
 require('session-lens').setup({})
-
-key_mapper('n', '<leader>ss', ":SearchSession<CR>", { desc = "Search session (SessonLens)" })

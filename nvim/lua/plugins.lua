@@ -182,6 +182,7 @@ return {
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-telescope/telescope-fzy-native.nvim" },
 			{ "nvim-telescope/telescope-media-files.nvim" },
+			-- { "jonarrien/telescope-cmdline.nvim" },
 			{ "junegunn/fzf" },
 		},
 		config = function()
@@ -197,8 +198,15 @@ return {
 		config = function()
 			require("lspsaga").setup({
 				lightbulb = {
-					-- enabld = false,
+					-- enable = false,
 					sign = false,
+				},
+				-- Currently using dropbar plugin stead
+				symbol_in_winbar = {
+					enable = false,
+				},
+				implement = {
+					enable = false,
 				},
 			})
 		end,
@@ -226,9 +234,30 @@ return {
 	-- Status line plugin
 	{
 		"hoob3rt/lualine.nvim",
+		-- dependencies = { "linrongbin16/lsp-progress.nvim" },
 		config = function()
 			require("pluginConfigs.lualine-config")
 		end,
+	},
+	-- vim.notify backend
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			notification = {
+				override_vim_notify = true,
+			},
+			logger = {
+				level = vim.log.levels.INFO,
+			},
+		},
+	},
+
+	{
+		"Bekaboo/dropbar.nvim",
+		-- optional, but required for fuzzy finder support
+		dependencies = {
+			"nvim-telescope/telescope-fzf-native.nvim",
+		},
 	},
 
 	-- file tree
@@ -282,37 +311,13 @@ return {
 	},
 
 	--
-	-- Navigation
-	--
-	{
-		"https://gitlab.com/yorickpeterse/nvim-window.git",
-		config = function()
-			require("pluginConfigs.window-config")
-		end,
-	},
-
-	-- Automatic tags management
-	-- {
-	--   'ludovicchabant/vim-gutentags',
-	--   config=function()
-	--     require('pluginConfigs.gutentags')
-	--   end
-	-- },
-
-	--
 	-- MISC
 	--
 
 	-- Hack
 	{
 		"stevearc/stickybuf.nvim",
-		config = function()
-			require("stickybuf").setup({
-				-- filetype = {
-				--   outline = "filetype",
-				-- },
-			})
-		end,
+		opts = {},
 	},
 
 	-- Intelligently set the root directory
