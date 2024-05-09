@@ -1,4 +1,4 @@
--- 
+--
 --
 -- :CmpStatus -> Check the status of sources
 -- Note: nvim_lsp is loaded after the first insert
@@ -42,11 +42,11 @@ cmp.setup({
 		end,
 	},
 	window = {
-		-- completion = cmp.config.window.bordered(),
-		-- documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
-    -- Down, up, C-n, C-p might not be needed here since the defaults could work?!
+		-- Down, up, C-n, C-p might not be needed here since the defaults could work?!
 		["<Down>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
 		["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
 		["<C-n>"] = cmp.mapping({
@@ -109,11 +109,12 @@ cmp.setup({
 	-- Configure sources, order of sources determines order in completion menu
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
-		{ name = "nvim_lua" },
-		{ name = "buffer" },
 		{ name = "vsnip" }, -- For vsnip users.
 		{ name = "path" },
-		-- { name = "crates" },
+	}, {
+		{ name = "nvim_lua" },
+		{ name = "buffer" },
+		{ name = "crates" },
 	}),
 	formatting = {
 		format = lspkind.cmp_format({
@@ -132,14 +133,14 @@ cmp.setup({
 -- Set configuration for specific filetype.
 cmp.setup.filetype("gitcommit", {
 	sources = cmp.config.sources({
-		{ name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+		{ name = "git" }, -- You can specify the `cmp_git` source if you were installed it.
 	}, {
 		{ name = "buffer" },
 	}),
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline("/", {
+cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = "buffer" },
@@ -154,4 +155,5 @@ cmp.setup.cmdline(":", {
 	}, {
 		{ name = "cmdline" },
 	}),
+	matching = { disallow_symbol_nonprefix_matching = false },
 })

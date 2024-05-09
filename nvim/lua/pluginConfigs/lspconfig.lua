@@ -74,15 +74,15 @@ local on_attach = function(_client, bufnr)
 		bi().lsp_incoming_calls()
 	end, opts("show incoming calls (LSP)(Telescope)"))
 
-  -----------------------
+	-----------------------
 	-- Mappings for lspsaga
-  -----------------------
+	-----------------------
 	vim.keymap.set("n", "K", function()
 		require("lspsaga.hover"):render_hover_doc()
 	end, opts("hover docs (lspsaga)"))
 
 	vim.keymap.set("n", "<leader>K", function()
-		require("lspsaga.hover"):render_hover_doc({"++keep"})
+		require("lspsaga.hover"):render_hover_doc({ "++keep" })
 	end, opts("hover docs (lspsaga)"))
 	-- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
 	vim.keymap.set("n", "gca", "<cmd>Lspsaga code_action<CR>", opts("code action (lspsaga)"))
@@ -96,8 +96,11 @@ local on_attach = function(_client, bufnr)
 	-- highlights instances of the same word under the cursor
 	require("illuminate").on_attach(_client)
 
-  -- enable inlayed types
-  vim.lsp.inlay_hint.enable()
+	-- toggle inlayed types
+  vim.lsp.inlay_hint.enable() -- Default to true
+	vim.keymap.set("n", "<leader>st", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	end, { desc = "toggle show types (LSP)" })
 end
 
 --  Small plugin to ensure various formatters are installed

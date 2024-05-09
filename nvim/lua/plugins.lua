@@ -91,6 +91,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 			"RRethy/vim-illuminate", -- illuminate works under the cursor
 			"scalameta/nvim-metals", -- Scala metals integration
+			"hrsh7th/nvim-cmp", -- Specify completion engine
 		},
 		config = function()
 			require("pluginConfigs.lspconfig")
@@ -113,9 +114,11 @@ return {
 			"hrsh7th/cmp-path", -- source for file system path
 			"hrsh7th/cmp-cmdline", -- source for vims cmd line
 			"hrsh7th/cmp-nvim-lua", -- nvim lua completion
+      "petertriho/cmp-git",
 			"onsails/lspkind.nvim", -- adds vscode-like pictograms to complete menu
 			"saecki/crates.nvim", -- Adds rust crates completions
 		},
+    event = { "InsertEnter", "CmdlineEnter" }, -- support lazy loading
 		config = function()
 			require("pluginConfigs.cmp-config")
 		end,
