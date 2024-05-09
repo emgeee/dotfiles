@@ -7,10 +7,13 @@ function gitchensync
 
   set current_branch (git rev-parse --abbrev-ref HEAD)
 
-  if test "$current_branch" = "master"
-    echo "Can't open a PR against master branch"
+  if test "$current_branch" = "main"
+    echo "Can't open a PR current branch is main"
     return 1
   end
+
+  # If the default repo is not set, prompt user to set it before continuing
+  gh repo set-default
 
   echo "pausing for 3 seconds..."
   sleep 3
@@ -22,5 +25,6 @@ function gitchensync
   git push -u origin $current_branch
 
   echo "opening PR"
-  gh pr create
+  gh pr create --base main
+  gh pr view --web
 end

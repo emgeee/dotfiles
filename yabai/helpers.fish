@@ -159,18 +159,25 @@ end
 function yabai_display_added
   # List the Ids of screens that should be used for aux puproses (usually the laptop's screen)
   # fetch uuids with `yabai -m query --displays`
-  set aux_screen_uuid "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+  set aux_screen_uuid "37D8832A-2D66-02CA-B9F7-8F30A301B230" # MBP 15" screen ID
 
   # Add app names that should be moved
   # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
   set aux_app_names \
-    "Spotify" \
+    # Messaging apps
+    "Messages" \
     "Discord" \
     "Slack" \
-    "Messages" \
+    "WhatsApp" \
+    "Signal" \
+    "Telegram" \
+
+    # Dev tools
+    "Spotify" \
     "KeePassXC" \
-    "Docker Desktop" \
-    "Obsidian"
+    "Obsidian" \
+
+    "Docker Desktop"
 
   # Find the Aux screen and configure to be a stack orientation (as opposed to bsp)
   set aux_screen (yabai -m query --displays | jq --arg uuid "$aux_screen_uuid" '.[] | select(.uuid == $uuid)')
