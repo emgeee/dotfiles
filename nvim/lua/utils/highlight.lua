@@ -25,7 +25,7 @@ end
 
 M.extract_highlight_colors = function(color_group, scope)
   if vim.fn.hlexists(color_group) == 0 then return nil end
-  local color = vim.api.nvim_get_hl_by_name(color_group, true)
+  local color = vim.api.nvim_get_hl(color_group)
   if color.background ~= nil then
     color.bg = string.format('#%06x', color.background)
     color.background = nil

@@ -160,6 +160,7 @@ function yabai_display_added
   # List the Ids of screens that should be used for aux puproses (usually the laptop's screen)
   # fetch uuids with `yabai -m query --displays`
   set aux_screen_uuid "37D8832A-2D66-02CA-B9F7-8F30A301B230" # MBP 15" screen ID
+  set home_screen_uuid "6EC90C89-CBE4-4BC6-A43B-56FAB7623884"
 
   # Add app names that should be moved
   # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
@@ -171,13 +172,13 @@ function yabai_display_added
     "WhatsApp" \
     "Signal" \
     "Telegram" \
-
     # Dev tools
     "Spotify" \
     "KeePassXC" \
     "Obsidian" \
-
     "Docker Desktop"
+
+  sleep 1
 
   # Find the Aux screen and configure to be a stack orientation (as opposed to bsp)
   set aux_screen (yabai -m query --displays | jq --arg uuid "$aux_screen_uuid" '.[] | select(.uuid == $uuid)')
@@ -188,7 +189,7 @@ function yabai_display_added
   # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
 
   for app in $aux_app_names
-    set app_id (yabai -m query --windows | jq --arg app_name "$app" '.[] | select(.app == $app_name) | .id')
+    set app_id (yabai -m query --windows | jq --arg app_name "$app" '.[] | select(.app | gsub("\u200e"; "") == $app_name) | .id')
 
     if test -n "$app_id"
       echo "moving $app ($app_id) to space $aux_screen_space"
@@ -196,6 +197,13 @@ function yabai_display_added
     else
       echo "$app not running"
     end
+  end
+
+
+  # Change audio output to USB speakers
+  set home_screen (yabai -m query --displays | jq --arg uuid "$home_screen_uuid" '.[] | select(.uuid == $uuid)')
+  if test -n "$home_screen"
+    SwitchAudioSource -s "USB Audio DAC   "
   end
 
   yabai_update_sketchybar

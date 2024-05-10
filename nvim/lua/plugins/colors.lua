@@ -1,0 +1,76 @@
+--
+-- UI pluginConfigs
+--
+-- change color scheme with
+-- :colorscheme <name>
+--
+return {
+	{
+		--- https://github.com/folke/tokyonight.nvim
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("tokyonight").setup({
+				style = "night",
+			})
+			-- require("tokyonight").load()
+		end,
+	},
+	{
+		--- https://github.com/navarasu/onedark.nvim
+		"navarasu/onedark.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.g.onedark_terminal_italics = 2
+
+			require("onedark").setup({
+				style = "deep",
+			})
+			-- require("onedark").load()
+		end,
+	},
+	{
+		--- https://github.com/bluz71/vim-nightfly-colors
+		"bluz71/vim-nightfly-colors",
+		name = "nightfly",
+		lazy = false,
+		priority = 1000,
+		config = function()
+      vim.g.nightflyCursorColor = true
+      vim.g.nightflyNormalFloat = false
+
+      vim.cmd("colorscheme nightfly")
+		end,
+	},
+	{
+		--- https://github.com/bluz71/vim-moonfly-colors
+		"bluz71/vim-moonfly-colors",
+		name = "moonfly",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		--- https://github.com/nyoom-engineering/oxocarbon.nvim
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+    --- https://github.com/scottmckendry/cyberdream.nvim
+		"scottmckendry/cyberdream.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("cyberdream").setup({
+				-- Recommended - see "Configuring" below for more config options
+				transparent = true,
+				italic_comments = true,
+				hide_fillchars = true,
+				borderless_telescope = true,
+				terminal_colors = true,
+			})
+		end,
+	},
+}
