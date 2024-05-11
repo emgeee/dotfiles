@@ -143,7 +143,7 @@ augroup end
 ]], false)
 
 -- Recommend by auto-session plugin
-vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal"
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- HACK: treat avro files as JSON files
 vim.cmd([[

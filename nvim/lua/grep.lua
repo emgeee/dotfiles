@@ -3,7 +3,7 @@ vim.cmd([[
   set grepformat=%f:%l:%c:%m
 ]])
 
-vim.g.rg_highlight= true
+vim.g.rg_highlight = true
 
 -- remove needing to capitalize 'R'
 vim.cmd([[cnoreabbrev rg Rg]])
@@ -18,5 +18,5 @@ if executable('ag')
 endif
 ]])
 
-vim.cmd([[cnoreabbrev Ack Ack!]])
-vim.cmd([[cnoreabbrev ack Ack!]])
+-- vim.cmd([[cnoreabbrev Ack Ack!]])
+-- vim.cmd([[cnoreabbrev ack Ack!]])
