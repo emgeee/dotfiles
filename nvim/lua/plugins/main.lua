@@ -108,13 +108,23 @@ return {
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
 	},
 
+	-- {
+	-- 	--- https://github.com/dgagn/diagflow.nvim
+	-- 	"dgagn/diagflow.nvim",
+	-- 	-- event = 'LspAttach', This is what I use personnally and it works great
+	-- 	opts = {},
+	-- },
 
 	-- mostly used for a pretty LSP hover functionality
 	-- hotkeys specified in lspconfig.lua
 	-- Note: the plugin seems really powerful
 	{
-		"nvimdev/lspsaga.nvim",
+		-- "nvimdev/lspsaga.nvim",
+		"emgeee/lspsaga.nvim",
 		config = function()
+			vim.diagnostic.config({
+				virtual_text = false,
+			})
 			require("lspsaga").setup({
 				lightbulb = {
 					-- enable = false,
@@ -135,9 +145,6 @@ return {
 		},
 	},
 
-	-- { "mileszs/ack.vim" },
-
-
 	-- vim.notify backend
 	{
 		"j-hui/fidget.nvim",
@@ -150,15 +157,6 @@ return {
 			},
 		},
 	},
-
-	-- {
- --    --- https://github.com/Bekaboo/dropbar.nvim
-	-- 	"Bekaboo/dropbar.nvim",
-	-- 	-- optional, but required for fuzzy finder support
-	-- 	dependencies = {
-	-- 		"nvim-telescope/telescope-fzf-native.nvim",
-	-- 	},
-	-- },
 
 	-- :SymbolsOutline to open window
 	-- Lspsaga can also do this - :Lspsaga outline .
@@ -179,7 +177,7 @@ return {
 
 	-- Add indentation guides even on blank lines
 	{
-    --- https://github.com/lukas-reineke/indent-blankline.nvim
+		--- https://github.com/lukas-reineke/indent-blankline.nvim
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
 		opts = {},
@@ -260,7 +258,6 @@ return {
 		end,
 	},
 
-
 	-- Syntax highlighting for kitty config file
 	{
 		"fladson/vim-kitty",
@@ -269,7 +266,6 @@ return {
 
 	-- Lua replit run :Luadev
 	{ "bfredl/nvim-luadev", cmd = "Luadev" },
-
 
 	-- Testing
 	{

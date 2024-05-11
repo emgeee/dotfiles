@@ -22,6 +22,21 @@ return {
 
 			local actions = require("telescope.actions")
 
+			-- local action_state = require("telescope.actions.state")
+			-- local state = require("telescope.state")
+
+			-- local slow_scroll = function(prompt_bufnr, direction)
+			-- 	local previewer = action_state.get_current_picker(prompt_bufnr).previewer
+			-- 	local status = state.get_status(prompt_bufnr)
+			--
+			-- 	-- Check if we actually have a previewer and a preview window
+			-- 	if type(previewer) ~= "table" or previewer.scroll_fn == nil or status.preview_win == nil then
+			-- 		return
+			-- 	end
+			--
+			-- 	previewer:scroll_fn(1 * direction)
+			-- end
+
 			--- https://github.com/nvim-telescope/telescope.nvim
 			telescope.setup({
 				defaults = {
@@ -31,7 +46,9 @@ return {
 							["<C-f>"] = false,
 
 							["<esc>"] = actions.close,
-							["<C-u>"] = false,
+							-- ["<C-u>"] = false,
+							["<C-u>"] = actions.results_scrolling_up,
+							["<C-d>"] = actions.results_scrolling_down,
 
 							["<C-h>"] = actions.preview_scrolling_left,
 							["<C-j>"] = actions.preview_scrolling_down,
@@ -129,17 +146,13 @@ return {
 			end, { desc = "Show hotkeys" })
 			-- vim.api.nvim_set_keymap('n', ':', ':Telescope cmdline<CR>', { noremap = true, desc = "Cmdline" })
 
-      -- Search for text
-			vim.api.nvim_create_user_command(
-				"Search",
-				function(opts)
-          bi().live_grep({default_text = opts.args})
-        end,
-				{nargs = "*"}
-			)
-      vim.cmd([[cnoreabbrev ack Search]])
-      vim.cmd([[cnoreabbrev Ack Search]])
-      vim.cmd([[cnoreabbrev ss Search]]) -- Search string
+			-- Search for text
+			vim.api.nvim_create_user_command("Search", function(opts)
+				bi().live_grep({ default_text = opts.args })
+			end, { nargs = "*" })
+			vim.cmd([[cnoreabbrev ack Search]])
+			vim.cmd([[cnoreabbrev Ack Search]])
+			vim.cmd([[cnoreabbrev ss Search]]) -- Search string
 		end,
 	},
 }

@@ -2,6 +2,9 @@
 
 set -x
 
+#
+# https://github.com/koekeishiya/yabai/blob/master/doc/yabai.asciidoc
+#
 # ====== Variables =============================
 
 declare -A gaps
