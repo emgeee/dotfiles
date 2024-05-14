@@ -5,7 +5,8 @@ local g = vim.g
 -- Requires a patched font from https://www.nerdfonts.com/
 -- Currently using RobotoMono
 -- configure Iterm>Profile>Non ASCII font
-g.neovide_cursor_animation_length=0
+vim.g.neovide_cursor_animation_length=0
+vim.g.neovide_scroll_animation_length = 0.1
 
 
 vim.wo.number = true --Make line numbers default
