@@ -44,15 +44,15 @@ return {
 			vim.keymap.set(
 				"n",
 				"gb",
-				":BufferLineCycleNext<CR>",
-				{ noremap = true, silent = true, desc = "Next buffer" }
+				":BufferLinePick<CR>",
+				{ noremap = true, silent = true, desc = "Select buffer" }
 			)
-			vim.keymap.set(
-				"n",
-				"gB",
-				":BufferLineCyclePrev<CR>",
-				{ noremap = true, silent = true, desc = "Previous buffer" }
-			)
+			-- vim.keymap.set(
+			-- 	"n",
+			-- 	"gB",
+			-- 	":BufferLineCyclePrev<CR>",
+			-- 	{ noremap = true, silent = true, desc = "Previous buffer" }
+			-- )
 
 			vim.keymap.set(
 				"n",

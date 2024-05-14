@@ -90,9 +90,6 @@ shift + alt - f : yabai -m window --toggle zoom-fullscreen; \
 # Make the current window in the largest split
 alt - v : yabai -m window --swap largest
 
-# Toggle vertical vs horizontal split
-alt - s : yabai -m window --toggle split
-
 
 ###################
 # Declare a new mode
@@ -118,7 +115,7 @@ window_resize < e : yabai_set_float true; yabai -m window --display mouse --grid
 # window_resize < 3 : yabai_move_to_display 
 
 window_resize < g : yabai_warp_mouse
-window_resize < s : yabai_warp_mouse
+# window_resize < s : yabai_warp_mouse
 
 window_resize < h : yabai_stack_window west
 window_resize < j : yabai_stack_window south
@@ -130,13 +127,20 @@ window_resize < alt - b : yabai -m space --layout $(yabai -m query --spaces --sp
                           skhd -k "escape"
 
 window_resize < t : terminal-notifier -message "status running" -title "skhd" ; skhd -k "escape"
-#
+
 # Toggle between bsp and stacked
 window_resize < b : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end'); \
-          sketchybar --trigger window_focus
-window_resize < v : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end'); \
-          sketchybar --trigger window_focus
+          sketchybar --trigger window_focus; \
+          skhd -k "escape"
 
+window_resize < v : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end'); \
+          sketchybar --trigger window_focus; \
+          skhd -k "escape"
+
+# Toggle vertical vs horizontal split
+window_resize < s : yabai -m window --toggle split \
+          sketchybar --trigger window_focus; \
+          skhd -k "escape"
 
 # Restart yabai
 window_resize < alt - 0 : yabai_restart
