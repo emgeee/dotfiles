@@ -33,20 +33,16 @@ key_mapper("n", "Y", "y$", { noremap = true })
 key_mapper("n", "<leader>h", ":nohlsearch<CR>", { noremap = true, silent = true, desc = "Clear highlighted search" })
 
 -- Strip all whitespace from file
-key_mapper("n", "<leader>W", [[:%s/\s\+$//<cr>:let @/=''<CR>]], { desc = "Strip whitespace" })
+key_mapper("n", "<leader>W", [[:%s/\s\+$//<cr>:let @/=''<CR>]], { noremap = true, silent = true, desc = "Strip whitespace" })
 
 -- re-hardwrap paragraph
-key_mapper("n", "<leader>q", "gqip", { desc = "Hardwrap paragraph" })
+key_mapper("n", "<leader>q", "gqip", { noremap = true, silent = true, desc = "Hardwrap paragraph" })
 
 -- reselect recent pasted text
-key_mapper("n", "<leader>v", "`[v`]")
+key_mapper("n", "<leader>v", "`[v`]", { noremap = true, silent = true, desc = "Reselect recently pasted text" })
 
 -- Quickly select entire file
-key_mapper("n", "<leader>sa", "ggVG")
-
--- Quickly open vimrc in new splits
-key_mapper("n", "<leader>ev", ":vs $MYVIMRC<CR>")
-key_mapper("n", "<leader>eV", ":split $MYVIMRC<CR>")
+key_mapper("n", "<leader>sa", "ggVG", { noremap = true, silent = true, desc = "Select all text in file" })
 
 -- Copy current filename to clipboard
 local copy_filename = function()
@@ -56,7 +52,7 @@ local copy_filename = function()
 	vim.notify("Copying filname to clipboard " .. current_file_name)
 end
 
-vim.keymap.set("n", "<leader>cfn", copy_filename, { noremap = true })
+vim.keymap.set("n", "<leader>cfn", copy_filename, { noremap = true, silent = true, desc = "Copy filename to clipboard" })
 
 -- easily interact with system clipboard
 key_mapper("n", "<leader>p", '"*p')

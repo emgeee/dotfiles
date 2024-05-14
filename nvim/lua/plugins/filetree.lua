@@ -1,6 +1,6 @@
 return {
 	{
-    --- https://github.com/nvim-tree/nvim-tree.lua
+		--- https://github.com/nvim-tree/nvim-tree.lua
 		"kyazdani42/nvim-tree.lua",
 		config = function()
 			local key_mapper = require("utils.key_mapper")
@@ -19,7 +19,7 @@ return {
 				vim.keymap.set("n", "<C-e>", api.node.open.replace_tree_buffer, opts("Open: In Place"))
 				vim.keymap.set("n", "<C-k>", api.node.show_info_popup, opts("Info"))
 				vim.keymap.set("n", "<C-r>", api.fs.rename_sub, opts("Rename: Omit Filename"))
-				vim.keymap.set("n", "<C-t>", api.node.open.tab, opts("Open: New Tab"))
+				-- vim.keymap.set("n", "<C-t>", api.node.open.tab, opts("Open: New Tab"))
 				vim.keymap.set("n", "<C-v>", api.node.open.vertical, opts("Open: Vertical Split"))
 				vim.keymap.set("n", "<C-x>", api.node.open.horizontal, opts("Open: Horizontal Split"))
 				vim.keymap.set("n", "<BS>", api.node.navigate.parent_close, opts("Close Directory"))
@@ -69,9 +69,14 @@ return {
 				vim.keymap.set("n", "<2-RightMouse>", api.tree.change_root_to_node, opts("CD"))
 				-- END_DEFAULT_ON_ATTACH
 
+				local swap_then_open_tab = function()
+					local node = api.tree.get_node_under_cursor()
+					vim.cmd("wincmd l")
+					api.node.open.tab(node)
+				end
 				-- Mappings migrated from view.mappings.list
-				--
 				-- You will need to insert "your code goes here" for any mappings with a custom action_cb
+				vim.keymap.set("n", "<C-t>", swap_then_open_tab, opts("Open: New Tab"))
 				vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
 			end
 
@@ -81,6 +86,20 @@ return {
 
 			key_mapper("n", "<F3>", ":NvimTreeToggle<CR>")
 			key_mapper("n", "<F4>", ":NvimTreeFindFile<CR>")
+
+      -- hack for working with auto-session plugin
+      -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Recipes#workaround-when-using-rmagattiauto-session
+			vim.api.nvim_create_autocmd({ "BufEnter" }, {
+				pattern = "NvimTree*",
+				callback = function()
+					local api = require("nvim-tree.api")
+					local view = require("nvim-tree.view")
+
+					if not view.is_visible() then
+						api.tree.open()
+					end
+				end,
+			})
 		end,
 	},
 }
