@@ -38,10 +38,10 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-      vim.g.nightflyCursorColor = true
-      vim.g.nightflyNormalFloat = false
+			vim.g.nightflyCursorColor = true
+			vim.g.nightflyNormalFloat = false
 
-      vim.cmd("colorscheme nightfly")
+			-- vim.cmd("colorscheme nightfly")
 		end,
 	},
 	{
@@ -58,7 +58,7 @@ return {
 		priority = 1000,
 	},
 	{
-    --- https://github.com/scottmckendry/cyberdream.nvim
+		--- https://github.com/scottmckendry/cyberdream.nvim
 		"scottmckendry/cyberdream.nvim",
 		lazy = false,
 		priority = 1000,
@@ -71,6 +71,27 @@ return {
 				borderless_telescope = true,
 				terminal_colors = true,
 			})
+		end,
+	},
+	{
+		--- https://github.com/catppuccin/nvim
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				integrations = {
+					cmp = true,
+					fidget = true,
+					indent_blankline = { enabled = true },
+					lsp_saga = true,
+					mason = true,
+					lsp_trouble = true,
+          telescope = true,
+				},
+			})
+
+			vim.cmd("colorscheme catppuccin-mocha")
 		end,
 	},
 }

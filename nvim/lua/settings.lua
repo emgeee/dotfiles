@@ -19,6 +19,8 @@ opt.cursorline = false --highlight entire line cursor is on
 
 opt.lazyredraw = true
 
+opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
+
 --Incremental live completion
 opt.inccommand = "nosplit"
 

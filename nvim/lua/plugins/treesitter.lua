@@ -50,6 +50,8 @@ return {
 							["il"] = "@loop.inner",
 							["aa"] = "@parameter.outer",
 							["ia"] = "@parameter.inner",
+							["ab"] = "@block.outer",
+							["ib"] = "@block.inner",
 						},
 					},
 					move = {

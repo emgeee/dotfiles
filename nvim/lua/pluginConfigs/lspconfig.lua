@@ -11,6 +11,12 @@ vim.api.nvim_create_user_command("Format", function()
 	vim.lsp.buf.format()
 end, { desc = "Format the current file" })
 
+local signs = { Error = "× ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 -- LSP settings
 local on_attach = function(_client, bufnr)
 	local opts = function(desc)

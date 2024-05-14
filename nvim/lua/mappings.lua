@@ -9,8 +9,18 @@ vim.g.maplocalleader = " "
 key_mapper("n", "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 key_mapper("n", "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
---Remap escape to leave terminal mode
-key_mapper("t", "<Esc>", [[<c-\><c-n>]], { noremap = true })
+function _G.set_terminal_keymaps()
+	local opts = { buffer = 0, silent = true }
+	vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+	vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+	vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+	vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+	vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+	vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
+end
+
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 -- Y yank until the end of line
 key_mapper("n", "Y", "y$", { noremap = true })
@@ -20,7 +30,7 @@ key_mapper("n", "Y", "y$", { noremap = true })
 -- key_mapper('i', 'jk', "<Esc>")
 
 -- easily clear highlighted search - :noh
-key_mapper("n", "<leader>h", ":nohlsearch<CR>", { desc = "Clear highlighted search" })
+key_mapper("n", "<leader>h", ":nohlsearch<CR>", { noremap = true, silent = true, desc = "Clear highlighted search" })
 
 -- Strip all whitespace from file
 key_mapper("n", "<leader>W", [[:%s/\s\+$//<cr>:let @/=''<CR>]], { desc = "Strip whitespace" })
@@ -38,22 +48,24 @@ key_mapper("n", "<leader>sa", "ggVG")
 key_mapper("n", "<leader>ev", ":vs $MYVIMRC<CR>")
 key_mapper("n", "<leader>eV", ":split $MYVIMRC<CR>")
 
--- vim fugitive shortcuts
-key_mapper("n", "<leader>gs", ":Git<CR>")
-key_mapper("n", "<leader>gd", ":Gdiff<CR>")
-vim.cmd([[cnoreabbrev gb GBrowse]])
-
 -- Copy current filename to clipboard
-
 local copy_filename = function()
-  local current_file_name = vim.fn.expand("%")
+	local current_file_name = vim.fn.expand("%")
 
-  vim.fn.setreg("*", current_file_name, "c")
-  vim.notify("Copying filname to clipboard " .. current_file_name)
+	vim.fn.setreg("*", current_file_name, "c")
+	vim.notify("Copying filname to clipboard " .. current_file_name)
 end
 
 vim.keymap.set("n", "<leader>cfn", copy_filename, { noremap = true })
 
+if vim.g.neovide then
+	vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
+	vim.keymap.set("v", "<D-c>", '"+y') -- Copy
+	vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
+	vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
+	vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
+	vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+end
 
 -- easily interact with system clipboard
 key_mapper("n", "<leader>p", '"*p')
@@ -86,6 +98,10 @@ key_mapper("n", "<C-h>", "<C-w>h")
 key_mapper("n", "<C-j>", "<C-w>j")
 key_mapper("n", "<C-k>", "<C-w>k")
 key_mapper("n", "<C-l>", "<C-w>l")
+
+-- Buffer cycling mappings defined in tab_bar.lua
+-- key_mapper("n", "gb", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
+-- key_mapper("n", "gB", ":bprev<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
 
 -- Don't copy the replaced text after pasting in visual mode
 key_mapper("v", "p", '"_dP')

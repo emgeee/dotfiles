@@ -8,16 +8,20 @@
 return {
 	{ "nvim-lua/plenary.nvim" },
 	{
+		"famiu/bufdelete.nvim",
+		config = function()
+			vim.keymap.set("n", "<leader>bd", function()
+				require("bufdelete").bufdelete(0)
+			end, { noremap = true, silent = true, desc = "Buffer delete (preserve layout)" })
+		end,
+	},
+	{
+		--- https://github.com/folke/neodev.nvim
 		"folke/neodev.nvim",
 		opts = {
 			library = { plugins = { "neotest" }, types = true },
 		},
 	},
-
-	-- Git commands in nvim
-	"tpope/vim-fugitive",
-	"tpope/vim-rhubarb",
-
 	{
 		"jdhao/better-escape.vim",
 		event = "InsertEnter",
@@ -69,6 +73,7 @@ return {
 	},
 
 	-- Open diagnostic pane with :Trouble
+	-- Trouble can also do this - :Trouble symbols
 	{
 		"folke/trouble.nvim",
 		branch = "dev", -- IMPORTANT!
@@ -105,15 +110,8 @@ return {
 				desc = "Quickfix List (Trouble)",
 			},
 		},
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		opts = {},
 	},
-
-	-- {
-	-- 	--- https://github.com/dgagn/diagflow.nvim
-	-- 	"dgagn/diagflow.nvim",
-	-- 	-- event = 'LspAttach', This is what I use personnally and it works great
-	-- 	opts = {},
-	-- },
 
 	-- mostly used for a pretty LSP hover functionality
 	-- hotkeys specified in lspconfig.lua
@@ -151,28 +149,14 @@ return {
 		opts = {
 			notification = {
 				override_vim_notify = true,
+				-- window = {
+				--   winblend = 0,
+				-- },
 			},
 			logger = {
 				level = vim.log.levels.INFO,
 			},
 		},
-	},
-
-	-- :SymbolsOutline to open window
-	-- Lspsaga can also do this - :Lspsaga outline .
-	-- Trouble can also do this - :Trouble symbols
-	{
-		"simrat39/symbols-outline.nvim",
-		config = function()
-			require("symbols-outline").setup({
-				keymaps = {
-					close = { "q" }, -- Keep pressing esc by accident so unbind it
-				},
-			})
-
-			vim.api.nvim_create_user_command("Outline", "SymbolsOutline", {})
-			vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>", { noremap = true })
-		end,
 	},
 
 	-- Add indentation guides even on blank lines
@@ -194,19 +178,13 @@ return {
 		end,
 	},
 
-	-- Add git related info in the signs columns and popups
-	{
-		"lewis6991/gitsigns.nvim",
-		event = "BufRead",
-		config = true,
-	},
-
 	--
 	-- MISC
 	--
 
 	-- Hack
 	{
+		--- https://github.com/stevearc/stickybuf.nvim
 		"stevearc/stickybuf.nvim",
 		opts = {},
 	},
@@ -223,27 +201,36 @@ return {
 
 	-- Comment plugin
 	{
+		--- https://github.com/numToStr/Comment.nvim
 		"numToStr/Comment.nvim",
+		lazy = false,
 		dependencies = {
 			"JoosepAlviste/nvim-ts-context-commentstring", -- Required for ts/tsx support
 		},
 		config = function()
-			require("Comment").setup({
+			local opts = {
 				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+
 				---LHS of toggle mappings in NORMAL mode
-				toggler = {
-					line = "<C-_><C-_>",
-					block = "<C-_>i",
-				},
+				toggler = {},
+
 				---LHS of operator-pending mappings in NORMAL and VISUAL mode
-				opleader = {
-					line = "<C-_><C-_>",
-					block = "<C-_>i",
-				},
-			})
+				opleader = {},
+				extra = {},
+			}
+			if vim.g.neovide then
+				opts.toggler.line = "<C--><C-->"
+				opts.toggler.block = "<C-->i"
+				opts.opleader.line = "<C--><C-->"
+				opts.opleader.block = "<C-->i"
+			else
+				opts.toggler.line = "<C-_><C-_>"
+				opts.toggler.block = "<C-_>i"
+				opts.opleader.line = "<C-_><C-_>"
+				opts.opleader.block = "<C-_>i"
+			end
+			require("Comment").setup(opts)
 		end,
-		opts = {},
-		lazy = false,
 	},
 
 	{
