@@ -128,9 +128,6 @@ for _, plugin in pairs(disabled_built_ins) do
 	g["loaded_" .. plugin] = 1
 end
 
--- Don't show status line on vim terminals
-vim.cmd([[ au TermOpen term://* setlocal nonumber laststatus=0 ]])
-
 -- Highlight on yank
 vim.cmd(
 	[[
