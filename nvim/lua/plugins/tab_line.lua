@@ -22,7 +22,7 @@ return {
 		config = function()
 			require("bufferline").setup({
 				options = {
-					-- mode = "tabs",
+					mode = "tabs",
 					separator_style = "slant",
 					indicator = {
 						style = "underline",

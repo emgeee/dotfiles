@@ -3,11 +3,7 @@ local g = vim.g
 
 -- Configure the UI
 -- Requires a patched font from https://www.nerdfonts.com/
--- Currently using RobotoMono
 -- configure Iterm>Profile>Non ASCII font
-vim.g.neovide_cursor_animation_length=0
-vim.g.neovide_scroll_animation_length = 0.1
-
 
 vim.wo.number = true --Make line numbers default
 opt.relativenumber = true --Relative line numbers
@@ -35,13 +31,13 @@ opt.mouse = "a"
 opt.breakindent = true
 
 --Save undo history
-vim.cmd[[set undofile]]
+vim.cmd([[set undofile]])
 
 --Decrease update time
 opt.updatetime = 250
 
 -- Use separate sign and number columns
-vim.wo.signcolumn="auto:2"
+vim.wo.signcolumn = "auto:2"
 
 -- Don't pass messages to |ins-completion-menu|.
 -- Avoid showing message extra message when using completion
@@ -51,7 +47,6 @@ opt.shortmess = vim.o.shortmess .. "c"
 g.splitbelow = true
 g.splitright = true
 
-
 -- options for searching
 opt.hlsearch = true --highlight all matches
 opt.incsearch = true --incremently start searching before hitting enter
@@ -59,10 +54,9 @@ opt.ignorecase = true --ignore case
 opt.smartcase = true --ignore case when only lower case
 opt.gdefault = true --default to global search+replace
 
-
 --  used for viewing lines that are so long they take up the entire screen at
 --  once when wrapped
-opt.display = 'lastline'
+opt.display = "lastline"
 
 opt.tabstop = 2 --size of a hard tabstop
 opt.shiftwidth = 2 --size of an indent (used for << and >>)
@@ -79,33 +73,33 @@ opt.softtabstop = 2
 opt.whichwrap:append("<>hl")
 
 -- Ignore these directories
-opt.wildmode = 'list:longest,full'
+opt.wildmode = "list:longest,full"
 opt.wildmenu = true
 
 opt.wildignore = {
-	'*/tmp/*,*.so,*.swp,*.zip',
-	'*/out/*',
-	'*/vendor/*',
-	'*/plugins/*',
-	'*.o,*.obj,*~',
-	'DS_Store',
-	'*.png,*.jpg,*.gif',
-	'*.pyc',
-	'public',
-	'submodules',
-	'node_modules',
-	'bower_components',
-	'www',
+	"*/tmp/*,*.so,*.swp,*.zip",
+	"*/out/*",
+	"*/vendor/*",
+	"*/plugins/*",
+	"*.o,*.obj,*~",
+	"DS_Store",
+	"*.png,*.jpg,*.gif",
+	"*.pyc",
+	"public",
+	"submodules",
+	"node_modules",
+	"bower_components",
+	"www",
 
-	'bazel-bin/*',
-	'bazel-monorepo/*',
-	'bazel-out/*',
-	'bazel-testlogs/*',
-	'fakes/*',
-  'target/*',
+	"bazel-bin/*",
+	"bazel-monorepo/*",
+	"bazel-out/*",
+	"bazel-testlogs/*",
+	"fakes/*",
+	"target/*",
 }
 
-g.rooter_patterns = {'.git'}
+g.rooter_patterns = { ".git" }
 
 -- disable builtin vim plugins
 local disabled_built_ins = {
@@ -127,7 +121,7 @@ local disabled_built_ins = {
 	"rrhelper",
 	"spellfile_plugin",
 	"matchit",
-  -- "matchparen",
+	-- "matchparen",
 }
 
 for _, plugin in pairs(disabled_built_ins) do
@@ -135,21 +129,23 @@ for _, plugin in pairs(disabled_built_ins) do
 end
 
 -- Don't show status line on vim terminals
-vim.cmd [[ au TermOpen term://* setlocal nonumber laststatus=0 ]]
+vim.cmd([[ au TermOpen term://* setlocal nonumber laststatus=0 ]])
 
 -- Highlight on yank
-vim.cmd([[
+vim.cmd(
+	[[
 augroup YankHighlight
 autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
-]], false)
+]],
+	false
+)
 
 -- Recommend by auto-session plugin
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- HACK: treat avro files as JSON files
 vim.cmd([[
 autocmd BufNewFile,BufRead *.avro set ft=json
 ]])
-

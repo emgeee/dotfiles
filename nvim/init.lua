@@ -61,6 +61,7 @@
 require("mappings")
 require("settings")
 require("grep")
+require("neovide")
 
 --- https://github.com/folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
