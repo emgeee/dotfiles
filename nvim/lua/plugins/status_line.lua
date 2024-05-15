@@ -22,12 +22,12 @@ return {
           },
           lualine_b = {
             { "branch", icon = "" },
-            { "diagnostics" },
           },
           lualine_c = {
             { "filename", path = 1 },
           },
           lualine_x = {
+            { "diagnostics" },
             { "filetype" },
             { "progress" },
             { "location" },

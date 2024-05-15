@@ -26,6 +26,22 @@ if vim.g.neovide then
 	end, { noremap = true, silent = true, desc = "Decrease font scale (Neovide)" })
 	vim.keymap.set("n", "<D-0>", function()
 		vim.g.neovide_scale_factor = 1.0
-    vim.notify("Scale factor reset")
+		vim.notify("Scale factor reset")
 	end, { noremap = true, silent = true, desc = "Reset font scale to 1.0 (Neovide)" })
+
+	vim.g.neovide_transparency = 1.0
+
+	local toggle_transparency = function()
+		if vim.g.neovide_transparency < 1.0 then
+			vim.g.neovide_transparency = 1.0
+		else
+			vim.g.neovide_transparency = 0.4
+		end
+	end
+	vim.keymap.set(
+		"n",
+		"<D-u>",
+		toggle_transparency,
+		{ noremap = true, silent = true, desc = "Toggle transparency (Neovide)" }
+	)
 end

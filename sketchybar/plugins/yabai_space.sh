@@ -22,11 +22,8 @@ window_state() {
     COLOR=$RED
     ;;
 	"stack")
-		LAST_STACK_INDEX=$(yabai -m query --windows --window stack.last | jq '.["stack-index"]')
 		ICON+=$YABAI_STACK
-		LABEL="$(printf "[%s/%s]" "$STACK_INDEX" "$LAST_STACK_INDEX")"
 		COLOR=$MAGENTA
-    ;;
 	esac
 
 	args=(--animate sin 10 --set $NAME icon.color=$COLOR)
@@ -41,7 +38,7 @@ window_state() {
 }
 
 mouse_clicked() {
-  yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end');
+  fish -c 'source ../../yabai/helpers.fish; yabai_toggle_space'
 
 	window_state
 }

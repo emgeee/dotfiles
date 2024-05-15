@@ -14,7 +14,9 @@ return {
 			require("tokyonight").setup({
 				style = "night",
 			})
-			-- require("tokyonight").load()
+      if vim.g.neovide then
+        vim.cmd("colorscheme tokyonight-storm")
+      end
 		end,
 	},
 	{
@@ -91,7 +93,9 @@ return {
 				},
 			})
 
-			vim.cmd("colorscheme catppuccin-mocha")
+      if not vim.g.neovide then
+        vim.cmd("colorscheme catppuccin-mocha")
+      end
 		end,
 	},
 }

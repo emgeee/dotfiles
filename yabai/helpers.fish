@@ -61,7 +61,7 @@ function yabai_set_all_float
   yabai_update_sketchybar
 end
 
-# Hot key to stack windows
+# Hotkey to stack windows
 function yabai_stack_window
   set direction $argv[1]
 
@@ -69,12 +69,32 @@ function yabai_stack_window
   set current_window_id (yabai -m query --windows --window | jq '.id')
 
   yabai_set_float false
+
+  # Try to stack the relevant direction
   yabai -m window --stack $direction
 
-  yabai -m window --focus $current_window_id
+  # if unable to stack, try unstacking in that direction
+  if test $status -gt 0
+    set next_window_id (yabai -m query --windows --window stack.next | jq '.id')
+    yabai -m window --toggle float;
+    yabai -m window $next_window_id --insert $direction
+    yabai -m window --toggle float;
+  else 
+    yabai -m window --focus $current_window_id
+  end
 
   yabai_update_sketchybar
   skhd -k "escape"
+end
+
+function yabai_unstack_window
+  set stack_index (yabai -m query --windows --window | jq '.["stack-index"]')
+
+  if test "$stack_index" -gt 0
+    yabai -m window --toggle float;
+    yabai -m window --toggle float;
+    yabai_update_sketchybar
+  end
 end
 
 # Move a window and stack it on top of another window
@@ -149,6 +169,7 @@ function yabai_restart
   terminal-notifier -message "restarting yabai" -title "skhd"
   yabai --restart-service
 
+  yabai_update_sketchybar
   skhd -k "escape"
 end
 
@@ -156,11 +177,29 @@ function yabai_move_to_display
   # @todo
 end
 
+function yabai_toggle_space
+  set current_layout (yabai -m query --spaces --space | jq -r '.type')
+
+  switch $current_layout
+    case "bsp"
+      set new_layout "stack"
+    case "stack"
+      set new_layout "float"
+    case "float"
+      set new_layout "bsp"
+    case '*'
+      echo "Undefined space type $current_layout"
+  end
+
+  yabai -m space --layout $new_layout
+  yabai_update_sketchybar
+end
+
 function yabai_display_added
   # List the Ids of screens that should be used for aux puproses (usually the laptop's screen)
   # fetch uuids with `yabai -m query --displays`
   set aux_screen_uuid "37D8832A-2D66-02CA-B9F7-8F30A301B230" # MBP 15" screen ID
-  set home_screen_uuid "6EC90C89-CBE4-4BC6-A43B-56FAB7623884"
+  set home_screen_uuid "E260DFD5-76B1-44C9-91D9-71EBDF0D1E8C" # Dell 39" monitor 
 
   # Add app names that should be moved
   # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
@@ -180,14 +219,12 @@ function yabai_display_added
 
   sleep 1
 
-  # Find the Aux screen and configure to be a stack orientation (as opposed to bsp)
+  # Find the Aux screen and set layout to stack
   set aux_screen (yabai -m query --displays | jq --arg uuid "$aux_screen_uuid" '.[] | select(.uuid == $uuid)')
   set aux_screen_space (echo $aux_screen | jq -rj .spaces[0] )
   yabai -m space $aux_screen_space --layout stack
 
   # Move specified apps to the aux display
-  # yabai -m query --windows | jq '.[] | {app: .app, id: .id}'
-
   for app in $aux_app_names
     set app_id (yabai -m query --windows | jq --arg app_name "$app" '.[] | select(.app | gsub("\u200e"; "") == $app_name) | .id')
 
