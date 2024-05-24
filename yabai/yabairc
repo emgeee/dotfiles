@@ -11,7 +11,7 @@ declare -A gaps
 declare -A color
 
 gaps["top"]="5"
-gaps["bottom"]="24"
+gaps["bottom"]="4"
 gaps["left"]="5"
 gaps["right"]="5"
 gaps["inner"]="5"

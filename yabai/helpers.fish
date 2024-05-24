@@ -174,7 +174,12 @@ function yabai_restart
 end
 
 function yabai_move_to_display
-  # @todo
+  set target_display $argv[1]
+
+  yabai -m window --space $target_display
+  
+  yabai_update_sketchybar
+  skhd -k "escape"
 end
 
 function yabai_toggle_space

@@ -58,9 +58,6 @@ alt - 0x18 : yabai -m window --ratio rel:0.05;
 # decrease window size ratio - 0x1B is the '-' key
 alt - 0x1B : yabai -m window --ratio rel:-0.05;
 
-# Reset ratio to 0.5
-alt - 0 : yabai -m window --ratio abs:0.5;
-
 # Equalize size of windows in the current space (subtly different than ratio)
 lctrl + alt - 0 : yabai -m space --balance
 
@@ -110,9 +107,12 @@ window_resize < e : yabai_set_float true; yabai -m window --display mouse --grid
                     skhd -k "escape"
 
 
-# window_resize < 1 : yabai_move_to_display
-# window_resize < 2 : yabai_move_to_display 
-# window_resize < 3 : yabai_move_to_display 
+window_resize < 1 : yabai_move_to_display 1
+window_resize < 2 : yabai_move_to_display 2
+window_resize < 3 : yabai_move_to_display 3
+window_resize < 4 : yabai_move_to_display 4
+window_resize < 5 : yabai_move_to_display 5
+window_resize < 6 : yabai_move_to_display 6
 
 window_resize < g : yabai_warp_mouse
 # window_resize < s : yabai_warp_mouse
@@ -144,3 +144,8 @@ window_resize < s : yabai -m window --toggle split \
 
 # Restart yabai
 window_resize < alt - 0 : yabai_restart
+
+# Reset ratio to 0.5
+window_resize <  0 : yabai -m window --ratio abs:0.5; \
+          skhd -k "escape"
+
