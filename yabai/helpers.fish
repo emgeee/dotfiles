@@ -176,8 +176,18 @@ end
 function yabai_move_to_display
   set target_display $argv[1]
 
-  yabai -m window --space $target_display
-  
+  # TODO: If the current window is part of a stack, move the entire stack to the target_display
+  set stack_index (yabai -m query --windows --window | jq '.["stack-index"]')
+
+  if test "$stack_index" -gt 0
+    set stack_windows (yabai -m query --windows | jq --argjson index "$stack_index" '.[] | select(.["stack-index"] == $index) | .id')
+    for window_id in $stack_windows
+      yabai -m window $window_id --space $target_display
+    end
+  else
+    yabai -m window --space $target_display
+  end
+
   yabai_update_sketchybar
   skhd -k "escape"
 end
@@ -213,6 +223,7 @@ function yabai_display_added
     "Messages" \
     "Discord" \
     "Slack" \
+    "Linear" \
     "WhatsApp" \
     "Signal" \
     "Telegram" \

@@ -146,6 +146,8 @@ window_resize < s : yabai -m window --toggle split \
 window_resize < alt - 0 : yabai_restart
 
 # Reset ratio to 0.5
-window_resize <  0 : yabai -m window --ratio abs:0.5; \
+# window_resize < 0 : yabai -m window --ratio abs:0.5; \
+#           skhd -k "escape"
+window_resize < 0 : yabai -m space --balance; \
           skhd -k "escape"
 

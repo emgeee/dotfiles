@@ -11,11 +11,16 @@ vim.api.nvim_create_user_command("Format", function()
 	vim.lsp.buf.format()
 end, { desc = "Format the current file" })
 
-local signs = { Error = "× ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "× ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.HINT] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+		},
+	},
+})
 
 -- LSP settings
 local on_attach = function(_client, bufnr)
@@ -39,10 +44,10 @@ local on_attach = function(_client, bufnr)
 	-- vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
 	-- vim.keymap.set('n', 'gca', function() vim.lsp.buf.code_action() end, opts)
 	vim.keymap.set("n", "[d", function()
-		vim.diagnostic.goto_prev()
+		vim.diagnostic.jump({ count = -1 })
 	end, opts("goto previous error (diagnostics)"))
 	vim.keymap.set("n", "]d", function()
-		vim.diagnostic.goto_next()
+		vim.diagnostic.jump({ count = 1 })
 	end, opts("goto next error (diagnostics)"))
 	-- vim.keymap.set('n', '<leader>q', function() vim.diagnostic.setloclist() end, opts)
 
@@ -58,7 +63,7 @@ local on_attach = function(_client, bufnr)
 		bi().lsp_definitions({ jump_type = "vsplit" })
 	end, opts("goto definition, vertical split (LSP)(Telescope)"))
 
-	vim.keymap.set("n", "gds", function()
+	vim.keymap.set("n", "gs", function()
 		bi().lsp_document_symbols()
 	end, opts("show document symbols (LSP)(Telescope)"))
 	vim.keymap.set("n", "gws", function()
@@ -103,9 +108,9 @@ local on_attach = function(_client, bufnr)
 	require("illuminate").on_attach(_client)
 
 	-- toggle inlayed types
-  vim.lsp.inlay_hint.enable() -- Default to true
+	vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) -- Default to true for current buffer
 	vim.keymap.set("n", "<leader>st", function()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 	end, { desc = "toggle show types (LSP)" })
 end
 
