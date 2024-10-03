@@ -199,7 +199,7 @@ function yabai_toggle_space
     case "bsp"
       set new_layout "stack"
     case "stack"
-      set new_layout "float"
+      set new_layout "bsp"
     case "float"
       set new_layout "bsp"
     case '*'

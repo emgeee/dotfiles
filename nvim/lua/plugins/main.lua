@@ -44,7 +44,12 @@ return {
   -- Full list of language servers: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
   {
     "williamboman/mason.nvim",
-    config = true,
+    opts = {
+      -- Use the tools on PATH before using any installed by Mason.
+      -- This should allow neovim to use the same rust-analyzer binary that's managed via rustup
+      -- which should mean rust doesn't need to constantly build/recompile when switching between them
+      PATH = "append",
+    },
   },
 
   {
@@ -80,7 +85,6 @@ return {
   -- Trouble can also do this - :Trouble symbols
   {
     "folke/trouble.nvim",
-    branch = "dev", -- IMPORTANT!
     cmd = "Trouble",
     keys = {
       {

@@ -58,6 +58,7 @@ yabai -m rule --add label="About This Mac" app="System Information" title="About
 yabai -m rule --add label="Karabiner-Elements" app="^Karabiner-Elements$" manage=off
 yabai -m rule --add label="MonitorControl" app="^MonitorControl$" manage=off
 yabai -m rule --add label="AltTab" app="^AltTab$" manage=off
+yabai -m rule --add label="League of Legends" app="^League of Legends$" manage=off
 
 # ===== Signals ================================
 

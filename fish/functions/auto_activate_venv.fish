@@ -23,6 +23,14 @@ function auto_activate_venv --description "Auto activate/deactivate virtualenv w
         return
     end
 
+    if test -d "$(pwd)/venv"
+        if [ "$VIRTUAL_ENV" != "$(pwd)/venv" ]
+            source "$(pwd)/venv/bin/activate.fish" &>/dev/null
+        end
+
+        return
+    end
+
     # Case #2: cd'd to a folder which isn't a Git repo and doesn't
     # have a .venv at its root.
     #

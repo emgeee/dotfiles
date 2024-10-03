@@ -128,7 +128,7 @@ require("mason-tool-installer").setup({
 		"luacheck",
 		"xmlformatter",
 		"taplo", -- TOML
-		"rust-analyzer",
+		-- "rust-analyzer",
 		"codelldb", -- VSCode lldb
 		"cpptools", -- Needed for rust
 	},
@@ -162,8 +162,36 @@ local opts = {
 	capabilities = capabilities,
 }
 
+lspconfig.rust_analyzer.setup({
+  on_attach = function(client, bufrn)
+    opts.on_attach(client, bufrn)
+  end,
+  capabilities = opts.capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      diagnostics = {
+        enable = true,
+      },
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+      },
+      procMacro = {
+        enable = true,
+      },
+    },
+  },
+})
+
 -- Information for configuration various lsp servers: :h lspconfig-all
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 mason_lspconfig.setup_handlers({
 	-- The first entry (without a key) will be the default handler
 	-- and will be called for each installed server that doesn't have
@@ -224,11 +252,18 @@ mason_lspconfig.setup_handlers({
 			settings = {
 				{
 					basedpyright = {
-						typeCheckingMode = "standard",
+						-- typeCheckingMode = "standard",
+						disableOrganizeImports = true, -- Use ruff instead
 						analysis = {
 							autoSearchPaths = true,
 							diagnosticMode = "openFilesOnly",
 							useLibraryCodeForTypes = true,
+						},
+					},
+					python = {
+						analysis = {
+							-- Ignore all files for analysis to exclusively use Ruff for linting
+							ignore = { "*" },
 						},
 					},
 				},
@@ -245,35 +280,53 @@ mason_lspconfig.setup_handlers({
 			settings = {},
 		})
 	end,
-	["rust_analyzer"] = function()
-		lspconfig.rust_analyzer.setup({
+	["ruff"] = function()
+		-- https://github.com/astral-sh/ruff-lsp?tab=readme-ov-file#setup
+		lspconfig.ruff.setup({
 			on_attach = function(client, bufrn)
+				-- From documentation:
+				-- Note that if you're using Ruff alongside another LSP (like Pyright), you may want to defer to that LSP for certain capabilities, like textDocument/hover
+				client.server_capabilities.hoverProvider = false
+
 				opts.on_attach(client, bufrn)
 			end,
-			capabilities = opts.capabilities,
-			settings = {
-				["rust-analyzer"] = {
-					diagnostics = {
-						enable = true,
-					},
-					imports = {
-						granularity = {
-							group = "module",
-						},
-						prefix = "self",
-					},
-					cargo = {
-						buildScripts = {
-							enable = true,
-						},
-					},
-					procMacro = {
-						enable = true,
-					},
+			init_options = {
+				settings = {
+					-- Any extra CLI arguments for `ruff` go here.
+					args = {},
 				},
 			},
 		})
 	end,
+	-- ["rust_analyzer"] = function()
+	-- 	lspconfig.rust_analyzer.setup({
+	-- 		on_attach = function(client, bufrn)
+	-- 			opts.on_attach(client, bufrn)
+	-- 		end,
+	-- 		capabilities = opts.capabilities,
+	-- 		settings = {
+	-- 			["rust-analyzer"] = {
+	-- 				diagnostics = {
+	-- 					enable = true,
+	-- 				},
+	-- 				imports = {
+	-- 					granularity = {
+	-- 						group = "module",
+	-- 					},
+	-- 					prefix = "self",
+	-- 				},
+	-- 				cargo = {
+	-- 					buildScripts = {
+	-- 						enable = true,
+	-- 					},
+	-- 				},
+	-- 				procMacro = {
+	-- 					enable = true,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	})
+	-- end,
 })
 
 -- Specific to scala metals
