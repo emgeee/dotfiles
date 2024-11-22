@@ -254,10 +254,10 @@ function yabai_display_added
 
 
   # Change audio output to USB speakers
-  set home_screen (yabai -m query --displays | jq --arg uuid "$home_screen_uuid" '.[] | select(.uuid == $uuid)')
-  if test -n "$home_screen"
-    SwitchAudioSource -s "USB Audio DAC   "
-  end
+  # set home_screen (yabai -m query --displays | jq --arg uuid "$home_screen_uuid" '.[] | select(.uuid == $uuid)')
+  # if test -n "$home_screen"
+  #   SwitchAudioSource -s "USB Audio DAC   "
+  # end
 
   yabai_update_sketchybar
 end

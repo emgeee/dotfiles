@@ -19,6 +19,10 @@ function _G.set_terminal_keymaps()
 	vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
 end
 
+for i = 1, 9 do
+  vim.keymap.set('n', 'g'..i, ':tabnext '..i..'<CR>', { noremap = true, silent = true })
+end
+
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 

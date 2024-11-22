@@ -7,6 +7,8 @@ return {
 			-- vim.keymap.set("n", "<leader>gs", ":Git<CR>", { noremap = true, silent = true, desc = "" })
 			-- vim.keymap.set("n", "<leader>gd", ":Gdiff<CR>", { noremap = true, silent = true, desc = "" })
 			vim.cmd([[cnoreabbrev gb GBrowse]])
+			vim.cmd([[cnoreabbrev Gb GBrowse]])
+			vim.cmd([[cnoreabbrev Gbrowse GBrowse]])
 		end,
 	},
 	{ "tpope/vim-rhubarb" },

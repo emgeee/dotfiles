@@ -24,7 +24,7 @@ def find_files_with_extension(extension, start_path):
 
 def main(extension, outfile_path=None):
     # Modify this list as necessary
-    skipped_items = ["node_modules", ".git", "venv"]
+    skipped_items = ["node_modules", ".git", "venv", ".venv"]
     start_path = os.getcwd()
     output_stream = open(outfile_path, "w") if outfile_path else sys.stdout
     try:

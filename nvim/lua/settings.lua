@@ -77,6 +77,7 @@ opt.wildmode = "list:longest,full"
 opt.wildmenu = true
 
 opt.wildignore = {
+  -- generic
 	"*/tmp/*,*.so,*.swp,*.zip",
 	"*/out/*",
 	"*/vendor/*",
@@ -84,19 +85,30 @@ opt.wildignore = {
 	"*.o,*.obj,*~",
 	"DS_Store",
 	"*.png,*.jpg,*.gif",
-	"*.pyc",
 	"public",
 	"submodules",
+	"fakes/*",
+	"target/*",
+
+  -- node
 	"node_modules",
 	"bower_components",
 	"www",
 
+  -- bazel
 	"bazel-bin/*",
 	"bazel-monorepo/*",
 	"bazel-out/*",
 	"bazel-testlogs/*",
-	"fakes/*",
-	"target/*",
+
+  -- python
+  "venv",
+  ".venv",
+	"*.pyc",
+
+  -- sqlite
+  "*.sqlite3",
+  "*.db-journal",
 }
 
 g.rooter_patterns = { ".git" }

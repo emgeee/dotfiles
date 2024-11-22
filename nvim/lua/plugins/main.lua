@@ -59,7 +59,7 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "RRethy/vim-illuminate", -- illuminate works under the cursor
       "scalameta/nvim-metals", -- Scala metals integration
-      "hrsh7th/nvim-cmp",   -- Specify completion engine
+      "hrsh7th/nvim-cmp",      -- Specify completion engine
     },
     config = function()
       require("pluginConfigs.lspconfig")
@@ -258,6 +258,13 @@ return {
   {
     "fladson/vim-kitty",
     ft = "kitty",
+  },
+
+  {
+    --- https://github.com/davidmh/mdx.nvim
+    "davidmh/mdx.nvim",
+    config = true,
+    dependencies = { "nvim-treesitter/nvim-treesitter" }
   },
 
   -- Lua replit run :Luadev
