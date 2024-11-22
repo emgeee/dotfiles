@@ -260,13 +260,6 @@ return {
     ft = "kitty",
   },
 
-  {
-    --- https://github.com/davidmh/mdx.nvim
-    "davidmh/mdx.nvim",
-    config = true,
-    dependencies = { "nvim-treesitter/nvim-treesitter" }
-  },
-
   -- Lua replit run :Luadev
   { "bfredl/nvim-luadev",   cmd = "Luadev" },
 
