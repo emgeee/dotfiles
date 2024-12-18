@@ -109,6 +109,7 @@ opt.wildignore = {
   -- sqlite
   "*.sqlite3",
   "*.db-journal",
+  "*.journal",
 }
 
 g.rooter_patterns = { ".git" }
