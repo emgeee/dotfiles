@@ -52,6 +52,11 @@ For the following programs you must remap the Hide window to a different key to 
 
 *Note*: these programs are also listed in the karabiner elements config for "Disable Cmd+H Hide (rev 2)"
 
+## Homebrew
+
+To restore from the current brewfile: `brew bundle install --file=Brewfile`
+To update the current brewfile: `brew bundle dump --force --file=Brewfile`
+
 
 
 ## Set up proper symlinks
