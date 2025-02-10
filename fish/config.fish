@@ -114,3 +114,7 @@ fish_add_path $BUN_INSTALL/bin
 
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/matt/.cache/lm-studio/bin
+
+
+# configure prompt using tide (https://github.com/IlanCosman/tide/wiki/Configuration)
+set -g tide_right_prompt_items status cmd_duration context jobs direnv node python distrobox
