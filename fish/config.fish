@@ -38,23 +38,10 @@ if type vimpager >/dev/null 2>&1
   set -Ux PAGER vimpager
 end
 
-####################### OMF config
-# Path to Oh My Fish install.
-set -Ux OMF_PATH $HOME/.local/share/omf
-
-# Customize Oh My Fish configuration path.
-set -Ux OMF_CONFIG "$HOME/.config/omf"
-
-# Load oh-my-fish configuration.
-source $OMF_PATH/init.fish
-
 # Load yabai helper functions
 if test -e $HOME/.config/yabai/helpers.fish
   source $HOME/.config/yabai/helpers.fish
 end
-
-# OMF theme - bobthefish: `omf install bobthefish`
-#######################
 
 set -gx PNPM_HOME $HOME/Library/pnpm
 fish_add_path $PNPM_HOME
@@ -116,7 +103,7 @@ if test -e $HOME/.config/fish/private_environment.fish
   source $HOME/.config/fish/private_environment.fish
 end
 
-test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
+# test -e $HOME/.iterm2_shell_integration.fish ; and source $HOME/.iterm2_shell_integration.fish
 
 # Use new paths for jupyter notebooks
 set -Ux JUPYTER_PLATFORM_DIRS 1
@@ -124,3 +111,6 @@ set -Ux JUPYTER_PLATFORM_DIRS 1
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 fish_add_path $BUN_INSTALL/bin
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/matt/.cache/lm-studio/bin
