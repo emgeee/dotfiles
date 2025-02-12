@@ -20,9 +20,6 @@ fish_add_path $HOME/.bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.cargo/bin
 
-# Rye python project/package manager
-fish_add_path $HOME/.rye/shims
-
 # For ARM Mac
 if test -e /opt/homebrew/bin/brew
   eval (/opt/homebrew/bin/brew shellenv)
@@ -50,9 +47,8 @@ fish_add_path $PNPM_HOME
 # installed via homebrew
 # Install binaries via pip requires reshiming: asdf reshim python
 # Versions of tools specified in ~/.tool-versions file
-if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
-  source /opt/homebrew/opt/asdf/libexec/asdf.fish
-end
+set -gx ASDF_DATA_DIR $HOME/.asdf
+fish_add_path $ASDF_DATA_DIR/shims
 
 
 if test -e $HOME/.asdf/plugins/java/set-java-home.fish
