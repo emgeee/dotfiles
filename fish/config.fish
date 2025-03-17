@@ -114,3 +114,6 @@ set -gx PATH $PATH /Users/matt/.cache/lm-studio/bin
 
 # configure prompt using tide (https://github.com/IlanCosman/tide/wiki/Configuration)
 set -g tide_right_prompt_items status cmd_duration context jobs direnv node python distrobox
+
+# Added by Windsurf
+fish_add_path /Users/matt/.codeium/windsurf/bin
