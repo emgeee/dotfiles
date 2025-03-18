@@ -1,0 +1,13 @@
+# Ignore everything in Zed's config directory
+*
+
+# Allow specific settings
+!keymap.json
+!settings.json
+!snippets.json
+
+# Ignore logs and caches
+cache/
+logs/
+history/
+workspace.json

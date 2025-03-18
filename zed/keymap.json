@@ -1,0 +1,61 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+// default keymaps: https://github.com/zed-industries/zed/blob/main/assets/keymaps/vim.json
+// random person's keymaps: https://www.snippets.so/snip/bafkreieaxwbdqbpqvtdvhtdopoiqc2734hqjpb5tbrxv76q2hug52wjlw4
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // "j k": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    "context": "Dock || Terminal || Editor || ProjectPanel",
+    "bindings": {
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "space f f": "editor::Format",
+      "ctrl-- ctrl--": "editor::ToggleComments",
+      "space s t": "editor::ToggleInlayHints"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      // todo: try and make space y copy to the sys keyboard and go back to normal mode
+      // "space y": ["workspace::SendKeystrokes", "\"*y"]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      // Put key bindings here if you want them to work in normal & visual mode.
+      "shift-l": "vim::EndOfLine",
+      "shift-h": "vim::StartOfLine"
+    }
+  },
+  {
+    "context": "vim_mode == normal && !menu",
+    "bindings": {
+      // "shift-y": ["workspace::SendKeystrokes", "y $"] // Use neovim's yank behavior: yank to end of line.
+    }
+  }
+]
