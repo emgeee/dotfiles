@@ -125,8 +125,8 @@ return {
   -- hotkeys specified in lspconfig.lua
   -- Note: the plugin seems really powerful
   {
-    -- "nvimdev/lspsaga.nvim",
-    "emgeee/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
+    -- "emgeee/lspsaga.nvim",
     config = function()
       vim.diagnostic.config({
         virtual_text = false,
