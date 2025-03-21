@@ -52,5 +52,10 @@
     "**/Thumbs.db",
     "**/.classpath",
     "**/.settings"
-  ]
+  ],
+  "languages": {
+    "Python": {
+      "language_servers": ["ruff", "basedpyright", "!pyright"]
+    }
+  }
 }
