@@ -15,36 +15,8 @@ Install using `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 
 - Install Karabiner elements
-- Configure a complex Modification to Disable Cmd+H hide:
-The following will disable cmd+H for all applications except for Kitty, because we use that hotkey to change window panes
+- Configure a complex Modification to Disable Cmd+H hide (check [karabiner/karabiner.json](karabiner/karabiner.json))
 
-```json
-{
-    "description": "Disable Cmd+H Hide (rev 2)",
-    "manipulators": [
-        {
-            "conditions": [
-                {
-                    "bundle_identifiers": [
-                        "^net\\.kovidgoyal\\.kitty$"
-                    ],
-                    "type": "frontmost_application_unless"
-                }
-            ],
-            "description": "",
-            "from": {
-                "key_code": "h",
-                "modifiers": {
-                    "mandatory": [
-                        "command"
-                    ]
-                }
-            },
-            "type": "basic"
-        }
-    ]
-}
-```
 
 For the following programs you must remap the Hide window to a different key to free up Cmd+H (https://superuser.com/questions/1043596/mac-osx-remove-hide-window-keyboard-shortcut)
 - Kitty

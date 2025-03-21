@@ -12,7 +12,9 @@
                                     {
                                         "bundle_identifiers": [
                                             "^net\\.kovidgoyal\\.kitty$",
-                                            "^com.microsoft.VSCode$"
+                                            "^com.microsoft.VSCode$",
+                                            "^com.google.Chrome$",
+                                            "^org.mozilla.firefox$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
