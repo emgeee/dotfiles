@@ -56,7 +56,35 @@
   ],
   "languages": {
     "Python": {
-      "language_servers": ["ruff", "basedpyright", "!pyright"]
+      "language_servers": ["basedpyright", "ruff"],
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": false,
+            "source.fixAll.ruff": true
+          }
+        },
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        }
+      ]
     }
   }
+  // "lsp": {
+  //   "ruff": {
+  //     "initialization_options": {
+  //       "settings": {
+  //         "lineLength": 88,
+  //         "showSyntaxErrors": true,
+  //         "lint": {
+  //           "select": ["ALL"],
+  //           "ignore": ["D", "S101", "E501"]
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
