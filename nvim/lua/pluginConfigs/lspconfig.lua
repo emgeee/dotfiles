@@ -141,7 +141,7 @@ if not mason_status_ok then
 	vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
 	return
 end
-mason_lspconfig.setup({})
+mason_lspconfig.setup()
 
 -- cmp config -- we need to advertise to LSP servers additional features supported by the cmp complete plugin
 local cmp_nvim_lsp_okay, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
