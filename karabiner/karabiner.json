@@ -14,7 +14,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com.microsoft.VSCode$",
                                             "^com.google.Chrome$",
-                                            "^org.mozilla.firefox$"
+                                            "^org.mozilla.firefox$",
+                                            "^com.googlecode.iterm2$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
