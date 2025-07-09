@@ -16,11 +16,16 @@ return {
     end,
   },
   {
-    --- https://github.com/folke/neodev.nvim
-    "folke/neodev.nvim",
-    opts = {
-      library = { plugins = { "neotest" }, types = true },
-    },
+    --- https://github.com/folke/lazydev.nvim
+    "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files
+      opts = {
+        library = {
+          -- See the configuration section for more details
+          -- Load luvit types when the `vim.uv` word is found
+          { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        },
+      },
   },
   {
     "jdhao/better-escape.vim",
@@ -43,7 +48,7 @@ return {
   -- Installs clients to directory :lua print(vim.fn.stdpath("data"))
   -- Full list of language servers: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       -- Use the tools on PATH before using any installed by Mason.
       -- This should allow neovim to use the same rust-analyzer binary that's managed via rustup
@@ -56,7 +61,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "WhoIsSethDaniel/mason-tool-installer.nvim",
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "RRethy/vim-illuminate", -- illuminate works under the cursor
       "scalameta/nvim-metals", -- Scala metals integration
       "hrsh7th/nvim-cmp",      -- Specify completion engine
@@ -151,7 +156,8 @@ return {
     },
   },
 
-  -- vim.notify backend
+  -- vim.notify backend (used for logs, warnings, and errors)
+  -- :Fidget history <-- view logs
   {
     --- https://github.com/j-hui/fidget.nvim
     "j-hui/fidget.nvim",
