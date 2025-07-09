@@ -141,7 +141,9 @@ if not mason_status_ok then
 	vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
 	return
 end
-mason_lspconfig.setup()
+mason_lspconfig.setup({
+	automatic_enable = true,
+})
 
 -- cmp config -- we need to advertise to LSP servers additional features supported by the cmp complete plugin
 local cmp_nvim_lsp_okay, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -192,141 +194,108 @@ lspconfig.rust_analyzer.setup({
 
 -- Information for configuration various lsp servers: :h lspconfig-all
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-mason_lspconfig.setup_handlers({
-	-- The first entry (without a key) will be the default handler
-	-- and will be called for each installed server that doesn't have
-	-- a dedicated handler.
-	function(server_name) -- Default handler (optional)
-		lspconfig[server_name].setup({
-			on_attach = opts.on_attach,
-			capabilities = opts.capabilities,
-		})
-	end,
-	["lua_ls"] = function()
-		lspconfig.lua_ls.setup({
-			on_attach = opts.on_attach,
-			capabilities = opts.capabilities,
-			settings = {
-				Lua = {
-					-- Tells Lua that a global variable named vim exists to not have warnings when configuring neovim
-					diagnostics = {
-						globals = { "vim" },
-					},
-					workspace = {
-						library = vim.api.nvim_get_runtime_file("", true),
-					},
-					telemetry = {
-						enable = false,
-					},
-				},
-			},
-		})
-	end,
-	["pyright"] = function()
-		lspconfig.pyright.setup({
-			on_attach = function(client, bufrn)
-				-- client.resolved_capabilities.hover = false
-				opts.on_attach(client, bufrn)
-			end,
-			capabilities = opts.capabilities,
-			settings = {
-				pyright = { autoImportCompletion = true },
-				python = {
-					analysis = {
-						autoSearchPaths = true,
-						-- Disable strict type checking
-						typeCheckingMode = "off",
-					},
-				},
-			},
-		})
-	end,
-	["basedpyright"] = function()
-		-- basedpyright threw a whole bunch of errors so I'm not currently using it
-		lspconfig.basedpyright.setup({
-			on_attach = function(client, bufrn)
-				-- client.resolved_capabilities.hover = false
-				opts.on_attach(client, bufrn)
-			end,
-			capabilities = opts.capabilities,
-			settings = {
-				{
-					basedpyright = {
-						-- typeCheckingMode = "standard",
-						disableOrganizeImports = true, -- Use ruff instead
-						analysis = {
-							autoSearchPaths = true,
-							diagnosticMode = "openFilesOnly",
-							useLibraryCodeForTypes = true,
-						},
-					},
-					python = {
-						analysis = {
-							-- Ignore all files for analysis to exclusively use Ruff for linting
-							ignore = { "*" },
-						},
-					},
-				},
-			},
-		})
-	end,
-	["jedi_language_server"] = function()
-		lspconfig.jedi_language_server.setup({
-			on_attach = function(client, bufrn)
-				-- client.resolved_capabilities.hover = false
-				opts.on_attach(client, bufrn)
-			end,
-			capabilities = opts.capabilities,
-			settings = {},
-		})
-	end,
-	["ruff"] = function()
-		-- https://github.com/astral-sh/ruff-lsp?tab=readme-ov-file#setup
-		lspconfig.ruff.setup({
-			on_attach = function(client, bufrn)
-				-- From documentation:
-				-- Note that if you're using Ruff alongside another LSP (like Pyright), you may want to defer to that LSP for certain capabilities, like textDocument/hover
-				client.server_capabilities.hoverProvider = false
+-- Note: mason-lspconfig v2.0.0 removed setup_handlers() function
+-- LSP servers are now auto-enabled by default with automatic_enable = true
+-- Manual server configuration below:
 
-				opts.on_attach(client, bufrn)
-			end,
-			init_options = {
-				settings = {
-					-- Any extra CLI arguments for `ruff` go here.
-					args = {},
-				},
+-- Default setup for most servers (previously handled by default handler)
+local servers = {
+	"bashls",
+	"gopls",
+	"ts_ls",
+	"jsonls",
+	"marksman",
+	"vimls",
+	"taplo",
+}
+
+for _, server in ipairs(servers) do
+	lspconfig[server].setup({
+		on_attach = opts.on_attach,
+		capabilities = opts.capabilities,
+	})
+end
+
+-- Lua LSP specific configuration
+lspconfig.lua_ls.setup({
+	on_attach = opts.on_attach,
+	capabilities = opts.capabilities,
+	settings = {
+		Lua = {
+			-- Tells Lua that a global variable named vim exists to not have warnings when configuring neovim
+			diagnostics = {
+				globals = { "vim" },
 			},
-		})
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
+
+-- Pyright specific configuration
+lspconfig.pyright.setup({
+	on_attach = function(client, bufrn)
+		-- client.resolved_capabilities.hover = false
+		opts.on_attach(client, bufrn)
 	end,
-	-- ["rust_analyzer"] = function()
-	-- 	lspconfig.rust_analyzer.setup({
-	-- 		on_attach = function(client, bufrn)
-	-- 			opts.on_attach(client, bufrn)
-	-- 		end,
-	-- 		capabilities = opts.capabilities,
-	-- 		settings = {
-	-- 			["rust-analyzer"] = {
-	-- 				diagnostics = {
-	-- 					enable = true,
-	-- 				},
-	-- 				imports = {
-	-- 					granularity = {
-	-- 						group = "module",
-	-- 					},
-	-- 					prefix = "self",
-	-- 				},
-	-- 				cargo = {
-	-- 					buildScripts = {
-	-- 						enable = true,
-	-- 					},
-	-- 				},
-	-- 				procMacro = {
-	-- 					enable = true,
-	-- 				},
-	-- 			},
-	-- 		},
-	-- 	})
-	-- end,
+	capabilities = opts.capabilities,
+	settings = {
+		pyright = { autoImportCompletion = true },
+		python = {
+			analysis = {
+				autoSearchPaths = true,
+				-- Disable strict type checking
+				typeCheckingMode = "off",
+			},
+		},
+	},
+})
+
+-- BasedPyright specific configuration
+lspconfig.basedpyright.setup({
+	on_attach = function(client, bufrn)
+		-- client.resolved_capabilities.hover = false
+		opts.on_attach(client, bufrn)
+	end,
+	capabilities = opts.capabilities,
+	settings = {
+		basedpyright = {
+			-- typeCheckingMode = "standard",
+			disableOrganizeImports = true, -- Use ruff instead
+			analysis = {
+				autoSearchPaths = true,
+				diagnosticMode = "openFilesOnly",
+				useLibraryCodeForTypes = true,
+			},
+		},
+		python = {
+			analysis = {
+				-- Ignore all files for analysis to exclusively use Ruff for linting
+				ignore = { "*" },
+			},
+		},
+	},
+})
+
+-- Ruff LSP configuration
+lspconfig.ruff.setup({
+	on_attach = function(client, bufrn)
+		-- From documentation:
+		-- Note that if you're using Ruff alongside another LSP (like Pyright), you may want to defer to that LSP for certain capabilities, like textDocument/hover
+		client.server_capabilities.hoverProvider = false
+
+		opts.on_attach(client, bufrn)
+	end,
+	init_options = {
+		settings = {
+			-- Any extra CLI arguments for `ruff` go here.
+			args = {},
+		},
+	},
 })
 
 -- Specific to scala metals
