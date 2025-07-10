@@ -60,10 +60,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-      "mason-org/mason-lspconfig.nvim",
       "RRethy/vim-illuminate", -- illuminate works under the cursor
-      "scalameta/nvim-metals", -- Scala metals integration
       "hrsh7th/nvim-cmp",      -- Specify completion engine
     },
     config = function()

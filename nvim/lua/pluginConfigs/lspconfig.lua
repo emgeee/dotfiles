@@ -92,9 +92,7 @@ local on_attach = function(_client, bufnr)
     require("lspsaga.hover"):render_hover_doc()
   end, opts("hover docs (lspsaga)"))
 
-  vim.keymap.set("n", "<leader>K", function()
-    require("lspsaga.hover"):render_hover_doc({ "++keep" })
-  end, opts("hover docs (lspsaga)"))
+  vim.keymap.set("n", "<leader>K", "<cmd>Lspsaga hover_doc", opts("hover docs (lspsaga)"))
   -- vim.keymap.set('n', 'grn', '<cmd>Lspsaga rename<CR>', opts)
   vim.keymap.set("n", "gca", "<cmd>Lspsaga code_action<CR>", opts("code action (lspsaga)"))
   vim.keymap.set("n", "ge", "<cmd>Lspsaga show_line_diagnostics<CR>", opts("show line diagnostics (lspsaga)"))
@@ -114,41 +112,11 @@ local on_attach = function(_client, bufnr)
   end, { desc = "toggle show types (LSP)" })
 end
 
---  Small plugin to ensure various formatters are installed
-require("mason-tool-installer").setup({
-  ensure_installed = {
-    "lua-language-server",
-    "vim-language-server",
-    "gopls",
-    "typescript-language-server",
-    "json-lsp",
-    "bash-language-server",
-    "marksman", -- Markdown
-    "shfmt",    -- format bash
-    "luacheck",
-    "xmlformatter",
-    "taplo",    -- TOML
-    -- "rust-analyzer",
-    "codelldb", -- VSCode lldb
-    "cpptools", -- Needed for rust
-  },
-})
-
--- Mason-lspconfig helps bridge the gap between Mason and native LSP client
--- Install LSP clients with mason and then configure them to work with nvim-lspconfig
-local mason_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not mason_status_ok then
-  vim.notify("Couldn't load Mason-LSP-Config" .. mason_lspconfig, vim.log.levels.ERROR)
-  return
-end
-mason_lspconfig.setup({
-  automatic_enable = true,
-})
 
 -- cmp config -- we need to advertise to LSP servers additional features supported by the cmp complete plugin
 local cmp_nvim_lsp_okay, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_nvim_lsp_okay then
-  vim.notify("Couldn't load cmp_nvim_lsp" .. mason_lspconfig, vim.log.levels.ERROR)
+  vim.notify("Couldn't load cmp_nvim_lsp" .. cmp_nvim_lsp, vim.log.levels.ERROR)
   return
 end
 local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -163,34 +131,6 @@ local opts = {
   on_attach = on_attach,
   capabilities = capabilities,
 }
-
-lspconfig.rust_analyzer.setup({
-  on_attach = function(client, bufrn)
-    opts.on_attach(client, bufrn)
-  end,
-  capabilities = opts.capabilities,
-  settings = {
-    ["rust-analyzer"] = {
-      diagnostics = {
-        enable = true,
-      },
-      imports = {
-        granularity = {
-          group = "module",
-        },
-        prefix = "self",
-      },
-      cargo = {
-        buildScripts = {
-          enable = true,
-        },
-      },
-      procMacro = {
-        enable = true,
-      },
-    },
-  },
-})
 
 -- Information for configuration various lsp servers: :h lspconfig-all
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
@@ -207,6 +147,7 @@ local servers = {
   "marksman",
   "vimls",
   "taplo",
+  "lua",
 }
 
 for _, server in ipairs(servers) do
@@ -257,14 +198,14 @@ lspconfig.lua_ls.setup({
 
 -- BasedPyright specific configuration
 lspconfig.basedpyright.setup({
-  on_attach = function(client, bufrn)
+  on_attach = function(client, bufnr)
     -- client.resolved_capabilities.hover = false
-    opts.on_attach(client, bufrn)
+    opts.on_attach(client, bufnr)
   end,
   capabilities = opts.capabilities,
   settings = {
     basedpyright = {
-      -- typeCheckingMode = "standard",
+      typeCheckingMode = "standard",
       disableOrganizeImports = true, -- Use ruff instead
       analysis = {
         autoSearchPaths = true,
@@ -283,12 +224,12 @@ lspconfig.basedpyright.setup({
 
 -- Ruff LSP configuration
 lspconfig.ruff.setup({
-  on_attach = function(client, bufrn)
+  on_attach = function(client, bufnr)
     -- From documentation:
     -- Note that if you're using Ruff alongside another LSP (like Pyright), you may want to defer to that LSP for certain capabilities, like textDocument/hover
     client.server_capabilities.hoverProvider = false
 
-    opts.on_attach(client, bufrn)
+    opts.on_attach(client, bufnr)
   end,
   init_options = {
     settings = {
@@ -298,27 +239,29 @@ lspconfig.ruff.setup({
   },
 })
 
--- Specific to scala metals
-
--- Autocmd that will actually be in charging of starting the whole thing
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  -- NOTE: You may or may not want java included here. You will need it if you
-  -- want basic Java support but it may also conflict if you are using
-  -- something like nvim-jdtls which also works on a java filetype autocmd.
-  pattern = { "scala", "sbt", "java" },
-  callback = function()
-    local metals_config = require("metals").bare_config()
-
-    -- Example of settings
-    metals_config.settings = {
-      showImplicitArguments = true,
-      excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-    }
-
-    metals_config.capabilities = capabilities
-    metals_config.on_attach = on_attach
-    require("metals").initialize_or_attach(metals_config)
-  end,
-  group = nvim_metals_group,
+lspconfig.rust_analyzer.setup({
+  on_attach = opts.on_attach,
+  capabilities = opts.capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      diagnostics = {
+        enable = true,
+      },
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+      },
+      procMacro = {
+        enable = true,
+      },
+    },
+  },
 })
+
