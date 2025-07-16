@@ -85,6 +85,9 @@ function __auto_activate_venv --on-event fish_prompt --on-variable PWD --descrip
 end
 #######################
 
+## enable direnv
+eval (direnv hook fish)
+
 
 function sshtmux
   set host $argv[1]
