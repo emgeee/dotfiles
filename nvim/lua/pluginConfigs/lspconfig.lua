@@ -146,7 +146,7 @@ local servers = {
 	"marksman",
 	"vimls",
 	"taplo",
-	"lua",
+	"lua_ls",
 }
 
 for _, server in ipairs(servers) do
