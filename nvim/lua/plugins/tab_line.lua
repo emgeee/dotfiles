@@ -37,7 +37,7 @@ return {
 							separator = true, -- use a "true" to enable the default, or set your own character
 						},
 					},
-					highlights = require("catppuccin.groups.integrations.bufferline").get(),
+					highlights = require("catppuccin.groups.integrations.bufferline").get_theme(),
 				},
 			})
 
