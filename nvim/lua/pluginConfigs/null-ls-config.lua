@@ -19,8 +19,8 @@ null_ls.setup({
     --     diagnostic.code = diagnostic.message_id
     --   end,
     -- }),
-    null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.isort,
+    -- null_ls.builtins.formatting.black,
+    -- null_ls.builtins.formatting.isort,
     -- null_ls.builtins.diagnostics.mypy,
 
     -- Lua

@@ -24,6 +24,7 @@ fish_add_path $HOME/.cargo/bin
 if test -e /opt/homebrew/bin/brew
   eval (/opt/homebrew/bin/brew shellenv)
 end
+fish_add_path (brew --prefix)/lib
 set HOMEBREW_NO_ANALYTICS 1
 
 # Universal environment variables
