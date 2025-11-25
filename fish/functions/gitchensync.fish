@@ -3,28 +3,33 @@
 # open PR
 # args: Git commit message
 function gitchensync
-  set msg $argv[1..-1]
+    set msg $argv[1..-1]
 
-  set current_branch (git rev-parse --abbrev-ref HEAD)
+    # Get current branch
+    set current_branch (git rev-parse --abbrev-ref HEAD)
 
-  if test "$current_branch" = "main"
-    echo "Can't open a PR current branch is main"
-    return 1
-  end
+    # Get repo's default branch from GitHub
+    set default_branch (gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')
 
-  # If the default repo is not set, prompt user to set it before continuing
-  gh repo set-default
+    # Prevent PRs from protected branches
+    if test "$current_branch" = "$default_branch"
+        echo "Can't open a PR: current branch is $current_branch"
+        return 1
+    end
 
-  echo "pausing for 3 seconds..."
-  sleep 3
+    # Ensure a default GitHub repo is configured
+    gh repo set-default
 
-  echo "committing to git"
-  git commit -am $msg
+    echo "pausing for 3 seconds..."
+    sleep 3
 
-  echo "pushing to origin"
-  git push -u origin $current_branch
+    echo "committing to git"
+    git commit -am "$msg"
 
-  echo "opening PR"
-  gh pr create --base main
-  gh pr view --web
+    echo "pushing to origin"
+    git push -u origin "$current_branch"
+
+    echo "opening PR"
+    gh pr create --base "$default_branch" --title "$msg"
+    gh pr view --web
 end
