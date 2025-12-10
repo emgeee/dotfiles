@@ -21,7 +21,7 @@ return {
             { "mode" },
           },
           lualine_b = {
-            { "branch", icon = "" },
+            -- { "branch", icon = "" },
           },
           lualine_c = {
             { "filename", path = 1 },
