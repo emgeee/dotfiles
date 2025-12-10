@@ -30,6 +30,7 @@ fish_add_path --path $GOPATH/bin
 set -x PNPM_HOME $HOME/Library/pnpm
 fish_add_path --path $PNPM_HOME
 
+source $HOME/google-cloud-sdk/path.fish.inc
 
 ### 3. User bins (higher priority)
 fish_add_path --path $HOME/.cargo/bin
