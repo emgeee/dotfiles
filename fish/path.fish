@@ -3,12 +3,22 @@
 ######################################################################
 
 ### 1. Homebrew LAST (lowest priority)
-# These go first so later prepends will stack *above* them.
+# Force correct position by removing then re-adding
 set -gx HOMEBREW_PREFIX /opt/homebrew
 set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
 set -gx HOMEBREW_REPOSITORY /opt/homebrew
 set -gx HOMEBREW_NO_ANALYTICS 1
 
+# Remove homebrew paths from wherever they currently are (e.g. /etc/paths.d)
+set -l new_path
+for p in $PATH
+    if not string match -q '/opt/homebrew/*' $p
+        set -a new_path $p
+    end
+end
+set -gx PATH $new_path
+
+# Add them at the front (will end up below user paths but above system)
 fish_add_path --path /opt/homebrew/sbin
 fish_add_path --path /opt/homebrew/bin
 
