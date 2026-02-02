@@ -2,9 +2,6 @@
 
 source ~/.config/fish/path.fish
 
-# mise (runtime version manager)
-mise activate fish | source
-
 # Aliases
 alias ls='lsd'
 alias icat="kitty +kitten icat"

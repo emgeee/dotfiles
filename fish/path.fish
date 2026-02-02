@@ -45,11 +45,10 @@ if test -z $GCLOUD_HOME
   source $GCLOUD_HOME
 end
 
+# mise (runtime version manager)
+mise activate fish | source
+
 ### 3. User bins (higher priority)
 fish_add_path --path $HOME/.cargo/bin
 fish_add_path --path $HOME/.local/bin
 fish_add_path --path $HOME/.bin
-
-fish_add_path --path $HOME/google-cloud-sdk/bin
-
-
